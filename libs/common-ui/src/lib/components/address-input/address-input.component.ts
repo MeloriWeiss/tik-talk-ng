@@ -17,11 +17,18 @@ import { debounceTime, switchMap, tap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { DadataSuggestion } from '../../data/interfaces/dadata.interface';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AddressInputDropdownComponent } from './address-input-dropdown/address-input-dropdown.component';
+import { ClickOutsideDirective } from '../../directives/index';
 
 @Component({
   selector: 'tt-address-input',
   standalone: true,
-  imports: [ReactiveFormsModule, AsyncPipe],
+  imports: [
+    ReactiveFormsModule,
+    AsyncPipe,
+    AddressInputDropdownComponent,
+    ClickOutsideDirective,
+  ],
   templateUrl: './address-input.component.html',
   styleUrl: './address-input.component.scss',
   providers: [
@@ -49,7 +56,7 @@ export class AddressInputComponent implements ControlValueAccessor {
   suggestions$ = this.innerSearchControl.valueChanges.pipe(
     debounceTime(500),
     switchMap((val) => {
-      return this.#dadataService.getSuggestion(val ?? '').pipe(
+      return this.#dadataService.getSuggestion(val ?? '', 5).pipe(
         tap((res) => {
           this.isDropdownOpened.set(!!res.length);
         })
@@ -60,12 +67,12 @@ export class AddressInputComponent implements ControlValueAccessor {
   constructor() {
     this.addressForm.valueChanges
       .pipe(
-        takeUntilDestroyed(),
         tap(() => {
           const address = Object.values(this.addressForm.value).join(', ');
           this.innerSearchControl.setValue(address, { emitEvent: false });
           this.onChange(address);
-        })
+        }),
+        takeUntilDestroyed()
       )
       .subscribe();
   }
@@ -105,5 +112,9 @@ export class AddressInputComponent implements ControlValueAccessor {
     this.addressForm.setValue(formData, { emitEvent: false });
     this.innerSearchControl.setValue(suggest.value, { emitEvent: false });
     this.onChange(Object.values(formData).join(', '));
+  }
+
+  closeDropdown() {
+    this.isDropdownOpened.set(false);
   }
 }

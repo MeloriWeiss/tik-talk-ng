@@ -29,7 +29,7 @@ import { Store } from '@ngrx/store';
 import { selectMe } from '@tt/data-access/profile';
 
 @Component({
-  selector: 'app-post',
+  selector: 'tt-post',
   standalone: true,
   imports: [
     AvatarCircleComponent,
@@ -43,11 +43,11 @@ import { selectMe } from '@tt/data-access/profile';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostComponent implements OnInit, AfterViewInit {
-  store = inject(Store);
-  injector = inject(Injector);
+  #store = inject(Store);
+  #injector = inject(Injector);
 
   post = input<Post>();
-  profile = this.store.selectSignal(selectMe);
+  profile = this.#store.selectSignal(selectMe);
   comms!: Signal<PostComment[]>;
 
   comments = computed(() => {
@@ -70,18 +70,18 @@ export class PostComponent implements OnInit, AfterViewInit {
             this.commentsContainer.nativeElement.scrollHeight;
         })
       },
-      { injector: this.injector }
+      { injector: this.#injector }
     );
   }
 
   ngOnInit() {
-    this.comms = this.store.selectSignal(
+    this.comms = this.#store.selectSignal(
       selectCommentsByPostId(this.post()!.id)
     );
   }
 
   async onCreatedComment(text: string) {
-    this.store.dispatch(
+    this.#store.dispatch(
       postsActions.createComment({
         payload: {
           text: text,

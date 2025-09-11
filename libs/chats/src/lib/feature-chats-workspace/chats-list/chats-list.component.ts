@@ -9,7 +9,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 
 @Component({
-  selector: 'app-chats-list',
+  selector: 'tt-chats-list',
   standalone: true,
   imports: [
     ChatsBtnComponent,
@@ -28,9 +28,9 @@ export class ChatsListComponent {
   chatsService = inject(ChatsService);
   store = inject(Store);
 
-  filterChatsControl = new FormControl('');
-
   chats = this.store.selectSignal(selectChats);
+
+  filterChatsControl = new FormControl('');
 
   constructor() {
     this.chatsService.messages$.pipe(takeUntilDestroyed()).subscribe(() => {
@@ -38,7 +38,7 @@ export class ChatsListComponent {
     });
 
     this.filterChatsControl.valueChanges
-      .pipe(takeUntilDestroyed(), startWith(''))
+      .pipe(startWith(''), takeUntilDestroyed())
       .subscribe((inputValue) => {
         this.store.dispatch(chatsActions.filterChats({ value: inputValue }));
       });

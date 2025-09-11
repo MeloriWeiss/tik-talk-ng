@@ -1,12 +1,12 @@
-<app-message-input
+<tt-message-input
   placeholder="Напишите что-нибудь"
   (created)="onCreatePost($event)"
   class="emojis-bottom"
-></app-message-input>
+></tt-message-input>
 
 <div class="posts-wrapper">
   @for (post of feed(); track post.id) {
-    <app-post [post]="post"></app-post>
+    <tt-post [post]="post"></tt-post>
   }
 </div>
 

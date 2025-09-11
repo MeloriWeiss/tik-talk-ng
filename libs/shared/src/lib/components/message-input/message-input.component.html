@@ -1,15 +1,15 @@
 @if (profile(); as profile) {
-  <app-avatar-circle [avatarUrl]="profile.avatarUrl"></app-avatar-circle>
+  <tt-avatar-circle [avatarUrl]="profile.avatarUrl"></tt-avatar-circle>
 }
 
-<app-main-textarea
+<tt-main-textarea
   [placeholder]="placeholder()"
   [formControl]="textareaControl"
   rows="1"
-></app-main-textarea>
+></tt-main-textarea>
 
 <div class="emojis" [class.opened]="isEmojiOpened">
-  <div class="emoji-rows" (click)="onClickSmile($event)">
+  <tt-popup-wrapper class="emoji-rows" (click)="onClickSmile($event)">
     <div class="emoji-row">
       <span>😃</span>
       <span>😁</span>
@@ -31,7 +31,7 @@
       <span>😜</span>
       <span>🤤</span>
     </div>
-  </div>
+  </tt-popup-wrapper>
   <svg
     icon="emojis"
     class="emojis-icon svg16 no-select"

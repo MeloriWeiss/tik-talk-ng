@@ -3,7 +3,7 @@ import { AvatarCircleComponent, LocalTimePipe } from '@tt/common-ui';
 import { Message } from '@tt/data-access/chats';
 
 @Component({
-  selector: 'app-chat-message',
+  selector: 'tt-chat-message',
   standalone: true,
   imports: [AvatarCircleComponent, LocalTimePipe],
   templateUrl: './chat-message.component.html',

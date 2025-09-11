@@ -10,6 +10,7 @@ import {
   linkedSignal,
   Injector,
   effect,
+  Renderer2,
 } from '@angular/core';
 import { ChatMessagesGroupComponent } from './chat-messages-group/chat-messages-group.component';
 import { ScrollBlockDirective } from '@tt/common-ui';
@@ -23,7 +24,7 @@ import { Store } from '@ngrx/store';
 import { untracked } from '@angular/core/primitives/signals';
 
 @Component({
-  selector: 'app-chat-messages-wrapper',
+  selector: 'tt-chat-messages-wrapper',
   standalone: true,
   imports: [
     MessageInputComponent,
@@ -35,15 +36,16 @@ import { untracked } from '@angular/core/primitives/signals';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatMessagesWrapperComponent implements AfterViewInit, OnDestroy {
-  chatsService = inject(ChatsService);
-  store = inject(Store);
-  injector = inject(Injector);
+  #chatsService = inject(ChatsService);
+  #store = inject(Store);
+  #injector = inject(Injector);
+  #r2 = inject(Renderer2);
 
   chat = input.required<PatchedChat>();
 
   messagesContainer = viewChild.required<ElementRef>('messagesContainer');
 
-  messagesGroups = this.store.selectSignal(selectActiveChatMessages);
+  messagesGroups = this.#store.selectSignal(selectActiveChatMessages);
 
   currentMessagesGroupDate = linkedSignal(() => {
     const messagesGroups = this.messagesGroups();
@@ -71,14 +73,16 @@ export class ChatMessagesWrapperComponent implements AfterViewInit, OnDestroy {
           const messagesContainer = untracked(() => this.messagesContainer());
           messagesContainer.nativeElement.scrollTop =
             messagesContainer.nativeElement.scrollHeight;
+          this.#r2.setStyle(messagesContainer.nativeElement, 'scrollBehavior', 'auto');
         });
       },
-      { injector: this.injector }
+      { injector: this.#injector }
     );
   }
 
   async onSendMessage(messageText: string) {
-    this.chatsService.wsAdaptor.sendMessage(messageText, this.chat().id);
+    this.#r2.setStyle(this.messagesContainer().nativeElement, 'scrollBehavior', 'smooth');
+    this.#chatsService.wsAdaptor.sendMessage(messageText, this.chat().id);
   }
 
   ngOnDestroy() {

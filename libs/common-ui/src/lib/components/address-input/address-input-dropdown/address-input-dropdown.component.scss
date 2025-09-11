@@ -1,0 +1,23 @@
+:host {
+  position: absolute;
+  top: 30px;
+}
+
+.address-btns {
+  display: flex;
+  flex-direction: column;
+}
+
+.suggest-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: .3s all;
+  color: var(--light-color);
+
+  &:hover {
+    background: var(--gray-color);
+  }
+}

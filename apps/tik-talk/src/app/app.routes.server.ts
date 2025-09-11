@@ -25,4 +25,8 @@ export const serverRoutes: ServerRoute[] = [
     path: 'chats/:id',
     renderMode: RenderMode.Client,
   },
+  {
+    path: 'exp/sandbox',
+    renderMode: RenderMode.Client,
+  },
 ];

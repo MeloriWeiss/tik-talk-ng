@@ -22,25 +22,26 @@ import {
 } from '@tt/data-access/profile';
 import { AuthService } from '@tt/data-access/auth';
 import { Store } from '@ngrx/store';
+import { HasChanges } from '@tt/data-access/shared';
 
 @Component({
-  selector: 'app-settings-page',
+  selector: 'tt-settings-page',
   standalone: true,
   imports: [
-    ProfileHeaderComponent,
     ReactiveFormsModule,
     SvgIconComponent,
     RouterLink,
-    AvatarUploadComponent,
     MainTextareaComponent,
     BadgesInputComponent,
     AddressInputComponent,
+    AvatarUploadComponent,
+    ProfileHeaderComponent,
   ],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SettingsPageComponent {
+export class SettingsPageComponent implements HasChanges {
   fb = inject(FormBuilder);
   profileService = inject(ProfileService);
   router = inject(Router);
@@ -57,6 +58,10 @@ export class SettingsPageComponent {
     stack: [[] as string[]],
     city: [''],
   });
+
+  get hasChanges() {
+    return false;
+  }
 
   constructor() {
     const me = this.store.selectSignal(selectMe);
@@ -86,8 +91,14 @@ export class SettingsPageComponent {
 
     this.store.dispatch(
       profileActions.patchProfile({
-        //@ts-ignore
-        profile: this.form.value,
+        profile: {
+          firstName: this.form.value.firstName ?? '',
+          lastName: this.form.value.lastName ?? '',
+          username: this.form.value.username ?? '',
+          description: this.form.value.description ?? '',
+          stack: this.form.value.stack ?? [],
+          city: this.form.value.city ?? '',
+        },
       })
     );
 

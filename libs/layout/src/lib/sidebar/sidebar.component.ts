@@ -1,13 +1,17 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
-  inject, OnDestroy,
-  OnInit
+  inject,
+  OnDestroy,
+  OnInit,
+  viewChild,
+  ViewContainerRef
 } from '@angular/core';
 import { SubscriberCardComponent } from './subscriber-card/subscriber-card.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ImgUrlPipe, SvgIconComponent } from '@tt/common-ui';
+import { ImgUrlPipe, SidebarPortalService, SvgIconComponent } from '@tt/common-ui';
 import { AsyncPipe } from '@angular/common';
 import {
   profileActions,
@@ -22,7 +26,6 @@ import {
 } from '@tt/data-access/chats';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { firstValueFrom, Subscription, timer } from 'rxjs';
-import { AuthService } from '@tt/data-access/auth';
 
 enum menuLinks {
   ME = 'profile/me',
@@ -31,7 +34,7 @@ enum menuLinks {
 }
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'tt-sidebar',
   standalone: true,
   imports: [
     SubscriberCardComponent,
@@ -45,19 +48,23 @@ enum menuLinks {
   styleUrl: './sidebar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SidebarComponent implements OnInit, OnDestroy {
-  profileService = inject(ProfileService);
-  store = inject(Store);
+export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
+  #profileService = inject(ProfileService);
   #chatsService = inject(ChatsService);
-  #authService = inject(AuthService);
-  destroyRef = inject(DestroyRef);
+  #store = inject(Store);
+  #destroyRef = inject(DestroyRef);
+  #sidebarPortalService = inject(SidebarPortalService);
 
-  unreadMessagesCount = this.store.selectSignal(selectUnreadMessagesCount);
-  me = this.store.selectSignal(selectMe);
+  sidebarContainer = viewChild('sidebarContainer', {
+    read: ViewContainerRef,
+  });
 
-  subscribers$ = this.profileService.getSubscribersShortList(3);
+  unreadMessagesCount = this.#store.selectSignal(selectUnreadMessagesCount);
+  me = this.#store.selectSignal(selectMe);
+
+  subscribers$ = this.#profileService.getSubscribersShortList(3);
   menuLinks = menuLinks;
-  connectWSSubscription!: Subscription;
+  #connectWSSubscription!: Subscription;
 
   menuItems = [
     {
@@ -82,26 +89,36 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   connectWs() {
-    this.connectWSSubscription?.unsubscribe();
-    this.connectWSSubscription = this.#chatsService
+    this.#connectWSSubscription?.unsubscribe();
+    this.#connectWSSubscription = this.#chatsService
       .connectWs()
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntilDestroyed(this.#destroyRef))
       .subscribe((message) => {
         if (isErrorMessage(message)) {
-          this.reconnect().then(() => {
-            this.connectWs();
-          });
+          this.reconnect().then();
         }
       });
   }
 
   async reconnect() {
-    await firstValueFrom(this.#authService.refreshAuthToken());
+    console.log('reconnecting');
+    await firstValueFrom(this.#profileService.getMe());
     await firstValueFrom(timer(2000));
+    this.connectWs();
   }
 
   ngOnInit() {
-    this.store.dispatch(profileActions.getMe());
+    this.#store.dispatch(profileActions.getMe());
+  }
+
+  ngAfterViewInit() {
+    const sidebarContainer = this.sidebarContainer();
+
+    if (!sidebarContainer) {
+      return;
+    }
+
+    this.#sidebarPortalService.registerContainer(sidebarContainer);
   }
 
   ngOnDestroy() {

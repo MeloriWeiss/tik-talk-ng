@@ -1,4 +1,4 @@
-<img src="/assets/svg/logo-small.svg" alt="logo" class="ml16 mb20" />
+<img src="/assets/svg/logo-small.svg" alt="logo" class="ml16 mb20"/>
 
 <nav (mouseenter)="null">
   <ul class="main-menu-list">
@@ -24,7 +24,7 @@
   <p class="small-text mt20 mb20">Подписчики</p>
 
   @for (profile of subscribers$ | async; track profile.id) {
-    <app-subscriber-card [profile]="profile"></app-subscriber-card>
+    <tt-subscriber-card [profile]="profile"></tt-subscriber-card>
   }
 
   <div class="mt20 to-subscribers">
@@ -35,17 +35,30 @@
   </div>
 </div>
 
-<footer class="sidebar__footer">
-  @if (me(); as me) {
-    <img
-      [src]="(me.avatarUrl | imgUrl) || '/assets/svg/avatar-placeholder.svg'"
-      [alt]="me.lastName"
-      class="sidebar__footer-img"
-    />
-    <div class="sidebar__footer-username regular">{{ me.username }}</div>
+<!--<a [routerLink]="[{outlets: {aside: ['first'], pew: ['first']}}]">First</a>-->
+<!--<a [routerLink]="[{outlets: {aside: ['second'], pew: ['second']}}]">Second</a>-->
+<!--<a [routerLink]="[{outlets: {primary: ['exp', 'sandbox'], aside: null, pew: null}}]">Experiments</a>-->
 
-    <a routerLink="/settings" class="settings-btn">
-      <svg icon="settings" class="svg14"></svg>
-    </a>
-  }
+<!--<router-outlet name="aside"></router-outlet>-->
+<!--<router-outlet name="pew"></router-outlet>-->
+
+<footer class="sidebar__footer">
+  <div class="sidebar__footer-container">
+    <ng-container #sidebarContainer></ng-container>
+  </div>
+
+  <div class="sidebar__footer-controls">
+    @if (me(); as me) {
+      <img
+        [src]="(me.avatarUrl | imgUrl) || '/assets/svg/avatar-placeholder.svg'"
+        [alt]="me.lastName"
+        class="sidebar__footer-img"
+      />
+      <div class="sidebar__footer-username regular">{{ me.username }}</div>
+
+      <a routerLink="/settings" class="settings-btn">
+        <svg icon="settings" class="svg14"></svg>
+      </a>
+    }
+  </div>
 </footer>

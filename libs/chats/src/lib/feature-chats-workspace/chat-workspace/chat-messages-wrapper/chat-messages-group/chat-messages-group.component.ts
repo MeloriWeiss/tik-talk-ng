@@ -11,7 +11,7 @@ import { ChatMessageComponent } from './chat-message/chat-message.component';
 import { MessagesGroup } from '@tt/data-access/chats';
 
 @Component({
-  selector: 'app-chat-messages-group',
+  selector: 'tt-chat-messages-group',
   standalone: true,
   imports: [ChatMessageComponent],
   templateUrl: './chat-messages-group.component.html',

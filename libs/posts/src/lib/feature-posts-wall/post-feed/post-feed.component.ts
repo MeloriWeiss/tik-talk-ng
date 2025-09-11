@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { PostComponent } from '../post/post.component';
 import { postsActions, selectPosts } from '@tt/data-access/posts';
-import { MessageInputComponent } from '@tt/shared';
 import { Store } from '@ngrx/store';
 import { selectMe } from '@tt/data-access/profile';
+import { MessageInputComponent } from '@tt/shared';
+import { PostComponent } from '../post/post.component';
 
 @Component({
-  selector: 'app-post-feed',
+  selector: 'tt-post-feed',
   standalone: true,
-  imports: [PostComponent, MessageInputComponent],
+  imports: [MessageInputComponent, PostComponent],
   templateUrl: './post-feed.component.html',
   styleUrl: './post-feed.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

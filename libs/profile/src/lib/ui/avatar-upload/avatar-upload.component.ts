@@ -7,7 +7,7 @@ import { selectMe } from '@tt/data-access/profile';
 import { Store } from '@ngrx/store';
 
 @Component({
-  selector: 'app-avatar-upload',
+  selector: 'tt-avatar-upload',
   standalone: true,
   imports: [SvgIconComponent, DndDirective, FormsModule],
   templateUrl: './avatar-upload.component.html',

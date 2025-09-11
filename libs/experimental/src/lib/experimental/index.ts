@@ -5,6 +5,7 @@ import { MockService } from './exp-r-forms/mock.service';
 import { NameValidator } from './exp-r-forms/name.validator';
 import { ExpTdFormsComponent } from './exp-td-forms/exp-td-forms.component';
 import { NoReactValidator } from './exp-td-forms/no-react.validator';
+import { ExperimentsComponent } from './experiments/experiments.component';
 
 export {
   ExpMyFormComponent,
@@ -13,5 +14,6 @@ export {
   MockService,
   NameValidator,
   ExpTdFormsComponent,
-  NoReactValidator
+  NoReactValidator,
+  ExperimentsComponent
 }

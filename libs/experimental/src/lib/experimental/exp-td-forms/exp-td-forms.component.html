@@ -9,7 +9,7 @@
     #usernameControl="ngModel"
   />
   @if (usernameControl.hasError('required') && usernameControl.dirty) {
-  <span>Это поле обязательно!</span>
+    <span>Это поле обязательно!</span>
   }
   <input
     type="text"
@@ -21,7 +21,7 @@
     #lastNameControl="ngModel"
   />
   @if (lastNameControl.hasError('noReact')) {
-  <span>{{ lastNameControl.getError('noReact').message }}</span>
+    <span>{{ lastNameControl.getError('noReact').message }}</span>
   }
   <div ngModelGroup="address">
     <input

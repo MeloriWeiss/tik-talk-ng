@@ -6,35 +6,57 @@ export interface ProfileState {
   profiles: Profile[];
   profileFilters: Record<string, any>;
   me: Profile | null;
+  page: number;
+  size: number;
+  totalProfilesCount: number;
 }
 
-export const initialState: ProfileState = {
+const initialState: ProfileState = {
   profiles: [],
   profileFilters: {},
-  me: null
-}
+  me: null,
+  page: 1,
+  size: 10,
+  totalProfilesCount: 0,
+};
 
 export const profileFeature = createFeature({
   name: 'profileFeature',
   reducer: createReducer(
     initialState,
-    on(profileActions.profilesLoaded, (state, payload) => {
+    on(profileActions.profilesLoaded, (state, { profiles, totalProfilesCount }) => {
       return {
         ...state,
-        profiles: payload.profiles
-      }
+        totalProfilesCount,
+        profiles: state.profiles.concat(profiles),
+      };
     }),
-    on(profileActions.filterEvents, (state, payload) => {
+    on(profileActions.filterProfiles, (state, { filters }) => {
       return {
         ...state,
-        profileFilters: payload.filters
-      }
+        profiles: [],
+        profileFilters: filters,
+        page: 1,
+      };
     }),
-    on(profileActions.meLoaded, (state, payload) => {
+    on(profileActions.setPage, (state, { page }) => {
       return {
         ...state,
-        me: payload.me
-      }
+        page: page ?? state.page + 1,
+      };
+    }),
+    on(profileActions.meLoaded, (state, { me }) => {
+      return {
+        ...state,
+        me: me,
+      };
+    }),
+    on(profileActions.resetProfiles, (state, _) => {
+      return {
+        ...state,
+        profiles: [],
+        page: 1
+      };
     })
-  )
-})
+  ),
+});

@@ -1,0 +1,16 @@
+.profile-cards__wrapper {
+  display: grid;
+  grid-gap: 8px;
+}
+
+.scrollbar {
+  padding-right: 10px;
+}
+
+.profiles-count {
+  padding: 4px 16px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  background-color: var(--dark-active-color);
+}

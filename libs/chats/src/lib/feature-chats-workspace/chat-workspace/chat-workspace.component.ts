@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input } from '@angular/core';
 import { ChatHeaderComponent } from './chat-header/chat-header.component';
 import { ChatMessagesWrapperComponent } from './chat-messages-wrapper/chat-messages-wrapper.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'app-chat-workspace',
+  selector: 'tt-chat-workspace',
   standalone: true,
   imports: [ChatHeaderComponent, ChatMessagesWrapperComponent],
   templateUrl: './chat-workspace.component.html',
@@ -25,7 +25,6 @@ export class ChatWorkspaceComponent {
   constructor() {
     this.activatedRoute.params
       .pipe(
-        takeUntilDestroyed(),
         switchMap(({ id }) => {
           if (id === 'new') {
             return this.activatedRoute.queryParams.pipe(
@@ -38,12 +37,39 @@ export class ChatWorkspaceComponent {
           }
           this.store.dispatch(chatsActions.getChatById({ chatId: id }));
           return of(null);
-        })
+        }),
+        takeUntilDestroyed()
       )
       .subscribe();
   }
 
-  // activeChat2$ = this.route.params.pipe(
+  // вариант со стором 2
+  // activeChat$ = this.activatedRoute.params.pipe(
+  //   switchMap(({ id }) => {
+  //     if (id === 'new') {
+  //       return this.activatedRoute.queryParams.pipe(
+  //         filter(({ userId }) => userId),
+  //         switchMap(({ userId }) => {
+  //           this.store.dispatch(chatsActions.createChat({ userId }));
+  //
+  //           return this.store.select(selectActiveChat).pipe(
+  //             switchMap((chat) => {
+  //               if (chat) {
+  //                 this.router.navigate(['chats', chat.id]).then();
+  //               }
+  //               return of(null);
+  //             })
+  //           );
+  //         })
+  //       );
+  //     }
+  //     this.store.dispatch(chatsActions.getChatById({ chatId: id }));
+  //     return this.store.select(selectActiveChat);
+  //   })
+  // );
+
+  // вариант без стора
+  // activeChat$ = this.route.params.pipe(
   //   switchMap(({ id }) => {
   //     return timer(0, 500000).pipe(
   //       switchMap(() => {

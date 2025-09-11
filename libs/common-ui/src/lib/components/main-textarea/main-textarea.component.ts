@@ -20,7 +20,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'app-main-textarea',
+  selector: 'tt-main-textarea',
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './main-textarea.component.html',

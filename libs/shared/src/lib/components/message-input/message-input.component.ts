@@ -1,20 +1,21 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  EventEmitter,
   inject,
   input,
   output,
-  Output
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AvatarCircleComponent, MainTextareaComponent, SvgIconComponent } from '@tt/common-ui';
+import {
+  AvatarCircleComponent,
+  MainTextareaComponent, PopupWrapperComponent,
+  SvgIconComponent
+} from '@tt/common-ui';
 import { Store } from '@ngrx/store';
 import { selectMe } from '@tt/data-access/profile';
 
 @Component({
-  selector: 'app-message-input',
+  selector: 'tt-message-input',
   standalone: true,
   imports: [
     AvatarCircleComponent,
@@ -22,6 +23,7 @@ import { selectMe } from '@tt/data-access/profile';
     FormsModule,
     MainTextareaComponent,
     ReactiveFormsModule,
+    PopupWrapperComponent,
   ],
   templateUrl: './message-input.component.html',
   styleUrl: './message-input.component.scss',
@@ -29,7 +31,6 @@ import { selectMe } from '@tt/data-access/profile';
 })
 export class MessageInputComponent {
   store = inject(Store);
-  cdr = inject(ChangeDetectorRef);
 
   profile = this.store.selectSignal(selectMe);
 

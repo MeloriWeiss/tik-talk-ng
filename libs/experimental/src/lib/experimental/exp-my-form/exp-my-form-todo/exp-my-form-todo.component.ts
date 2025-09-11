@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy } from '@angular/core';
 import {
   FormArray,
   FormControl,
@@ -38,14 +38,14 @@ function getInternshipForm(
 }
 
 @Component({
-  selector: 'app-exp-my-form',
+  selector: 'tt-exp-my-form',
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './exp-my-form-todo.component.html',
   styleUrl: './exp-my-form-todo.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ExpMyFormTodoComponent {
+export class ExpMyFormTodoComponent implements OnDestroy {
   myMockService = inject(MyMockTodoService);
   internshipsList: InternshipsListItem[] = [];
   commonInternshipsList: {

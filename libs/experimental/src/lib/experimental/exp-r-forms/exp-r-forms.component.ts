@@ -84,7 +84,7 @@ function getDateRangeError(message: string) {
 }
 
 @Component({
-  selector: 'app-exp-r-forms',
+  selector: 'tt-exp-r-forms',
   standalone: true,
   templateUrl: './exp-r-forms.component.html',
   imports: [ReactiveFormsModule, KeyValuePipe],

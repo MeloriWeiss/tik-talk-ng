@@ -1,14 +1,26 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, filter } from 'rxjs';
+import { debounceTime, filter, first, map, take, tap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SvgIconComponent } from '@tt/common-ui';
 import { ProfileHeaderComponent } from '../../ui/index';
-import { profileActions, selectProfileFilters } from '@tt/data-access/profile';
+import {
+  profileActions,
+  selectFilteredProfiles,
+  selectProfileFilters,
+} from '@tt/data-access/profile';
 import { Store } from '@ngrx/store';
+import { ActivatedRoute } from '@angular/router';
+
+interface Search {
+  firstName: string;
+  lastName: string;
+  city: string;
+  stack: string;
+}
 
 @Component({
-  selector: 'app-profile-filters',
+  selector: 'tt-profile-filters',
   standalone: true,
   imports: [
     FormsModule,
@@ -21,10 +33,10 @@ import { Store } from '@ngrx/store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileFiltersComponent {
-  fb = inject(FormBuilder);
-  store = inject(Store);
+  #fb = inject(FormBuilder);
+  #store = inject(Store);
 
-  searchForm = this.fb.group({
+  searchForm = this.#fb.group({
     firstName: [''],
     lastName: [''],
     city: [''],
@@ -35,19 +47,31 @@ export class ProfileFiltersComponent {
     this.searchForm.valueChanges
       .pipe(
         debounceTime(500),
-        takeUntilDestroyed(),
-        filter((formValue) =>
-          Object.values(formValue).every((value) =>
-            value?.length !== 0 ? (value?.length || 0) > 2 : true
-          )
-        )
+        map((formValue) => {
+          return Object.entries(formValue)
+            .filter(([_, value]) => {
+              return (value?.length ?? 0) > 2;
+            })
+            .reduce((summaryFilters, [key, value]) => {
+              return {
+                ...summaryFilters,
+                [key]: value,
+              };
+            }, {} as Search);
+        }),
+        takeUntilDestroyed()
       )
-      .subscribe((formValue) => {
-        this.store.dispatch(
-          profileActions.filterEvents({ filters: formValue })
+      .subscribe((formFilters) => {
+        this.#store.dispatch(
+          profileActions.filterProfiles({ filters: formFilters })
         );
       });
 
-    this.searchForm.patchValue(this.store.selectSignal(selectProfileFilters)());
+    this.searchForm.patchValue(
+      this.#store.selectSignal(selectProfileFilters)(),
+      {
+        emitEvent: !this.#store.selectSignal(selectFilteredProfiles)().length,
+      }
+    );
   }
 }

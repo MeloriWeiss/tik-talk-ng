@@ -67,13 +67,20 @@
   position: absolute;
   width: calc(100% - 26px);
   bottom: 20px;
-  background-color: var(--dark-active-color);
-  border-radius: 2px;
-  padding: 4px 16px;
-  display: grid;
-  grid-template-columns: 32px 1fr 28px;
-  grid-gap: 12px;
-  align-items: center;
+
+  .sidebar__footer-container {
+    margin-bottom: 20px;
+  }
+
+  .sidebar__footer-controls {
+    background-color: var(--dark-active-color);
+    border-radius: 2px;
+    padding: 4px 16px;
+    display: grid;
+    grid-template-columns: 32px 1fr 28px;
+    grid-gap: 12px;
+    align-items: center;
+  }
 
   .sidebar__footer-img {
     width: 32px;

@@ -1,0 +1,15 @@
+@if (suggestions(); as suggestions) {
+  <tt-popup-wrapper>
+    <div class="address-btns">
+      @for (suggest of suggestions; track suggest.value) {
+        <button
+          type="button"
+          class="suggest-btn"
+          (click)="onSuggestionPick(suggest)"
+        >{{ suggest.value }}
+        </button>
+      }
+    </div>
+  </tt-popup-wrapper>
+}
+

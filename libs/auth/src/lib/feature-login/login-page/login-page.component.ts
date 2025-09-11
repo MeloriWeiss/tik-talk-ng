@@ -10,7 +10,7 @@ import { AuthService } from '@tt/data-access/auth';
 import { SvgIconComponent, TtInputComponent } from '@tt/common-ui';
 
 @Component({
-  selector: 'app-login-page',
+  selector: 'tt-login-page',
   standalone: true,
   imports: [ReactiveFormsModule, SvgIconComponent, TtInputComponent],
   templateUrl: './login-page.component.html',
@@ -18,8 +18,8 @@ import { SvgIconComponent, TtInputComponent } from '@tt/common-ui';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginPageComponent {
-  authService = inject(AuthService);
-  router = inject(Router);
+  #authService = inject(AuthService);
+  #router = inject(Router);
 
   form = new FormGroup({
     username: new FormControl<string | null>(null, Validators.required),
@@ -31,9 +31,13 @@ export class LoginPageComponent {
       return;
     }
 
-    //@ts-ignore
-    this.authService.login(this.form.value).subscribe((res) => {
-      this.router.navigate(['/']).then();
-    });
+    this.#authService
+      .login({
+        username: this.form.value.username ?? '',
+        password: this.form.value.password ?? '',
+      })
+      .subscribe((res) => {
+        this.#router.navigate(['/']).then();
+      });
   }
 }

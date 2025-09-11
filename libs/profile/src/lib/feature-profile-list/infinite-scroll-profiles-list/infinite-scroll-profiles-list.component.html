@@ -1,0 +1,62 @@
+<div class="profile-cards__wrapper scrollbar wide-scrollbar" scrollBlock>
+  @for (profile of profiles(); track profile.id; let last = $last) {
+    <tt-profile-card [profile]="profile"></tt-profile-card>
+    @if (last && profiles().length < totalCount()) {
+      @defer (on viewport) {
+        <tt-infinite-scroll-trigger
+          (loaded)="fetchProfiles()"
+        ></tt-infinite-scroll-trigger>
+      } @placeholder {
+        <div></div>
+      }
+    }
+  }
+  @if (profiles().length < totalCount()) {
+    <tt-loader></tt-loader>
+  }
+</div>
+
+<tt-sidebar-portal>
+  <div class="profiles-count">Найдено профилей: {{ totalCount() }}</div>
+</tt-sidebar-portal>
+
+
+<!--<div-->
+<!--  class="profile-cards__wrapper scrollbar wide-scrollbar"-->
+<!--  scrollBlock-->
+<!--  waIntersectionObserver-->
+<!--  waIntersectionThreshold="0.5"-->
+<!--&gt;-->
+<!--  @for (profile of profiles(); track profile.id; let last = $last) {-->
+<!--    <tt-profile-card-->
+<!--      [profile]="profile"-->
+<!--    ></tt-profile-card>-->
+<!--    @if (last && profiles().length < totalCount()) {-->
+<!--      <div (waIntersectionObservee)="onIntersection($event)"></div>-->
+<!--    }-->
+<!--  }-->
+<!--  @if (profiles().length < totalCount()) {-->
+<!--    <tt-loader></tt-loader>-->
+<!--  }-->
+<!--</div>-->
+
+
+<!--<div-->
+<!--  class="profile-cards__wrapper scrollbar wide-scrollbar"-->
+<!--  scrollBlock-->
+<!--  infiniteScroll-->
+<!--  [infiniteScrollDistance]="1"-->
+<!--  [infiniteScrollThrottle]="50"-->
+<!--  [infiniteScrollContainer]="'.profile-cards__wrapper'"-->
+<!--  [fromRoot]="true"-->
+<!--  (scrolled)="onScroll()"-->
+<!--&gt;-->
+<!--  @for (profile of profiles(); track profile.id) {-->
+<!--    <tt-profile-card-->
+<!--      [profile]="profile"-->
+<!--    ></tt-profile-card>-->
+<!--  }-->
+<!--  @if (profiles().length < totalCount()) {-->
+<!--    <tt-loader></tt-loader>-->
+<!--  }-->
+<!--</div>-->

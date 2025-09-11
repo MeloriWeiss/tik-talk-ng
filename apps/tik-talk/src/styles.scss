@@ -301,10 +301,16 @@ h4 {
     background-color: var(--primary-color);
   }
 
-  &.scroll-hidden {
+  &.wide-scrollbar {
     &::-webkit-scrollbar {
-      display: none;
+      width: 8px;
     }
+  }
+}
+
+.scroll-hidden {
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 

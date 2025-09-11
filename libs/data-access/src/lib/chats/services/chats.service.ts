@@ -22,25 +22,26 @@ import { chatsActions } from '../store';
 })
 export class ChatsService {
   #http = inject(HttpClient);
-  authService = inject(AuthService);
-  store = inject(Store);
+  #authService = inject(AuthService);
+  #store = inject(Store);
   me = inject(Store).selectSignal(selectMe);
 
   wsAdaptor: ChatWSService = new ChatWSRxjsService();
-  messages$ = new BehaviorSubject<null>(null);
+  #messages$ = new BehaviorSubject<null>(null);
+  messages$ = this.#messages$.asObservable();
   baseApiUrl = httpConfig.baseApiUrl;
 
   connectWs() {
     return this.wsAdaptor.connect({
       url: `${this.baseApiUrl}chat/ws`,
-      token: this.authService.accessToken ?? '',
+      token: this.#authService.accessToken ?? '',
       handleWSMessage: this.handleWSMessage,
     }) as Observable<ChatWSMessage>;
   }
 
   handleWSMessage = (message: ChatWSMessage) => {
-    this.store.dispatch(chatsActions.newMessage({ message }));
-    this.messages$.next(null);
+    this.#store.dispatch(chatsActions.newMessage({ message }));
+    this.#messages$.next(null);
   };
 
   disconnectWs() {

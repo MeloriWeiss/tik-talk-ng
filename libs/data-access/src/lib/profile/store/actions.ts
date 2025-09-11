@@ -4,12 +4,15 @@ import { Profile } from '../index';
 export const profileActions = createActionGroup({
   source: 'profile',
   events: {
-    'filter events': props<{ filters: Record<string, any> }>(),
-    'profiles loaded': props<{ profiles: Profile[] }>(),
+    'filter profiles': props<{ filters: Record<string, any> }>(),
+    'profiles loaded': props<{ profiles: Profile[], totalProfilesCount: number }>(),
+    'set page': props<{ page?: number }>(),
 
     'get me': emptyProps(),
     'me loaded': props<{ me: Profile }>(),
 
     'patch profile': props<{ profile: Partial<Profile> }>(),
+
+    'reset profiles': emptyProps()
   },
 });

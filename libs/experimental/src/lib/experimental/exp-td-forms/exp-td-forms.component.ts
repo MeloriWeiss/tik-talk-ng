@@ -4,7 +4,7 @@ import { JsonPipe } from '@angular/common';
 import { NoReactValidator } from './no-react.validator';
 
 @Component({
-  selector: 'app-exp-td-forms',
+  selector: 'tt-exp-td-forms',
   standalone: true,
   imports: [FormsModule, JsonPipe, NoReactValidator],
   templateUrl: './exp-td-forms.component.html',

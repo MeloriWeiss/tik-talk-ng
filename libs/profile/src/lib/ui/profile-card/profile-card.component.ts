@@ -4,7 +4,7 @@ import { Profile } from '@tt/data-access/profile';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-profile-card',
+  selector: 'tt-profile-card',
   standalone: true,
   imports: [AvatarCircleComponent, RouterLink, SvgIconComponent],
   templateUrl: './profile-card.component.html',

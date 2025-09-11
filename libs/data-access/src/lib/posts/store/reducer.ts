@@ -7,7 +7,7 @@ export interface PostsState {
   comments: Record<string, PostComment[]>;
 }
 
-export const initialState: PostsState = {
+const initialState: PostsState = {
   posts: [],
   comments: {}
 };

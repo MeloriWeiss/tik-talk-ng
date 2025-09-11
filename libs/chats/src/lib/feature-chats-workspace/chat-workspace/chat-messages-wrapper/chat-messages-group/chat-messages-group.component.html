@@ -3,6 +3,6 @@
     {{ messageGroup.date }}
   </div>
   @for (message of messageGroup.messages; track message.id) {
-    <app-chat-message [message]="message"></app-chat-message>
+    <tt-chat-message [message]="message"></tt-chat-message>
   }
 }

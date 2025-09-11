@@ -1,4 +1,4 @@
-<app-profile-header></app-profile-header>
+<tt-profile-header></tt-profile-header>
 
 <form class="profile-form__wrapper" (ngSubmit)="onSave()" [formGroup]="form">
   <div class="profile-form">
@@ -21,16 +21,16 @@
 
     <label class="tt-form-label">
       <span>О себе</span>
-      <app-main-textarea
+      <tt-main-textarea
         formControlName="description"
         rows="4"
         class="bordered"
-      ></app-main-textarea>
+      ></tt-main-textarea>
     </label>
 
     <label class="tt-form-label">
       <span>Аватар</span>
-      <app-avatar-upload></app-avatar-upload>
+      <tt-avatar-upload></tt-avatar-upload>
     </label>
 
     <div class="tt-form-label">

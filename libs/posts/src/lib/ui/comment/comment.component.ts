@@ -3,7 +3,7 @@ import { PostComment } from '@tt/data-access/posts';
 import { AvatarCircleComponent, DateDiffPipe } from '@tt/common-ui';
 
 @Component({
-  selector: 'app-comment',
+  selector: 'tt-comment',
   standalone: true,
   imports: [AvatarCircleComponent, DateDiffPipe],
   templateUrl: './comment.component.html',

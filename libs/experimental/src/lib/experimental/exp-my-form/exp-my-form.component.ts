@@ -38,7 +38,7 @@ const validateRepeatedProfessions: ValidatorFn = (control: AbstractControl) => {
 };
 
 @Component({
-  selector: 'app-exp-my-form',
+  selector: 'tt-exp-my-form',
   standalone: true,
   imports: [ReactiveFormsModule, MaskitoDirective],
   templateUrl: './exp-my-form.component.html',

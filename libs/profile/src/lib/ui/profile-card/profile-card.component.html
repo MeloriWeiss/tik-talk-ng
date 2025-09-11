@@ -1,7 +1,7 @@
 @if (profile) {
   <div class="profile-card">
     <a [routerLink]="['/profile', profile.id]" class="avatar-name">
-      <app-avatar-circle [avatarUrl]="profile.avatarUrl" class="size70"></app-avatar-circle>
+      <tt-avatar-circle [avatarUrl]="profile.avatarUrl" class="size70"></tt-avatar-circle>
       <div class="profile-card__name">
         <strong class="h6">{{ profile.firstName }} {{ profile.lastName }}</strong>
         <span class="regular">{{ profile.username }}</span>

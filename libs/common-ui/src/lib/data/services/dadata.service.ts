@@ -13,11 +13,11 @@ export class DadataService {
   #apiUrl =
     'https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address';
 
-  getSuggestion(query: string) {
+  getSuggestion(query: string, count?: number) {
     return this.#http
       .post<DadataSuggestions>(
         this.#apiUrl,
-        { query },
+        { query, count },
         {
           headers: {
             Authorization: `Token ${DADATA_TOKEN}`,

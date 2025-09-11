@@ -17,7 +17,7 @@ export interface ChatsState {
   chats: ChatsListItem[];
 }
 
-export const initialState: ChatsState = {
+const initialState: ChatsState = {
   activeChat: null,
   activeChatMessages: [],
   unreadMessagesCount: 0,
