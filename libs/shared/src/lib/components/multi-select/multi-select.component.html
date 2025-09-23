@@ -1,0 +1,33 @@
+<button
+  class="tt-form-input tt-form-input__with-icon select-header no-select scrollbar"
+  [class.active]="isDropdownOpened()"
+  (click)="toggleDropdown()"
+  [disabled]="disabled()"
+  #selectHeader
+>
+  @if (value(); as value) {
+    @if (!value.length) {
+      <div class="select-placeholder">Выберите</div>
+    }
+    @for (selectedOption of value; track selectedOption.value; let i = $index) {
+      <button
+        class="badge-tag deletable"
+      >
+        <button (click)="onOptionDelete($event, i)" type="button" class="badge-tag__delete">
+          <svg icon="cross" class="svg10"></svg>
+        </button>
+        {{ selectedOption.name }}
+      </button>
+    }
+  }
+</button>
+
+@if (isDropdownOpened()) {
+  <tt-portal [host]="selectHeader" [width]="elementWidth()">
+    <tt-multi-select-dropdown
+      [options]="options()"
+      (addOption)="onToggleOption($event)"
+      (ttClickOutside)="closeDropdown()"
+    ></tt-multi-select-dropdown>
+  </tt-portal>
+}

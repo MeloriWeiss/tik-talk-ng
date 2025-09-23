@@ -2,9 +2,18 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ChatsBtnComponent } from '../chats-btn/chats-btn.component';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { startWith } from 'rxjs';
-import { ScrollBlockDirective, SvgIconComponent } from '@tt/common-ui';
-import { chatsActions, ChatsService, selectChats } from '@tt/data-access/chats';
+import { startWith, switchMap, tap } from 'rxjs';
+import {
+  ScrollBlockDirective,
+  SvgIconComponent,
+  TtFormInputComponent,
+} from '@tt/common-ui';
+import {
+  chatsActions,
+  ChatsService,
+  selectChats,
+  selectFilteredChats,
+} from '@tt/data-access/chats';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 
@@ -19,6 +28,7 @@ import { Store } from '@ngrx/store';
     RouterLink,
     RouterLinkActive,
     ScrollBlockDirective,
+    TtFormInputComponent,
   ],
   templateUrl: './chats-list.component.html',
   styleUrl: './chats-list.component.scss',
@@ -28,7 +38,7 @@ export class ChatsListComponent {
   chatsService = inject(ChatsService);
   store = inject(Store);
 
-  chats = this.store.selectSignal(selectChats);
+  filteredChats = this.store.selectSignal(selectFilteredChats);
 
   filterChatsControl = new FormControl('');
 
@@ -37,8 +47,17 @@ export class ChatsListComponent {
       this.store.dispatch(chatsActions.getMyChats());
     });
 
-    this.filterChatsControl.valueChanges
-      .pipe(startWith(''), takeUntilDestroyed())
+    this.store
+      .select(selectChats)
+      .pipe(
+        tap(() => {
+          this.filterChatsControl.setValue('');
+        }),
+        switchMap(() => {
+          return this.filterChatsControl.valueChanges.pipe(startWith(''));
+        }),
+        takeUntilDestroyed()
+      )
       .subscribe((inputValue) => {
         this.store.dispatch(chatsActions.filterChats({ value: inputValue }));
       });

@@ -6,7 +6,7 @@
 @if (suggestions$ | async; as suggestions) {
   @if (isDropdownOpened()) {
     <tt-address-input-dropdown
-      (clickOutside)="closeDropdown()"
+      (ttClickOutside)="closeDropdown()"
       [suggestions]="suggestions"
       (suggestionPick)="onSuggestionPick($event)"
     ></tt-address-input-dropdown>

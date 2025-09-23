@@ -1,0 +1,39 @@
+@if (community(); as community) {
+  <div class="community-card">
+    <a [routerLink]="['/community', community.id]" class="avatar-name">
+      <tt-avatar-circle [avatarUrl]="community.avatarUrl" class="size70"></tt-avatar-circle>
+      <div class="community-card__name">
+        <strong class="h6">{{ community.name }}</strong>
+        <span class="regular">{{ subscribersAmount() | endingMasculineWord : 'подписчик' }}</span>
+      </div>
+    </a>
+
+    <div class="community-card__tags">
+      @for (skill of community.tags; track skill) {
+        <div class="badge-tag">{{ skill }}</div>
+      }
+    </div>
+
+    <div class="community-card__action-btns">
+      @if (community.admin.id !== me()?.id) {
+        @if (isJoined()) {
+          <button class="btn btn-transparent" (click)="leaveCommunity(community.id)">
+            Отписаться
+          </button>
+        } @else {
+          <button class="btn btn-text-icon" (click)="joinCommunity(community.id)">
+            <div class="btn-hover-icon-container">
+              <svg icon="signin" class="svg16 btn-hover-icon"></svg>
+            </div>
+            Подписаться
+            <svg icon="subscribe" class="svg16"></svg>
+          </button>
+        }
+      }
+
+      <a [routerLink]="['/community', community.id]" class="btn btn-icon">
+        <svg icon="redirect-arrow" class="svg16"></svg>
+      </a>
+    </div>
+  </div>
+}

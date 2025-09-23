@@ -29,4 +29,8 @@ export const serverRoutes: ServerRoute[] = [
     path: 'exp/sandbox',
     renderMode: RenderMode.Client,
   },
+  {
+    path: 'communities',
+    renderMode: RenderMode.Client,
+  },
 ];

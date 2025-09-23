@@ -7,11 +7,15 @@ import {
   OnDestroy,
   OnInit,
   viewChild,
-  ViewContainerRef
+  ViewContainerRef,
 } from '@angular/core';
 import { SubscriberCardComponent } from './subscriber-card/subscriber-card.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ImgUrlPipe, SidebarPortalService, SvgIconComponent } from '@tt/common-ui';
+import {
+  ImgUrlPipe,
+  SidebarPortalService,
+  SvgIconComponent,
+} from '@tt/common-ui';
 import { AsyncPipe } from '@angular/common';
 import {
   profileActions,
@@ -31,6 +35,7 @@ enum menuLinks {
   ME = 'profile/me',
   CHATS = 'chats',
   SEARCH = 'search',
+  COMMUNITIES = 'communities',
 }
 
 @Component({
@@ -81,6 +86,11 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
       label: 'Поиск',
       icon: 'search',
       link: this.menuLinks.SEARCH,
+    },
+    {
+      label: 'Сообщества',
+      icon: 'communities',
+      link: this.menuLinks.COMMUNITIES,
     },
   ];
 

@@ -3,6 +3,12 @@
     pointer-events: none;
     opacity: 0.5;
   }
+
+  &.scrolled {
+    .badge-control {
+      height: 44px;
+    }
+  }
 }
 
 .badge-control {
@@ -14,26 +20,13 @@
   border-bottom: 1px solid var(--light-color);
   color: var(--light-color);
   padding-top: 10px;
-  padding-bottom: 10px;
+  padding-bottom: 9px;
   background-color: var(--dark-color);
   transition: 0.5s all;
 
   &:focus-within {
     border-bottom: 1px solid var(--primary-color);
   }
-}
-
-.badge-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.badge-btn__delete {
-  background: none;
-  border: none;
-  color: var(--light-color);
-  cursor: pointer;
 }
 
 .badges-ghost-input {
@@ -46,4 +39,8 @@
   font-family: 'JetBrains Mono', sans-serif;
   color: var(--light-color);
   outline: none;
+
+  &::placeholder {
+    color: var(--light-transparent-color);
+  }
 }

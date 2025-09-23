@@ -6,6 +6,11 @@ export const selectChats = createSelector(
   (chats) => chats
 );
 
+export const selectFilteredChats = createSelector(
+  chatsFeature.selectFilteredChats,
+  (filteredChats) => filteredChats
+);
+
 export const selectActiveChat = createSelector(
   chatsFeature.selectActiveChat,
   (activeChat) => activeChat

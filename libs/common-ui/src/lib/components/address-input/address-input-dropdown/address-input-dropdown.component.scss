@@ -1,23 +1,44 @@
 :host {
   position: absolute;
-  top: 30px;
+  top: 50px;
+  z-index: 10;
 }
 
-.address-btns {
+.popup-wrapper {
+  padding: 16px 12px;
+}
+
+.suggest-btns {
   display: flex;
   flex-direction: column;
+  align-items: start;
 }
 
 .suggest-btn {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+
+  &:hover {
+    .suggest-btn__inner-wrapper {
+      background: var(--dark-active-color);
+      color: var(--primary-color);
+    }
+  }
+}
+
+.suggest-btn__inner-wrapper {
+  display: block;
   background: none;
   border: none;
   cursor: pointer;
   padding: 4px;
   border-radius: 4px;
+  width: 100%;
+  text-align: start;
   transition: .3s all;
   color: var(--light-color);
-
-  &:hover {
-    background: var(--gray-color);
-  }
 }

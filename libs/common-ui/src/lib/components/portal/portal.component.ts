@@ -23,6 +23,8 @@ export class PortalComponent implements AfterViewInit, OnDestroy {
   #portalService = inject(PortalService);
 
   host = input.required<HTMLElement>();
+  width = input<number>();
+
   portalContent = viewChild('portalContent', { read: TemplateRef });
 
   top = signal(0);

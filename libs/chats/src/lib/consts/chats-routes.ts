@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { ChatsPageComponent } from './chats-page.component';
+import { ChatsPageComponent } from '../feature-chats-workspace/chats-page/chats-page.component';
 
 // const meResolver: ResolveFn<Profile[]> = () => {
 //   console.log('meResolver');
@@ -18,7 +18,7 @@ export const chatsRoutes: Routes = [
       {
         path: ':id',
         loadComponent: () =>
-          import('../chat-workspace/chat-workspace.component').then(
+          import('../feature-chats-workspace/chat-workspace/chat-workspace.component').then(
             (c) => c.ChatWorkspaceComponent
           ),
         // runGuardsAndResolvers: 'pathParamsChange',
