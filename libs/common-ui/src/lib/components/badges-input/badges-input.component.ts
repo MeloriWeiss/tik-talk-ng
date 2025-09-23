@@ -1,8 +1,11 @@
 import {
   ChangeDetectionStrategy,
-  Component, computed,
-  forwardRef, HostBinding,
-  HostListener, input
+  Component,
+  computed,
+  forwardRef,
+  HostBinding,
+  HostListener,
+  input,
 } from '@angular/core';
 import { SvgIconComponent } from '../svg-icon/svg-icon.component';
 import {
@@ -12,6 +15,7 @@ import {
 } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'tt-badges-input',
@@ -29,6 +33,7 @@ import { AsyncPipe } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BadgesInputComponent implements ControlValueAccessor {
+  placeholder = input('');
   keyCode = input('enter');
   #code = computed(() => this.keyCode().toLowerCase());
 
@@ -53,7 +58,7 @@ export class BadgesInputComponent implements ControlValueAccessor {
     if (!this.innerInput) {
       return;
     }
-    this.value$.next([...this.value$.value, this.innerInput]);
+    this.value$.next([...new Set([...this.value$.value, this.innerInput])]);
     this.innerInput = '';
     this.onChange(this.value$.value);
   }

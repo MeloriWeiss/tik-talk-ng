@@ -1,0 +1,43 @@
+.option-btn {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+
+  &:hover {
+    .option-btn__inner-wrapper {
+      background: var(--dark-active-color);
+
+      .badge-tag {
+        color: var(--primary-color);
+        border-color: var(--primary-color);
+      }
+    }
+  }
+
+  &.selected {
+    .option-btn__inner-wrapper {
+      .badge-tag {
+        color: var(--primary-color);
+        border-color: var(--primary-color);
+      }
+    }
+  }
+}
+
+.option-btn__inner-wrapper {
+  padding: 4px;
+  border-radius: 4px;
+  text-align: start;
+  transition: .3s all;
+  color: var(--light-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.selected-icon {
+  color: var(--primary-color);
+}

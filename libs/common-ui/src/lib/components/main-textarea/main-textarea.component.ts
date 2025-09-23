@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
+  effect,
   ElementRef,
   forwardRef,
   inject,
@@ -47,10 +48,20 @@ export class MainTextareaComponent
 
   disabled = signal(false);
 
-  control = new FormControl('');
+  innerFormControl = new FormControl('');
+
+  constructor() {
+    effect(() => {
+      if (this.disabled()) {
+        this.innerFormControl.disable();
+        return;
+      }
+      this.innerFormControl.enable();
+    });
+  }
 
   ngAfterViewInit() {
-    this.control.valueChanges
+    this.innerFormControl.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((val) => {
         this.onChange(val);
@@ -65,7 +76,7 @@ export class MainTextareaComponent
   }
 
   writeValue(val: string | null): void {
-    this.control.setValue(val);
+    this.innerFormControl.setValue(val);
   }
 
   registerOnChange(fn: any): void {

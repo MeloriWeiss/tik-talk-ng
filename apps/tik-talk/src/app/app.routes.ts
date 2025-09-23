@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { canActivateAuth, canDeactivate, LoginPageComponent } from '@tt/auth';
 import {
   ProfilePageComponent,
-  SearchPageComponent,
+  ProfilesSearchPageComponent,
   SettingsPageComponent,
 } from '@tt/profile';
 import { LayoutComponent } from '@tt/layout';
@@ -61,7 +61,7 @@ export const routes: Routes = [
         component: SettingsPageComponent,
         canDeactivate: [canDeactivate],
       },
-      { path: 'search', component: SearchPageComponent },
+      { path: 'search', component: ProfilesSearchPageComponent },
       {
         path: 'chats',
         // canMatch: [canMatch],
@@ -75,6 +75,11 @@ export const routes: Routes = [
         // ],
         loadChildren: () => import('@tt/chats').then((m) => m.chatsRoutes),
         data: { preload: false },
+      },
+      {
+        path: 'communities',
+        loadChildren: () =>
+          import('@tt/communities').then((m) => m.communitiesRoutes),
       },
 
       // {

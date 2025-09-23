@@ -1,0 +1,15 @@
+<form class="communities-search-form" [formGroup]="searchForm">
+  <tt-labeled-form-field-wrapper label="Название сообщества">
+    <tt-form-input formControlName="name">
+      <svg icon="search" class="search-input-icon svg18" rightIcon></svg>
+    </tt-form-input>
+  </tt-labeled-form-field-wrapper>
+
+  <tt-labeled-form-field-wrapper label="Тема">
+    <tt-multi-select formControlName="theme" [options]="communityThemes"></tt-multi-select>
+  </tt-labeled-form-field-wrapper>
+
+  <tt-labeled-form-field-wrapper label="Теги">
+    <tt-badges-input formControlName="tags" placeholder="Введите" class="scrolled"></tt-badges-input>
+  </tt-labeled-form-field-wrapper>
+</form>

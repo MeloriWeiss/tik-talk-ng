@@ -18,7 +18,7 @@ import {
 import { Store } from '@ngrx/store';
 
 @Component({
-  selector: 'tt-infinite-scroll-profiles-list',
+  selector: 'tt-profiles-list',
   imports: [
     ProfileCardComponent,
     ProfileCardComponent,
@@ -27,11 +27,11 @@ import { Store } from '@ngrx/store';
     InfiniteScrollTriggerComponent,
     SidebarPortalComponent,
   ],
-  templateUrl: './infinite-scroll-profiles-list.component.html',
-  styleUrl: './infinite-scroll-profiles-list.component.scss',
+  templateUrl: './profiles-list.component.html',
+  styleUrl: './profiles-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InfiniteScrollProfilesListComponent implements OnDestroy {
+export class ProfilesListComponent implements OnDestroy {
   #store = inject(Store);
   #sidebarPortalService = inject(SidebarPortalService);
 

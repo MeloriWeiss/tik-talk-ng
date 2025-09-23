@@ -30,7 +30,12 @@ export class ProfileEffects {
           ...filters,
         });
       }),
-      map((res) => profileActions.profilesLoaded({ profiles: res.items, totalProfilesCount: res.total }))
+      map((res) =>
+        profileActions.profilesLoaded({
+          profiles: res.items,
+          totalProfilesCount: res.total,
+        })
+      )
     );
   });
 

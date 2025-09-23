@@ -1,23 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, filter, first, map, take, tap } from 'rxjs';
+import { debounceTime, map } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { SvgIconComponent } from '@tt/common-ui';
+import { LabeledFormFieldWrapperComponent, SvgIconComponent, TtFormInputComponent } from '@tt/common-ui';
 import { ProfileHeaderComponent } from '../../ui/index';
-import {
-  profileActions,
-  selectFilteredProfiles,
-  selectProfileFilters,
-} from '@tt/data-access/profile';
+import { profileActions, selectProfileFilters } from '@tt/data-access/profile';
 import { Store } from '@ngrx/store';
-import { ActivatedRoute } from '@angular/router';
-
-interface Search {
-  firstName: string;
-  lastName: string;
-  city: string;
-  stack: string;
-}
+import { prepareSearchFormValue } from '@tt/shared';
 
 @Component({
   selector: 'tt-profile-filters',
@@ -26,7 +15,9 @@ interface Search {
     FormsModule,
     ProfileHeaderComponent,
     ReactiveFormsModule,
+    LabeledFormFieldWrapperComponent,
     SvgIconComponent,
+    TtFormInputComponent,
   ],
   templateUrl: './profile-filters.component.html',
   styleUrl: './profile-filters.component.scss',
@@ -47,18 +38,7 @@ export class ProfileFiltersComponent {
     this.searchForm.valueChanges
       .pipe(
         debounceTime(500),
-        map((formValue) => {
-          return Object.entries(formValue)
-            .filter(([_, value]) => {
-              return (value?.length ?? 0) > 2;
-            })
-            .reduce((summaryFilters, [key, value]) => {
-              return {
-                ...summaryFilters,
-                [key]: value,
-              };
-            }, {} as Search);
-        }),
+        map(prepareSearchFormValue),
         takeUntilDestroyed()
       )
       .subscribe((formFilters) => {
@@ -68,10 +48,7 @@ export class ProfileFiltersComponent {
       });
 
     this.searchForm.patchValue(
-      this.#store.selectSignal(selectProfileFilters)(),
-      {
-        emitEvent: !this.#store.selectSignal(selectFilteredProfiles)().length,
-      }
+      this.#store.selectSignal(selectProfileFilters)()
     );
   }
 }

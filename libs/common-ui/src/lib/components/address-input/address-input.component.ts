@@ -102,7 +102,7 @@ export class AddressInputComponent implements ControlValueAccessor {
   onTouched() {}
 
   onSuggestionPick(suggest: DadataSuggestion) {
-    this.isDropdownOpened.set(false);
+    this.closeDropdown();
 
     const formData = {
       city: suggest.data.city,

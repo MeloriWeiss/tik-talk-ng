@@ -1,0 +1,25 @@
+:host {
+  position: relative;
+}
+
+.select-header {
+  cursor: pointer;
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+.tt-form-input {
+  padding-top: 10px;
+  padding-bottom: 9px;
+
+  &.active {
+    border-color: var(--primary-color);
+  }
+}
+
+.select-placeholder {
+  font-size: 14px;
+  color: var(--light-transparent-color);
+}

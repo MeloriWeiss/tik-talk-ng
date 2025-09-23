@@ -1,0 +1,12 @@
+:host {
+  display: block;
+}
+
+.communities-search-form {
+  padding: 16px 20px;
+  background-color: var(--dark-color);
+  border: var(--light-border);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-gap: 40px;
+}

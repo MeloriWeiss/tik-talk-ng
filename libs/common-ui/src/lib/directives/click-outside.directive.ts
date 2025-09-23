@@ -1,20 +1,18 @@
 import { Directive, ElementRef, inject, output } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
 import { filter, fromEvent } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
-  selector: '[clickOutside]',
+  selector: '[ttClickOutside]',
   standalone: true,
 })
 export class ClickOutsideDirective {
-  #document = inject(DOCUMENT);
   #hostElement = inject(ElementRef);
 
-  clickOutside = output<void>();
+  ttClickOutside = output<void>();
 
   constructor() {
-    fromEvent(this.#document, 'click')
+    fromEvent(document.body, 'click')
       .pipe(
         filter((event) => {
           return !this.isClickInsideHostElement(event.target as HTMLElement);
@@ -22,7 +20,7 @@ export class ClickOutsideDirective {
         takeUntilDestroyed()
       )
       .subscribe(() => {
-        this.clickOutside.emit();
+        this.ttClickOutside.emit();
       });
   }
 

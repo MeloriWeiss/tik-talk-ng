@@ -15,6 +15,7 @@ export interface ChatsState {
   activeChatMessages: MessagesGroup[];
   unreadMessagesCount: number;
   chats: ChatsListItem[];
+  filteredChats: ChatsListItem[];
 }
 
 const initialState: ChatsState = {
@@ -22,6 +23,7 @@ const initialState: ChatsState = {
   activeChatMessages: [],
   unreadMessagesCount: 0,
   chats: [],
+  filteredChats: [],
 };
 
 export const chatsFeature = createFeature({
@@ -44,7 +46,7 @@ export const chatsFeature = createFeature({
     on(chatsActions.filterChats, (state, { value }) => {
       return {
         ...state,
-        chats: state.chats.filter((chat) => {
+        filteredChats: state.chats.filter((chat) => {
           return `${chat.userFrom.firstName} ${chat.userFrom.lastName}`
             .toLowerCase()
             .includes(value?.toLowerCase() ?? '');

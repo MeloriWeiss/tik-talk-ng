@@ -1,4 +1,4 @@
-@if (profile) {
+@if (profile(); as profile) {
   <div class="profile-card">
     <a [routerLink]="['/profile', profile.id]" class="avatar-name">
       <tt-avatar-circle [avatarUrl]="profile.avatarUrl" class="size70"></tt-avatar-circle>
@@ -17,7 +17,13 @@
     </div>
 
     <div class="profile-card__action-btns">
-      <button class="btn">Подписаться</button>
+      <button class="btn btn-text-icon">
+        <div class="btn-hover-icon-container">
+          <svg icon="signin" class="svg16 btn-hover-icon"></svg>
+        </div>
+        Подписаться
+        <svg icon="subscribe" class="svg16"></svg>
+      </button>
       <a [routerLink]="['/profile', profile.id]" class="btn btn-icon">
         <svg icon="redirect-arrow" class="svg16"></svg>
       </a>

@@ -1,0 +1,9 @@
+<input
+  [formControl]="innerFormControl"
+  (blur)="onTouched()"
+  [placeholder]="placeholder()"
+  [type]="type()"
+  class="tt-form-input"
+/>
+<ng-content select="[rightIcon]"></ng-content>
+

@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
 import { httpConfig, Pageable } from '../../shared/index';
-import { Profile } from '../index';
+import { Profile } from '../interfaces/profile.interface';
 
 @Injectable({
   providedIn: 'root',

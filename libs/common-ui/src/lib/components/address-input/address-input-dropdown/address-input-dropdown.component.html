@@ -1,12 +1,15 @@
 @if (suggestions(); as suggestions) {
-  <tt-popup-wrapper>
-    <div class="address-btns">
+  <tt-popup-wrapper class="popup-wrapper">
+    <div class="suggest-btns">
       @for (suggest of suggestions; track suggest.value) {
         <button
           type="button"
           class="suggest-btn"
           (click)="onSuggestionPick(suggest)"
-        >{{ suggest.value }}
+        >
+          <span class="suggest-btn__inner-wrapper">
+            {{ suggest.value }}
+          </span>
         </button>
       }
     </div>

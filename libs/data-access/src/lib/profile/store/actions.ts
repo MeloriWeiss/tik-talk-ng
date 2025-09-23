@@ -5,7 +5,10 @@ export const profileActions = createActionGroup({
   source: 'profile',
   events: {
     'filter profiles': props<{ filters: Record<string, any> }>(),
-    'profiles loaded': props<{ profiles: Profile[], totalProfilesCount: number }>(),
+    'profiles loaded': props<{
+      profiles: Profile[];
+      totalProfilesCount: number;
+    }>(),
     'set page': props<{ page?: number }>(),
 
     'get me': emptyProps(),
@@ -13,6 +16,6 @@ export const profileActions = createActionGroup({
 
     'patch profile': props<{ profile: Partial<Profile> }>(),
 
-    'reset profiles': emptyProps()
+    'reset profiles': emptyProps(),
   },
 });

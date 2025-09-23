@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { AvatarCircleComponent, SvgIconComponent } from '@tt/common-ui';
 import { Profile } from '@tt/data-access/profile';
 import { RouterLink } from '@angular/router';
@@ -12,5 +12,5 @@ import { RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileCardComponent {
-  @Input() profile!: Profile;
+  profile = input<Profile>();
 }

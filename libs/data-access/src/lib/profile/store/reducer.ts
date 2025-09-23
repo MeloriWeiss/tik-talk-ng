@@ -1,6 +1,6 @@
-import { Profile } from '../index';
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { profileActions } from './actions';
+import { Profile } from '../interfaces/profile.interface';
 
 export interface ProfileState {
   profiles: Profile[];
@@ -24,13 +24,16 @@ export const profileFeature = createFeature({
   name: 'profileFeature',
   reducer: createReducer(
     initialState,
-    on(profileActions.profilesLoaded, (state, { profiles, totalProfilesCount }) => {
-      return {
-        ...state,
-        totalProfilesCount,
-        profiles: state.profiles.concat(profiles),
-      };
-    }),
+    on(
+      profileActions.profilesLoaded,
+      (state, { profiles, totalProfilesCount }) => {
+        return {
+          ...state,
+          totalProfilesCount,
+          profiles: state.profiles.concat(profiles),
+        };
+      }
+    ),
     on(profileActions.filterProfiles, (state, { filters }) => {
       return {
         ...state,
@@ -55,7 +58,7 @@ export const profileFeature = createFeature({
       return {
         ...state,
         profiles: [],
-        page: 1
+        page: 1,
       };
     })
   ),
