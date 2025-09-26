@@ -91,6 +91,7 @@ export class MainTextareaComponent
     this.disabled.set(isDisabled);
   }
 
-  onChange(value: string | null) {};
+  onChange(value: string | null) {}
+
   onTouched() {};
 }

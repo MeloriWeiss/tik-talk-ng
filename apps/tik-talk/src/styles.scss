@@ -148,6 +148,11 @@ body {
   }
 }
 
+.non-visible-btn {
+  background: none;
+  border: none;
+}
+
 .shadow {
   position: relative;
 
@@ -350,7 +355,7 @@ h4 {
 }
 
 .scrollbar {
-  overflow: auto;
+  overflow-y: auto;
 
   &::-webkit-scrollbar {
     width: 4px;

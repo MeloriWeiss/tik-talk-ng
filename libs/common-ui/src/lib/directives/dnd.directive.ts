@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: '[dnd]',
+  selector: '[ttDnd]',
   standalone: true,
 })
 export class DndDirective {

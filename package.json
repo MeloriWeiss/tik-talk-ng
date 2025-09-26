@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "nx run tik-talk:serve --open",
-    "build": "nx build",
+    "build": "nx build tik-talk",
+    "lint": "nx run-many --target=lint --all",
     "watch": "nx build --watch --configuration development",
     "test": "nx test"
   },

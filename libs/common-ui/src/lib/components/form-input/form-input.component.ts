@@ -7,7 +7,8 @@ import {
   signal,
 } from '@angular/core';
 import {
-  ControlValueAccessor, FormControl,
+  ControlValueAccessor,
+  FormControl,
   FormsModule,
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
@@ -37,9 +38,7 @@ export class TtFormInputComponent implements ControlValueAccessor {
 
   constructor() {
     this.innerFormControl.valueChanges
-      .pipe(
-        takeUntilDestroyed()
-      )
+      .pipe(takeUntilDestroyed())
       .subscribe((value) => {
         this.onChange(value);
       });
@@ -67,5 +66,6 @@ export class TtFormInputComponent implements ControlValueAccessor {
   }
 
   onChange(value: string | null) {}
+
   onTouched() {}
 }

@@ -4,13 +4,13 @@
   </tt-form-input>
 </div>
 
-<div class="chats-wrapper scrollbar scroll-hidden" scrollBlock [diff]="1">
+<div class="chats-wrapper scrollbar scroll-hidden" ttScrollBlock [diff]="1">
   @for (chat of filteredChats(); track chat.id) {
-    <button
+    <tt-button
       chats
       [chat]="chat"
       [routerLink]="[chat.id]"
       routerLinkActive="active"
-    ></button>
+    ></tt-button>
   }
 </div>

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { DateUtil } from '@tt/common-ui';
 import { httpConfig } from '../../shared/index';
 import { Store } from '@ngrx/store';

@@ -52,8 +52,6 @@ export const canMatch: CanMatchFn = (route: Route, segments: UrlSegment[]) => {
   providedIn: 'root',
 })
 export class CanActivate1 implements CanActivate {
-  #router = inject(Router);
-
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot

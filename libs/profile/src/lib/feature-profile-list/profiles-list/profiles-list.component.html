@@ -1,4 +1,4 @@
-<div class="profile-cards__wrapper scrollbar wide-scrollbar" scrollBlock>
+<div class="profile-cards__wrapper scrollbar wide-scrollbar" ttScrollBlock>
   @for (profile of profiles(); track profile.id; let last = $last) {
     <tt-profile-card [profile]="profile"></tt-profile-card>
     @if (last && profiles().length < totalCount()) {
@@ -23,7 +23,7 @@
 
 <!--<div-->
 <!--  class="profile-cards__wrapper scrollbar wide-scrollbar"-->
-<!--  scrollBlock-->
+<!--  ttScrollBlock-->
 <!--  waIntersectionObserver-->
 <!--  waIntersectionThreshold="0.5"-->
 <!--&gt;-->
@@ -43,7 +43,7 @@
 
 <!--<div-->
 <!--  class="profile-cards__wrapper scrollbar wide-scrollbar"-->
-<!--  scrollBlock-->
+<!--  ttScrollBlock-->
 <!--  infiniteScroll-->
 <!--  [infiniteScrollDistance]="1"-->
 <!--  [infiniteScrollThrottle]="50"-->

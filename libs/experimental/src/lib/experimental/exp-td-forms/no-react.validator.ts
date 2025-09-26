@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 
 @Directive({
-  selector: '[noReact]',
+  selector: '[ttNoReact]',
   standalone: true,
   providers: [
     {

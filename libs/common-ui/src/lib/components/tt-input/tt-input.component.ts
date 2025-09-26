@@ -50,9 +50,6 @@ export class TtInputComponent implements ControlValueAccessor {
   isPasswordVisible = signal<boolean>(false);
   disabled = signal(false);
 
-  onChange: any;
-  onTouched: any;
-
   value: string | null = null;
 
   writeValue(val: string | null): void {
@@ -81,4 +78,8 @@ export class TtInputComponent implements ControlValueAccessor {
       this.isPasswordVisible.set(!this.isPasswordVisible());
     }
   }
+
+  onChange(value: string | null) {}
+
+  onTouched() {};
 }

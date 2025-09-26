@@ -32,11 +32,15 @@
       <span>🤤</span>
     </div>
   </tt-popup-wrapper>
-  <svg
-    icon="emojis"
-    class="emojis-icon svg16 no-select"
+  <button
+    class="non-visible-btn"
     (click)="onOpenEmojiList()"
-  ></svg>
+  >
+    <svg
+      icon="emojis"
+      class="emojis-icon svg16 no-select"
+    ></svg>
+  </button>
 </div>
 
 <button class="btn btn-icon" (click)="onCreate()">

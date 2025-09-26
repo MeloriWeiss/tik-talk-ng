@@ -10,7 +10,8 @@ import {
   input,
   OnInit,
   Signal,
-  ViewChild,
+  untracked,
+  viewChild,
 } from '@angular/core';
 import { CommentComponent } from '../../ui';
 import {
@@ -46,7 +47,7 @@ export class PostComponent implements OnInit, AfterViewInit {
   #store = inject(Store);
   #injector = inject(Injector);
 
-  post = input<Post>();
+  post = input.required<Post>();
   profile = this.#store.selectSignal(selectMe);
   comms!: Signal<PostComment[]>;
 
@@ -59,15 +60,17 @@ export class PostComponent implements OnInit, AfterViewInit {
     return this.post()?.comments;
   });
 
-  @ViewChild('commentsContainer') commentsContainer!: ElementRef;
+  commentsContainer = viewChild.required<ElementRef>('commentsContainer');
 
   ngAfterViewInit() {
     effect(
       () => {
         this.comments();
+        const commentsContainer = untracked(() => this.commentsContainer());
+
         requestAnimationFrame(() => {
-          this.commentsContainer.nativeElement.scrollTop =
-            this.commentsContainer.nativeElement.scrollHeight;
+          commentsContainer.nativeElement.scrollTop =
+            commentsContainer.nativeElement.scrollHeight;
         })
       },
       { injector: this.#injector }
@@ -76,17 +79,23 @@ export class PostComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.comms = this.#store.selectSignal(
-      selectCommentsByPostId(this.post()!.id)
+      selectCommentsByPostId(this.post().id)
     );
   }
 
   async onCreatedComment(text: string) {
+    const profile = this.profile();
+
+    if (!profile) {
+      return;
+    }
+
     this.#store.dispatch(
       postsActions.createComment({
         payload: {
           text: text,
-          authorId: this.profile()!.id,
-          postId: this.post()!.id,
+          authorId: profile.id,
+          postId: this.post().id,
         },
       })
     );

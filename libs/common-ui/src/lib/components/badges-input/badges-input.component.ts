@@ -15,7 +15,6 @@ import {
 } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'tt-badges-input',
@@ -90,7 +89,7 @@ export class BadgesInputComponent implements ControlValueAccessor {
     this.onChange(this.value$.value);
   }
 
-  onChange(value: string[] | null) {}
+  onChange(value: string | string[] | null) {}
 
-  onTouched() {}
+  onTouched() {};
 }

@@ -9,7 +9,7 @@ import { RouterOutlet } from '@angular/router';
 import { PortalService } from '@tt/common-ui';
 
 @Component({
-  selector: 'app-root',
+  selector: 'tt-root',
   standalone: true,
   imports: [RouterOutlet],
   templateUrl: './app.component.html',

@@ -9,7 +9,7 @@ import { Store } from '@ngrx/store';
 @Component({
   selector: 'tt-avatar-upload',
   standalone: true,
-  imports: [SvgIconComponent, DndDirective, FormsModule],
+  imports: [SvgIconComponent, FormsModule, DndDirective],
   templateUrl: './avatar-upload.component.html',
   styleUrl: './avatar-upload.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

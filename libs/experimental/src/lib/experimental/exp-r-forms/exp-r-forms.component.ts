@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
-  FormBuilder,
   FormControl,
   FormGroup,
   FormRecord,
@@ -92,7 +91,6 @@ function getDateRangeError(message: string) {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ExpRFormsComponent {
-  #fb = inject(FormBuilder);
   mockService = inject(MockService);
   nameValidator = inject(NameValidator);
   features: Feature[] = [];

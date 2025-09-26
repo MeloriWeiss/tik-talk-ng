@@ -117,13 +117,14 @@ export class MultiSelectComponent
     deletedOption.selected = false;
 
     this.value.set(value);
-    this.onChange(this.value().map((option) => option.value));
+    this.onChange(value.map((option) => option.value));
   }
 
   closeDropdown() {
     this.isDropdownOpened.set(false);
   }
 
-  onChange(value: string[]) {}
-  onTouched() {}
+  onChange(value: string | string[] | null) {}
+
+  onTouched() {};
 }

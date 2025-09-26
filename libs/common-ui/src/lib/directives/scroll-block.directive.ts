@@ -5,14 +5,13 @@ import {
   ElementRef,
   inject,
   input,
-  OnInit,
   Renderer2,
 } from '@angular/core';
 import { debounceTime, fromEvent } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Directive({
-  selector: '[scrollBlock]',
+  selector: '[ttScrollBlock]',
   standalone: true,
 })
 export class ScrollBlockDirective implements AfterViewInit {

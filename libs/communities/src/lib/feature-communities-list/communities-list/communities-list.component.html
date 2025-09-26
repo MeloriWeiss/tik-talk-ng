@@ -1,5 +1,5 @@
 @if (communities(); as communities) {
-  <div class="communities-cards__wrapper scrollbar wide-scrollbar" scrollBlock>
+  <div class="communities-cards__wrapper scrollbar wide-scrollbar" ttScrollBlock>
     @for (community of communities; track community.id; let last = $last) {
       <tt-community-card [community]="community"></tt-community-card>
       @if (last && communities.length < totalCount()) {

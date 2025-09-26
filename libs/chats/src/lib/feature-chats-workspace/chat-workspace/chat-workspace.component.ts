@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, effect, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ChatHeaderComponent } from './chat-header/chat-header.component';
 import { ChatMessagesWrapperComponent } from './chat-messages-wrapper/chat-messages-wrapper.component';
 import { ActivatedRoute, Router } from '@angular/router';

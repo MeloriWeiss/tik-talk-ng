@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  effect,
   forwardRef,
   inject,
   signal,
@@ -43,7 +44,8 @@ import { ClickOutsideDirective } from '../../directives/index';
 export class AddressInputComponent implements ControlValueAccessor {
   #dadataService = inject(DadataService);
 
-  isDropdownOpened = signal(false);
+  readonly isDropdownOpened = signal(false);
+  readonly disabled = signal(false);
 
   innerSearchControl = new FormControl('');
 
@@ -75,6 +77,14 @@ export class AddressInputComponent implements ControlValueAccessor {
         takeUntilDestroyed()
       )
       .subscribe();
+
+    effect(() => {
+      if (this.disabled()) {
+        this.innerSearchControl.disable();
+        return;
+      }
+      this.innerSearchControl.enable();
+    });
   }
 
   writeValue(address: string): void {
@@ -87,7 +97,9 @@ export class AddressInputComponent implements ControlValueAccessor {
     this.innerSearchControl.setValue(address, { emitEvent: false });
   }
 
-  setDisabledState(isDisabled: boolean): void {}
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled.set(isDisabled);
+  }
 
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -96,10 +108,6 @@ export class AddressInputComponent implements ControlValueAccessor {
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
-
-  onChange(value: any) {}
-
-  onTouched() {}
 
   onSuggestionPick(suggest: DadataSuggestion) {
     this.closeDropdown();
@@ -117,4 +125,8 @@ export class AddressInputComponent implements ControlValueAccessor {
   closeDropdown() {
     this.isDropdownOpened.set(false);
   }
+
+  onChange(value: string | null) {}
+
+  onTouched() {};
 }

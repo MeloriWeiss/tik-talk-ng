@@ -5,7 +5,7 @@ import { selectMe } from '@tt/data-access/profile';
 import { Store } from '@ngrx/store';
 
 @Component({
-  selector: 'button[chats]',
+  selector: 'tt-button[chats]',
   standalone: true,
   imports: [AvatarCircleComponent, DateDiffPipe],
   templateUrl: './chats-btn.component.html',
