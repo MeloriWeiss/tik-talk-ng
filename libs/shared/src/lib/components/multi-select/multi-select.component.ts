@@ -73,10 +73,10 @@ export class MultiSelectComponent
 
     this.value.set(newValue);
   }
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: string | string[] | null) => void): void {
     this.onChange = fn;
   }
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
   setDisabledState?(isDisabled: boolean): void {
