@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import {SvgIconComponent} from "@tt/common-ui";
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { SvgIconComponent } from '@tt/common-ui';
+import { ModalService } from '@tt/common-ui';
+import { CreateCommunityModalComponent } from '../../ui/index';
 
 @Component({
   selector: 'tt-communities-header',
@@ -8,4 +10,10 @@ import {SvgIconComponent} from "@tt/common-ui";
   styleUrl: './communities-header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CommunitiesHeaderComponent {}
+export class CommunitiesHeaderComponent {
+  #modalService = inject(ModalService);
+
+  showModal() {
+    this.#modalService.show(CreateCommunityModalComponent);
+  }
+}

@@ -4,6 +4,7 @@
 :root {
   --dark-color: #000000;
   --dark-active-color: #161616;
+  --dark-transparent-color: rgba(0, 0, 0, 0.4);
   --light-color: #ffffff;
   --primary-color: #ae7aff;
   --primary-hover-color: #8850e7;
@@ -13,6 +14,7 @@
   --message-color: #404040;
 
   --light-border: 1px solid var(--light-color);
+  --light-wide-border: 2px solid var(--light-color);
 }
 
 *,
@@ -88,6 +90,15 @@ body {
     border: var(--light-border);
   }
 
+  &.btn-invisible {
+    border: none;
+    background: none;
+    width: min-content;
+    height: min-content;
+    padding: 5px;
+    line-height: 1;
+  }
+
   &.btn-icon {
     width: 44px;
     height: 44px;
@@ -102,7 +113,7 @@ body {
     gap: 8px;
   }
 
-  &:hover {
+  &:not(&.btn-invisible):hover {
     background-color: var(--primary-hover-color);
 
     &.btn-transparent {
@@ -181,9 +192,9 @@ body {
   text-align: center;
 }
 
-.svg10 {
-  width: 10px;
-  height: 10px;
+.svg11 {
+  width: 11px;
+  height: 11px;
 }
 
 .svg14 {
