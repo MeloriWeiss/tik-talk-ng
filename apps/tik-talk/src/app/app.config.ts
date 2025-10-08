@@ -42,7 +42,7 @@ export class DelayedPreloadingStrategy implements PreloadingStrategy {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideClientHydration(withEventReplay()),
+    // provideClientHydration(withEventReplay()),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(
       routes,

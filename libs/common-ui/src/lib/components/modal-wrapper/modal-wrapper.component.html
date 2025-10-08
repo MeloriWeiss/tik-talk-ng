@@ -1,0 +1,18 @@
+<tt-popup-wrapper
+  (click)="clickOnModal($event)"
+  class="modal-wrapper"
+>
+  <div class="modal-header">
+    <span class="title">{{ title() }}</span>
+    <button
+      (click)="closeModal()"
+      class="btn btn-invisible"
+    >
+      <svg icon="cross" class="svg11"></svg>
+    </button>
+  </div>
+
+  <div class="modal-content">
+    <ng-content></ng-content>
+  </div>
+</tt-popup-wrapper>

@@ -15,6 +15,9 @@ import { SidebarPortalService } from './sidebar-portal/sidebar-portal.service';
 import { SvgIconComponent } from './svg-icon/svg-icon.component';
 import { TtFormInputComponent } from './form-input/form-input.component';
 import { TtInputComponent } from './tt-input/tt-input.component';
+import { ModalWrapperComponent } from './modal-wrapper/modal-wrapper.component';
+import { ModalHostComponent } from './modal-host/modal-host.component';
+import { ModalService } from './modal-wrapper/modal.service';
 
 export {
   AvatarCircleComponent,
@@ -34,4 +37,7 @@ export {
   PopupWrapperComponent,
   LabeledFormFieldWrapperComponent,
   TtFormInputComponent,
+  ModalWrapperComponent,
+  ModalService,
+  ModalHostComponent,
 };

@@ -1,0 +1,37 @@
+:host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--dark-transparent-color);
+  display: grid;
+  place-content: center;
+}
+
+.modal-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 32px;
+  background-color: var(--dark-color);
+  border: var(--light-wide-border);
+  border-radius: 2px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+
+  .title {
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 24px;
+    color: var(--light-color);
+  }
+}
+
+.btn.btn-invisible {
+  color: var(--light-color);
+}
