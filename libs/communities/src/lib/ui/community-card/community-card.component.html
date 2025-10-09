@@ -1,6 +1,6 @@
 @if (community(); as community) {
   <div class="community-card">
-    <a [routerLink]="['/community', community.id]" class="avatar-name">
+    <a [routerLink]="['/communities', community.id]" class="avatar-name">
       <tt-avatar-circle [avatarUrl]="community.avatarUrl" class="size70"></tt-avatar-circle>
       <div class="community-card__name">
         <strong class="h6">{{ community.name }}</strong>
@@ -31,7 +31,7 @@
         }
       }
 
-      <a [routerLink]="['/community', community.id]" class="btn btn-icon">
+      <a [routerLink]="['/communities', community.id]" class="btn btn-icon">
         <svg icon="redirect-arrow" class="svg16"></svg>
       </a>
     </div>

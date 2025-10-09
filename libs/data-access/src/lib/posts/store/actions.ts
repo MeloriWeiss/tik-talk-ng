@@ -5,10 +5,10 @@ import { CommentCreateDto, PostCreateDto } from '../interfaces/post.interface';
 export const postsActions = createActionGroup({
   source: 'posts',
   events: {
-    'fetch posts': emptyProps(),
+    'fetch posts': props<{ userId?: number }>(),
     'posts loaded': props<{ posts: Post[] }>(),
     'fetch post': props<{ postId: number }>(),
-    'post loaded': props<{post: Post}>(),
+    'post loaded': props<{ post: Post }>(),
     'create post': props<{ payload: PostCreateDto }>(),
 
     'create comment': props<{ payload: CommentCreateDto }>(),

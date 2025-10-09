@@ -1,6 +1,6 @@
 import { NameValue } from '@tt/data-access/shared';
 
-export const communityThemes: NameValue[] = [
+export const communitiesThemes: NameValue[] = [
   {
     name: 'PROGRAMMING',
     value: 'PROGRAMMING',

@@ -1,5 +1,5 @@
 @if (suggestions(); as suggestions) {
-  <tt-popup-wrapper class="popup-wrapper">
+  <div class="popup-wrapper">
     <div class="suggest-btns">
       @for (suggest of suggestions; track suggest.value) {
         <button
@@ -13,6 +13,6 @@
         </button>
       }
     </div>
-  </tt-popup-wrapper>
+  </div>
 }
 

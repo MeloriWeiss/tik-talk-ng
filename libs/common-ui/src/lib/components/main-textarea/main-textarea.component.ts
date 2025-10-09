@@ -66,12 +66,13 @@ export class MainTextareaComponent
       .subscribe((val) => {
         this.onChange(val);
 
-        const field = this.field()?.nativeElement;
+        const field: HTMLElement | undefined = this.field()?.nativeElement;
         if (!field) {
           return;
         }
+
         this.r2.setStyle(field, 'height', 'auto');
-        this.r2.setStyle(field, 'height', field.scrollHeight + 'px');
+        this.r2.setStyle(field, 'height', field.scrollHeight + 1 + 'px');
       });
   }
 

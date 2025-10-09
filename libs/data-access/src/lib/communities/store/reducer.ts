@@ -52,6 +52,12 @@ export const communitiesFeature = createFeature({
         communities: [],
         page: 1,
       };
+    }),
+    on(communitiesActions.communityCreated, (state, { community }) => {
+      return {
+        ...state,
+        communities: [community, ...state.communities],
+      }
     })
   ),
 });

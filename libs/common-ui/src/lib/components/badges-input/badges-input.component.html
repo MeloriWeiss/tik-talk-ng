@@ -1,7 +1,11 @@
 <div class="badge-control scrollbar">
   @for (tech of value$ | async; track tech; let i = $index) {
     <div class="badge-tag deletable">
-      <button (click)="onTagDelete(i)" type="button" class="badge-tag__delete">
+      <button
+        (click)="onTagDelete(i)"
+        type="button"
+        class="badge-tag__delete"
+      >
         <svg icon="cross" class="svg11"></svg>
       </button>
       {{ tech }}

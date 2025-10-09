@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { httpConfig, Pageable } from '../../shared/index';
 import { Community } from '../interfaces/communities.interface';
-import { Subject, timer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -31,5 +30,9 @@ export class CommunitiesService {
       `${this.#baseApiUrl}community/${communityId}/join`,
       {}
     );
+  }
+
+  createCommunity(params: Record<string, unknown>) {
+    return this.#http.post<Community>(`${this.#baseApiUrl}community/`, params)
   }
 }

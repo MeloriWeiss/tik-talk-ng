@@ -11,8 +11,8 @@ import {
   communitiesActions,
   selectCommunitiesFilters,
 } from '@tt/data-access/communities/store';
-import { MultiSelectComponent, prepareSearchFormValue } from '@tt/shared';
-import {communityThemes} from "./community-themes";
+import { MultiSelectComponent, MultiSelectOptionComponent, prepareSearchFormValue } from '@tt/shared';
+import { communitiesThemes } from '../../consts/index';
 
 @Component({
   selector: 'tt-communities-filters',
@@ -24,6 +24,7 @@ import {communityThemes} from "./community-themes";
     MultiSelectComponent,
     SvgIconComponent,
     TtFormInputComponent,
+    MultiSelectOptionComponent,
   ],
   templateUrl: './communities-filters.component.html',
   styleUrl: './communities-filters.component.scss',
@@ -33,7 +34,7 @@ export class CommunitiesFiltersComponent {
   #fb = inject(FormBuilder);
   #store = inject(Store);
 
-  communityThemes = communityThemes;
+  communitiesThemes = communitiesThemes;
 
   searchForm = this.#fb.group({
     name: [''],

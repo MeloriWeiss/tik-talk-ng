@@ -11,8 +11,16 @@ import { provideEffects } from '@ngrx/effects';
 export const communitiesRoutes: Routes = [
   {
     path: '',
-    component: CommunitiesSearchPageComponent,
     children: [
+      {
+        path: '',
+        redirectTo: 'search',
+        pathMatch: 'full'
+      },
+      {
+        path: 'search',
+        component: CommunitiesSearchPageComponent,
+      },
       {
         path: ':id',
         component: CommunityPageComponent,

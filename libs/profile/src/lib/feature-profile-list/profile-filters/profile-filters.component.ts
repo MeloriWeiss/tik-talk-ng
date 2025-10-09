@@ -2,7 +2,10 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, map } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { LabeledFormFieldWrapperComponent, SvgIconComponent, TtFormInputComponent } from '@tt/common-ui';
+import {
+  LabeledFormFieldWrapperComponent, SvgIconComponent,
+  TtFormInputComponent,
+} from '@tt/common-ui';
 import { ProfileHeaderComponent } from '../../ui/index';
 import { profileActions, selectProfileFilters } from '@tt/data-access/profile';
 import { Store } from '@ngrx/store';
@@ -16,8 +19,8 @@ import { prepareSearchFormValue } from '@tt/shared';
     ProfileHeaderComponent,
     ReactiveFormsModule,
     LabeledFormFieldWrapperComponent,
-    SvgIconComponent,
     TtFormInputComponent,
+    SvgIconComponent,
   ],
   templateUrl: './profile-filters.component.html',
   styleUrl: './profile-filters.component.scss',

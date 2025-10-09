@@ -6,11 +6,7 @@ import {
   output,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  AvatarCircleComponent,
-  MainTextareaComponent, PopupWrapperComponent,
-  SvgIconComponent
-} from '@tt/common-ui';
+import { AvatarCircleComponent, MainTextareaComponent, SvgIconComponent } from '@tt/common-ui';
 import { Store } from '@ngrx/store';
 import { selectMe } from '@tt/data-access/profile';
 
@@ -19,11 +15,10 @@ import { selectMe } from '@tt/data-access/profile';
   standalone: true,
   imports: [
     AvatarCircleComponent,
-    SvgIconComponent,
     FormsModule,
     MainTextareaComponent,
     ReactiveFormsModule,
-    PopupWrapperComponent,
+    SvgIconComponent,
   ],
   templateUrl: './message-input.component.html',
   styleUrl: './message-input.component.scss',

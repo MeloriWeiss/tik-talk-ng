@@ -1,9 +1,3 @@
-@if (options(); as options) {
-  <tt-popup-wrapper class="shadow shadow-dropdown popup-wrapper">
-    <div class="option-btns">
-      @for (option of options; track option.value) {
-        <tt-multi-select-dd-button [option]="option" (addOption)="onToggleOption($event)"></tt-multi-select-dd-button>
-      }
-    </div>
-  </tt-popup-wrapper>
-}
+<div class="shadow popup-wrapper">
+  <ng-content></ng-content>
+</div>

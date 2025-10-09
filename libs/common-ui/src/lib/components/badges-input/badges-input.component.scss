@@ -4,9 +4,15 @@
     opacity: 0.5;
   }
 
-  &.scrolled {
+  &.scrollable {
     .badge-control {
       height: 44px;
+    }
+  }
+
+  &.ng-invalid.ng-touched {
+    .badge-control {
+      border-color: red;
     }
   }
 }

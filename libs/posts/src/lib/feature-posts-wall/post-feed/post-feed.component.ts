@@ -4,6 +4,8 @@ import { Store } from '@ngrx/store';
 import { selectMe } from '@tt/data-access/profile';
 import { MessageInputComponent } from '@tt/shared';
 import { PostComponent } from '../post/post.component';
+import { ActivatedRoute } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'tt-post-feed',
@@ -14,22 +16,35 @@ import { PostComponent } from '../post/post.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostFeedComponent {
-  store = inject(Store);
+  #store = inject(Store);
+  #activatedRoute = inject(ActivatedRoute);
 
-  feed = this.store.selectSignal(selectPosts);
-  profile = this.store.selectSignal(selectMe);
+  feed = this.#store.selectSignal(selectPosts);
+  me = this.#store.selectSignal(selectMe);
 
   constructor() {
-    this.store.dispatch(postsActions.fetchPosts());
+    this.#activatedRoute.params
+      .pipe(takeUntilDestroyed())
+      .subscribe(({ id }) => {
+        return this.#store.dispatch(
+          postsActions.fetchPosts(id === 'me' ? {} : { userId: id })
+        );
+      });
   }
 
   onCreatePost(text: string) {
-    this.store.dispatch(
+    const me = this.me();
+
+    if (!me) {
+      return;
+    }
+
+    this.#store.dispatch(
       postsActions.createPost({
         payload: {
           title: 'Клёвый пост',
           content: text,
-          authorId: this.profile()!.id,
+          authorId: me.id,
         },
       })
     );

@@ -5,7 +5,7 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { ModalService } from '../modal-wrapper/modal.service';
+import { ModalService } from '../base-modal/modal.service';
 
 @Component({
   selector: 'tt-modal-host',
