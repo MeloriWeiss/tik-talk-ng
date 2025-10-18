@@ -6,17 +6,16 @@ import {
   input,
 } from '@angular/core';
 import { ModalService } from './modal.service';
-import { PopupWrapperComponent } from '../popup-wrapper/popup-wrapper.component';
 import { SvgIconComponent } from '../svg-icon/svg-icon.component';
 
 @Component({
-  selector: 'tt-modal-wrapper',
-  imports: [PopupWrapperComponent, SvgIconComponent],
-  templateUrl: './modal-wrapper.component.html',
-  styleUrl: './modal-wrapper.component.scss',
+  selector: 'tt-base-modal',
+  imports: [SvgIconComponent],
+  templateUrl: './base-modal.component.html',
+  styleUrl: './base-modal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModalWrapperComponent {
+export class BaseModalComponent {
   #modalService = inject(ModalService);
 
   title = input('');

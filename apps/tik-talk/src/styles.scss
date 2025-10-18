@@ -102,8 +102,7 @@ body {
   &.btn-icon {
     width: 44px;
     height: 44px;
-    padding: 14px;
-    font-size: 0;
+    padding: 13px;
   }
 
   &.btn-text-icon {
@@ -162,6 +161,13 @@ body {
 .non-visible-btn {
   background: none;
   border: none;
+}
+
+.popup-wrapper {
+  padding: 8px;
+  background-color: var(--dark-color);
+  border: var(--light-border);
+  border-radius: 4px;
 }
 
 .shadow {
@@ -347,7 +353,7 @@ h4 {
   border-bottom: 1px solid transparent;
   color: var(--light-color);
   width: 100%;
-  padding: 11px 4px 11px;
+  padding: 12px 0 11px;
   font-size: 14px;
   outline: none;
   transition: 0.5s all;
@@ -357,6 +363,7 @@ h4 {
   }
 
   &::placeholder {
+    font-size: 16px;
     color: var(--light-transparent-color);
   }
 

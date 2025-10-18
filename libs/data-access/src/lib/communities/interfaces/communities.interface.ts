@@ -1,17 +1,6 @@
 export interface Community {
   id: number;
-  admin: {
-    id: number;
-    username: string;
-    avatarUrl: string;
-    subscribersAmount: number;
-    firstName: string;
-    lastName: string;
-    isActive: boolean;
-    stack: string[];
-    city: string;
-    description: string;
-  },
+  admin: Admin;
   name: string;
   themes: string[];
   tags: string[];
@@ -21,4 +10,17 @@ export interface Community {
   subscribersAmount: number;
   createdAt: string;
   isJoined: boolean;
+}
+
+interface Admin {
+  id: number;
+  username: string;
+  avatarUrl: string;
+  subscribersAmount: number;
+  firstName: string;
+  lastName: string;
+  isActive: boolean;
+  stack: string[];
+  city: string;
+  description: string;
 }

@@ -14,8 +14,8 @@ export class PostsEffects {
   fetchPosts = createEffect(() => {
     return this.actions$.pipe(
       ofType(postsActions.fetchPosts),
-      switchMap(() => {
-        return this.postService.fetchPosts();
+      switchMap(({ userId }) => {
+        return this.postService.fetchPosts(userId);
       }),
       map((res) => postsActions.postsLoaded({ posts: res }))
     );

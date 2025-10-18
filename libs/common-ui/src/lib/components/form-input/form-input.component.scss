@@ -1,4 +1,10 @@
 :host {
   display: block;
   position: relative;
+
+  &.ng-invalid.ng-touched {
+    .tt-form-input {
+      border-color: red;
+    }
+  }
 }

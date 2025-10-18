@@ -2,8 +2,9 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
   CommentCreateDto,
-  Post, PostComment,
-  PostCreateDto
+  Post,
+  PostComment,
+  PostCreateDto,
 } from '../interfaces/post.interface';
 import { map } from 'rxjs';
 import { httpConfig } from '../../shared';
@@ -20,8 +21,10 @@ export class PostService {
     return this.#http.post<Post>(`${this.baseApiUrl}post/`, payload);
   }
 
-  fetchPosts() {
-    return this.#http.get<Post[]>(`${this.baseApiUrl}post/`);
+  fetchPosts(userId?: number) {
+    return this.#http.get<Post[]>(`${this.baseApiUrl}post/`, {
+      params: userId ? { user_id: userId } : {},
+    });
   }
 
   fetchPost(postId: number) {

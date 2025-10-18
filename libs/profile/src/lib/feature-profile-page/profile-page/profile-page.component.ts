@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
-import { switchMap } from 'rxjs';
+import { first, switchMap } from 'rxjs';
 import { ScrollBlockDirective } from '@tt/common-ui';
 import { SvgIconComponent } from '@tt/common-ui';
 import { PostFeedComponent } from '@tt/posts';
@@ -43,6 +43,7 @@ export class ProfilePageComponent {
   isMyPage = signal(false);
 
   profile$ = this.me$.pipe(
+    first(),
     switchMap((me) => {
       return this.#activatedRoute.params.pipe(
         switchMap(({ id }) => {

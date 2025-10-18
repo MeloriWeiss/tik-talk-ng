@@ -9,7 +9,7 @@
 ></tt-main-textarea>
 
 <div class="emojis" [class.opened]="isEmojiOpened">
-  <tt-popup-wrapper class="emoji-rows" (click)="onClickSmile($event)">
+  <button class="emoji-rows popup-wrapper" (click)="onClickSmile($event)">
     <div class="emoji-row">
       <span>😃</span>
       <span>😁</span>
@@ -31,7 +31,7 @@
       <span>😜</span>
       <span>🤤</span>
     </div>
-  </tt-popup-wrapper>
+  </button>
   <button
     class="non-visible-btn"
     (click)="onOpenEmojiList()"

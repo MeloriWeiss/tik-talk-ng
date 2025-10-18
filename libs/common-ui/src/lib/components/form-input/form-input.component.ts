@@ -32,7 +32,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class TtFormInputComponent implements ControlValueAccessor {
   type = input('text');
   placeholder = input('Введите');
-  disabled = signal(true);
+  disabled = signal(false);
 
   innerFormControl = new FormControl('');
 

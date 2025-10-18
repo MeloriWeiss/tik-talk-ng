@@ -1,0 +1,15 @@
+<button
+  class="option-btn"
+  type="button"
+  [class.selected]="selected()"
+  (click)="toggleSelected()"
+>
+    <span class="option-btn__inner-wrapper">
+      <span class="badge-tag">
+        {{ name() }}
+      </span>
+      @if (selected()) {
+        <svg icon="check-mark" class="selected-icon svg18"></svg>
+      }
+    </span>
+</button>

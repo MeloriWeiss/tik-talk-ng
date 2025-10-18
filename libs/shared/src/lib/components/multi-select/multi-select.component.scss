@@ -1,5 +1,23 @@
 :host {
   position: relative;
+
+  &.ng-invalid.ng-touched {
+    .tt-form-input {
+      border-color: red;
+    }
+  }
+
+  .scrollbar {
+    min-height: 44px;
+    height: auto;
+  }
+
+  &.scrollable {
+    .scrollbar {
+      min-height: auto;
+      height: 44px;
+    }
+  }
 }
 
 .select-header {

@@ -12,5 +12,8 @@ export const communitiesActions = createActionGroup({
     'set page': props<{ page?: number }>(),
 
     'reset communities': emptyProps(),
+
+    'create community': props<{ params: Record<string, any> }>(),
+    'community created': props<{ community: Community }>(),
   },
 });

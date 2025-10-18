@@ -6,10 +6,14 @@
   </tt-labeled-form-field-wrapper>
 
   <tt-labeled-form-field-wrapper label="Тема">
-    <tt-multi-select formControlName="theme" [options]="communityThemes"></tt-multi-select>
+    <tt-multi-select formControlName="theme" [options]="communitiesThemes" class="scrollable">
+      @for (option of communitiesThemes; track option.value) {
+        <tt-multi-select-option [name]="option.name" [value]="option.value"></tt-multi-select-option>
+      }
+    </tt-multi-select>
   </tt-labeled-form-field-wrapper>
 
   <tt-labeled-form-field-wrapper label="Теги">
-    <tt-badges-input formControlName="tags" placeholder="Введите" class="scrolled"></tt-badges-input>
+    <tt-badges-input formControlName="tags" placeholder="Введите" class="scrollable"></tt-badges-input>
   </tt-labeled-form-field-wrapper>
 </form>

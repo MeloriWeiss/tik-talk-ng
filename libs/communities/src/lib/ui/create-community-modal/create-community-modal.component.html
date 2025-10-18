@@ -1,3 +1,65 @@
-<tt-modal-wrapper title="Поделиться">
-  Content
-</tt-modal-wrapper>
+<tt-base-modal>
+  <form class="modal" [formGroup]="createCommunityForm" (ngSubmit)="createCommunity()">
+    <tt-labeled-form-field-wrapper label="Название сообщества">
+      <tt-form-input
+        formControlName="name"
+        class="form-control"
+      ></tt-form-input>
+      <span class="control-value-error">Название должно содержать не менее 5 символов</span>
+    </tt-labeled-form-field-wrapper>
+
+    <tt-labeled-form-field-wrapper label="Тема">
+      <tt-multi-select
+        formControlName="themes"
+        [options]="communitiesThemes"
+        class="form-control"
+      >
+        @for (option of communitiesThemes; track option.value) {
+          <tt-multi-select-option [name]="option.name" [value]="option.value"></tt-multi-select-option>
+        }
+      </tt-multi-select>
+      <span class="control-value-error">Выберите минимум одну тему</span>
+    </tt-labeled-form-field-wrapper>
+
+    <tt-labeled-form-field-wrapper label="Теги">
+      <tt-badges-input
+        formControlName="tags"
+        placeholder="Введите"
+        class="form-control"
+      ></tt-badges-input>
+      <span class="control-value-error">Введите минимум один тег</span>
+    </tt-labeled-form-field-wrapper>
+
+    <tt-labeled-form-field-wrapper label="Описание">
+      <tt-main-textarea
+        formControlName="description"
+        placeholder="Введите"
+        rows="4"
+        class="bordered"
+      ></tt-main-textarea>
+    </tt-labeled-form-field-wrapper>
+
+    <div class="modal-actions">
+      <button
+        class="btn btn-transparent btn-icon"
+        type="button"
+        (click)="resetForm()"
+      >
+        <svg icon="trash" class="svg16 trash-icon"></svg>
+      </button>
+      <div class="modal-primary-btns">
+        <button
+          class="btn btn-transparent"
+          type="button"
+          (click)="closeModal()"
+        >Отмена
+        </button>
+        <button
+          class="btn"
+          (submit)="createCommunity()"
+        >Сохранить
+        </button>
+      </div>
+    </div>
+  </form>
+</tt-base-modal>

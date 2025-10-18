@@ -3,6 +3,7 @@
   [class.active]="isDropdownOpened()"
   (click)="toggleDropdown()"
   [disabled]="disabled()"
+  type="button"
   #selectHeader
 >
   @if (value(); as value) {
@@ -12,8 +13,9 @@
     @for (selectedOption of value; track selectedOption.value; let i = $index) {
       <button
         class="badge-tag deletable"
+        type="button"
       >
-        <button (click)="onOptionDelete($event, i)" type="button" class="badge-tag__delete">
+        <button (click)="deleteOption(selectedOption.value)" type="button" class="badge-tag__delete">
           <svg icon="cross" class="svg11"></svg>
         </button>
         {{ selectedOption.name }}
@@ -25,9 +27,9 @@
 @if (isDropdownOpened()) {
   <tt-portal [host]="selectHeader" [width]="elementWidth()">
     <tt-multi-select-dropdown
-      [options]="options()"
-      (addOption)="onToggleOption($event)"
       (ttClickOutside)="closeDropdown()"
-    ></tt-multi-select-dropdown>
+    >
+      <ng-content></ng-content>
+    </tt-multi-select-dropdown>
   </tt-portal>
 }

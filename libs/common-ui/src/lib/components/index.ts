@@ -7,7 +7,6 @@ import { InfiniteScrollTriggerComponent } from './infinite-scroll-trigger/infini
 import { LabeledFormFieldWrapperComponent } from './labeled-form-field-wrapper/labeled-form-field-wrapper.component';
 import { LoaderComponent } from './loader/loader.component';
 import { MainTextareaComponent } from './main-textarea/main-textarea.component';
-import { PopupWrapperComponent } from './popup-wrapper/popup-wrapper.component';
 import { PortalComponent } from './portal/portal.component';
 import { PortalService } from './portal/portal.service';
 import { SidebarPortalComponent } from './sidebar-portal/sidebar-portal.component';
@@ -15,9 +14,9 @@ import { SidebarPortalService } from './sidebar-portal/sidebar-portal.service';
 import { SvgIconComponent } from './svg-icon/svg-icon.component';
 import { TtFormInputComponent } from './form-input/form-input.component';
 import { TtInputComponent } from './tt-input/tt-input.component';
-import { ModalWrapperComponent } from './modal-wrapper/modal-wrapper.component';
+import { BaseModalComponent } from './base-modal/base-modal.component';
 import { ModalHostComponent } from './modal-host/modal-host.component';
-import { ModalService } from './modal-wrapper/modal.service';
+import { ModalService } from './base-modal/modal.service';
 
 export {
   AvatarCircleComponent,
@@ -34,10 +33,9 @@ export {
   PortalComponent,
   PortalService,
   ErrorComponent,
-  PopupWrapperComponent,
   LabeledFormFieldWrapperComponent,
   TtFormInputComponent,
-  ModalWrapperComponent,
+  BaseModalComponent,
   ModalService,
   ModalHostComponent,
 };

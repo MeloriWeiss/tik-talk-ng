@@ -1,1 +1,37 @@
+.modal {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 352px;
+  margin-top: -6px;
+}
 
+.modal-actions {
+  margin-top: 23px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.trash-icon {
+  color: #e99898;
+}
+
+.modal-primary-btns {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.control-value-error {
+  display: none;
+  color: red;
+  text-align: start;
+  margin-top: 8px;
+}
+
+.form-control {
+  &.ng-invalid.ng-touched + .control-value-error {
+    display: block;
+  }
+}
