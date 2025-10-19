@@ -10,7 +10,6 @@ import { ImgUrlPipe } from '../../pipes/index';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AvatarCircleComponent {
-  initialUrl = 'assets/svg/avatar-placeholder.svg';
-
-  avatarUrl = input<string | null | undefined>(this.initialUrl);
+  avatarUrl = input<string | null | undefined>();
+  defaultAvatarUrl = input<string | null | undefined>();
 }

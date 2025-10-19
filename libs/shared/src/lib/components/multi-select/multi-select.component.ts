@@ -73,7 +73,6 @@ export class MultiSelectComponent
 
       this.value.set(newValue);
       this.onChange(newValue.map((item) => item.value));
-      this.closeDropdown();
     });
   }
 

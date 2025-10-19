@@ -1,0 +1,16 @@
+@if (subscribers(); as subscribers) {
+  <div class="mb16 subscribers-header">
+    <h3 class="h6">Подписчики</h3>
+    <span class="subscribers-count badge">{{ subscribers.total }}</span>
+  </div>
+  <div class="subscribers-wrapper">
+    @for (subscriber of subscribers.items; track subscriber.id) {
+      <tt-subscriber-circle
+        [subscriber]="subscriber"
+      ></tt-subscriber-circle>
+    }
+    <a [routerLink]="['/search']" class="to-subscribers-search">
+      <div class="to-subscribers-search-icon"></div>
+    </a>
+  </div>
+}

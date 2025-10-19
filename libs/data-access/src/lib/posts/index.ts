@@ -1,4 +1,9 @@
-import { Post, PostComment } from './interfaces/post.interface';
+import {
+  BasePostAuthor,
+  Post,
+  PostComment,
+  PostCreateDto,
+} from './interfaces/post.interface';
 import { PostService } from './services/post.service';
 
 export * from './store';
@@ -6,5 +11,7 @@ export * from './store';
 export {
   Post,
   PostService,
-  PostComment
+  PostComment,
+  PostCreateDto,
+  BasePostAuthor
 }

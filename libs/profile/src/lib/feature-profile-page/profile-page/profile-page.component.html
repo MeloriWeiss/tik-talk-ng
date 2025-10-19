@@ -17,31 +17,18 @@
     <tt-post-feed
       ttScrollBlock
       [bottomPaddingSize]="2"
+      [posts]="posts()"
+      [avatarUrl]="profile.avatarUrl"
+      (createdPost)="createPost($event)"
       class="scrollbar scroll-hidden"
     ></tt-post-feed>
 
-    <div>
-      <h3 class="h6 mb16">Подписчики</h3>
-      <div class="subscribers-wrapper mb32">
-        @for (subscriber of subscribers$ | async; track subscriber.id) {
-          <tt-subscriber-circle
-            [subscriber]="subscriber"
-          ></tt-subscriber-circle>
-        }
-        <a [routerLink]="['/search']" class="to-subscribers-search">
-          <div class="to-subscribers-search-icon"></div>
-        </a>
-      </div>
+    <aside class="aside-info">
+      <tt-subscribers-block [subscribers]="subscribers$ | async"></tt-subscribers-block>
 
-      <h3 class="h6 mb16">Навыки</h3>
-      <div class="stack-wrapper mb32">
-        @for (skill of profile.stack; track skill) {
-          <div class="badge-tag">{{ skill }}</div>
-        }
-      </div>
+      <tt-labeled-tags [tags]="profile.stack"></tt-labeled-tags>
 
-      <h3 class="h6 mb16">О себе</h3>
-      <p class="regular">{{ profile.description }}</p>
-    </div>
+      <tt-labeled-text [text]="profile.description"></tt-labeled-text>
+    </aside>
   </main>
 }

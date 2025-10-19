@@ -8,6 +8,7 @@ import {
 } from '../interfaces/post.interface';
 import { map } from 'rxjs';
 import { httpConfig } from '../../shared';
+import { Profile } from '../../profile';
 
 @Injectable({
   providedIn: 'root',
@@ -18,17 +19,23 @@ export class PostService {
   baseApiUrl = httpConfig.baseApiUrl;
 
   createPost(payload: PostCreateDto) {
-    return this.#http.post<Post>(`${this.baseApiUrl}post/`, payload);
+    return this.#http.post<Post<Profile>>(`${this.baseApiUrl}post/`, payload);
   }
 
   fetchPosts(userId?: number) {
-    return this.#http.get<Post[]>(`${this.baseApiUrl}post/`, {
-      params: userId ? { user_id: userId } : {},
-    });
+    return this.#http
+      .get<Post<Profile>[]>(`${this.baseApiUrl}post/`, {
+        params: userId ? { user_id: userId } : {},
+      })
+      .pipe(
+        map((posts) => {
+          return posts.filter((post) => !post.communityId);
+        })
+      );
   }
 
   fetchPost(postId: number) {
-    return this.#http.get<Post>(`${this.baseApiUrl}post/${postId}`);
+    return this.#http.get<Post<Profile>>(`${this.baseApiUrl}post/${postId}`);
   }
 
   createComment(payload: CommentCreateDto) {
@@ -37,7 +44,7 @@ export class PostService {
 
   getCommentsByPostId(postId: number) {
     return this.#http
-      .get<Post>(`${this.baseApiUrl}post/${postId}`)
+      .get<Post<Profile>>(`${this.baseApiUrl}post/${postId}`)
       .pipe(map((res) => res.comments));
   }
 }

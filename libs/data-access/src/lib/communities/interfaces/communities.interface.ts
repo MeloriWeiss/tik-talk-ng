@@ -1,26 +1,15 @@
+import { Profile } from '../../profile/index';
+
 export interface Community {
   id: number;
-  admin: Admin;
+  admin: Profile;
   name: string;
   themes: string[];
   tags: string[];
-  bannerUrl: string;
+  bannerUrl: string | null;
   avatarUrl: string;
   description: string;
   subscribersAmount: number;
   createdAt: string;
   isJoined: boolean;
-}
-
-interface Admin {
-  id: number;
-  username: string;
-  avatarUrl: string;
-  subscribersAmount: number;
-  firstName: string;
-  lastName: string;
-  isActive: boolean;
-  stack: string[];
-  city: string;
-  description: string;
 }

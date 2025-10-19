@@ -20,6 +20,7 @@ import {
   SvgIconComponent,
 } from '@tt/common-ui';
 import {
+  BasePostAuthor,
   Post,
   PostComment,
   postsActions,
@@ -47,8 +48,11 @@ export class PostComponent implements OnInit, AfterViewInit {
   #store = inject(Store);
   #injector = inject(Injector);
 
-  post = input.required<Post>();
   profile = this.#store.selectSignal(selectMe);
+
+  post = input.required<Post<BasePostAuthor>>();
+  defaultAvatarUrl = input<string | null>(null);
+
   comms!: Signal<PostComment[]>;
 
   comments = computed(() => {

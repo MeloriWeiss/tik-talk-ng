@@ -37,7 +37,7 @@ export class PostsEffects {
       switchMap(({ payload }) => {
         return this.postService.createPost(payload);
       }),
-      map((res) => postsActions.fetchPost({ postId: res.id }))
+      map((res) => postsActions.postLoaded({ post: res }))
     );
   });
 

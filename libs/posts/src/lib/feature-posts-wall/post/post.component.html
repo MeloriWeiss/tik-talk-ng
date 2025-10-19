@@ -1,9 +1,9 @@
 @if (post(); as post) {
-  <tt-avatar-circle [avatarUrl]="post.author.avatarUrl"></tt-avatar-circle>
+  <tt-avatar-circle [avatarUrl]="post.author.avatarUrl" [defaultAvatarUrl]="defaultAvatarUrl()"></tt-avatar-circle>
 
   <main class="post-body small-text">
     <div class="post-header">
-      <strong class="post-author bold">{{ post.author.firstName }} {{ post.author.lastName }}</strong>
+      <strong class="post-author bold">{{ post.author.name }}</strong>
       <span class="post-created-at ml8">{{ post.createdAt | dateDiff }}</span>
     </div>
     <p>{{ post.content }}</p>
@@ -26,8 +26,8 @@
     </div>
 
     <tt-message-input
-      placeholder="Напишите комментарий"
       (created)="onCreatedComment($event)"
+      placeholder="Напишите комментарий"
       class="border-dashed"
     ></tt-message-input>
   </main>

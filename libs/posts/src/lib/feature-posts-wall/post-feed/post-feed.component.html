@@ -1,12 +1,19 @@
-<tt-message-input
-  placeholder="Напишите что-нибудь"
-  (created)="onCreatePost($event)"
-  class="emojis-bottom"
-></tt-message-input>
+@if (canCreatePosts()) {
+  <tt-message-input
+    [avatarUrl]="avatarUrl()"
+    [defaultAvatarUrl]="defaultAvatarUrl()"
+    (created)="onCreatePost($event)"
+    placeholder="Напишите что-нибудь"
+    class="message-input emojis-bottom"
+  ></tt-message-input>
+}
 
 <div class="posts-wrapper">
-  @for (post of feed(); track post.id) {
-    <tt-post [post]="post"></tt-post>
+  @for (post of posts(); track post.id) {
+    <tt-post
+      [post]="post"
+      [defaultAvatarUrl]="defaultAvatarUrl()"
+    ></tt-post>
   }
 </div>
 

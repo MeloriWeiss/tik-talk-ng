@@ -5,12 +5,12 @@ import {
   input,
   linkedSignal,
 } from '@angular/core';
-import { CommunitiesService, Community } from '@tt/data-access/communities';
+import { Community } from '@tt/data-access/communities';
 import { AvatarCircleComponent, EndingMasculineWordPipe, SvgIconComponent } from '@tt/common-ui';
 import { RouterLink } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { selectMe } from '@tt/data-access/profile';
+import { SubscribeBtnComponent } from '../subscribe-btn/subscribe-btn.component';
 
 @Component({
   selector: 'tt-community-card',
@@ -19,38 +19,25 @@ import { selectMe } from '@tt/data-access/profile';
     SvgIconComponent,
     RouterLink,
     EndingMasculineWordPipe,
+    SubscribeBtnComponent,
   ],
   templateUrl: './community-card.component.html',
   styleUrl: './community-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommunityCardComponent {
-  #communitiesService = inject(CommunitiesService);
   #store = inject(Store);
 
   me = this.#store.selectSignal(selectMe);
 
   community = input<Community>();
-  isJoined = linkedSignal(() => this.community()?.isJoined);
+  isJoined = linkedSignal(() => Boolean(this.community()?.isJoined));
   subscribersAmount = linkedSignal(
     () => this.community()?.subscribersAmount ?? 0
   );
 
-  joinCommunity(communityId: number) {
-    firstValueFrom(this.#communitiesService.joinCommunity(communityId)).then(
-      () => {
-        this.isJoined.set(true);
-        this.subscribersAmount.update((count) => count + 1);
-      }
-    );
-  }
-
-  leaveCommunity(communityId: number) {
-    firstValueFrom(this.#communitiesService.leaveCommunity(communityId)).then(
-      () => {
-        this.isJoined.set(false);
-        this.subscribersAmount.update((count) => count - 1);
-      }
-    );
+  changeJoinStatus(status: boolean) {
+    this.isJoined.set(status);
+    this.subscribersAmount.update((count) => status ? count + 1 : count - 1);
   }
 }

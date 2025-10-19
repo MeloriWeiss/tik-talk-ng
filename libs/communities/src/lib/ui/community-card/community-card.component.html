@@ -16,19 +16,11 @@
 
     <div class="community-card__action-btns">
       @if (community.admin.id !== me()?.id) {
-        @if (isJoined()) {
-          <button class="btn btn-transparent" (click)="leaveCommunity(community.id)">
-            Отписаться
-          </button>
-        } @else {
-          <button class="btn btn-text-icon" (click)="joinCommunity(community.id)">
-            <div class="btn-hover-icon-container">
-              <svg icon="signin" class="svg16 btn-hover-icon"></svg>
-            </div>
-            Подписаться
-            <svg icon="subscribe" class="svg16"></svg>
-          </button>
-        }
+        <tt-subscribe-btn
+          [isJoined]="isJoined()"
+          [communityId]="community.id"
+          (changeJoinStatus)="changeJoinStatus($event)"
+        ></tt-subscribe-btn>
       }
 
       <a [routerLink]="['/communities', community.id]" class="btn btn-icon">

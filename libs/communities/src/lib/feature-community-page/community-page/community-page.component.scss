@@ -1,0 +1,58 @@
+.community-header {
+  display: grid;
+  grid-template-columns: 1fr 316px;
+  align-items: center;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.community_avatar-name {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.community-name {
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 32px;
+  color: var(--light-color);
+}
+
+.btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+
+  &.to-settings-btn {
+    width: 180px;
+    text-decoration: none;
+  }
+
+  &.to-chats-btn {
+    width: 140px;
+  }
+}
+
+.to-settings-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--dark-color);
+}
+
+.community-body {
+  display: grid;
+  grid-gap: 64px;
+  grid-template-columns: 1fr 340px;
+  padding-top: 24px;
+}
+
+.community-info {
+  justify-self: center;
+  width: 292px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 32px;
+}
