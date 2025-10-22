@@ -1,1 +1,48 @@
-<p>community-page works!</p>
+@if (community$ | async; as community) {
+  <tt-community-banner [bannerUrl]="community.bannerUrl"></tt-community-banner>
+
+  <header class="community-header">
+    <div class="community_avatar-name">
+      <tt-avatar-circle
+        [avatarUrl]="community.avatarUrl"
+        defaultAvatarUrl="assets/svg/img-placeholder.svg"
+        class="size70"
+      ></tt-avatar-circle>
+      <span class="community-name">{{ community.name }}</span>
+    </div>
+
+    @if (isMyCommunity()) {
+      <a class="btn to-settings-btn">
+        Редактировать
+        <svg icon="settings" class="to-settings-icon"></svg>
+      </a>
+    } @else {
+      <tt-subscribe-btn
+        [isJoined]="isJoined()"
+        [communityId]="community.id"
+        (changeJoinStatus)="changeJoinStatus($event)"
+      ></tt-subscribe-btn>
+    }
+  </header>
+
+  <main class="community-body">
+    <tt-post-feed
+      ttScrollBlock
+      [bottomPaddingSize]="2"
+      [posts]="posts()"
+      [avatarUrl]="community.avatarUrl"
+      defaultAvatarUrl="assets/svg/img-placeholder.svg"
+      [canCreatePosts]="isMyCommunity()"
+      (createdPost)="createPost($event)"
+      class="scrollbar scroll-hidden"
+    ></tt-post-feed>
+
+    <aside class="aside-info">
+      <tt-subscribers-block [subscribers]="subscribers()"></tt-subscribers-block>
+
+      <tt-labeled-tags title="Тема" [tags]="community.themes"></tt-labeled-tags>
+
+      <tt-labeled-text title="Описание" [text]="community.description"></tt-labeled-text>
+    </aside>
+  </main>
+}

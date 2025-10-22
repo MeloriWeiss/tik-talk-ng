@@ -17,6 +17,8 @@ import { TtInputComponent } from './tt-input/tt-input.component';
 import { BaseModalComponent } from './base-modal/base-modal.component';
 import { ModalHostComponent } from './modal-host/modal-host.component';
 import { ModalService } from './base-modal/modal.service';
+import { LabeledTextComponent } from './labeled-text/labeled-text.component';
+import { LabeledTagsComponent } from './labeled-tags/labeled-tags.component';
 
 export {
   AvatarCircleComponent,
@@ -38,4 +40,6 @@ export {
   BaseModalComponent,
   ModalService,
   ModalHostComponent,
+  LabeledTextComponent,
+  LabeledTagsComponent,
 };

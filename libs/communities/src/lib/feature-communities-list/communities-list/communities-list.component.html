@@ -1,19 +1,21 @@
 @if (communities(); as communities) {
-  <div class="communities-cards__wrapper scrollbar wide-scrollbar" ttScrollBlock>
-    @for (community of communities; track community.id; let last = $last) {
-      <tt-community-card [community]="community"></tt-community-card>
-      @if (last && communities.length < totalCount()) {
-        @defer (on viewport) {
-          <tt-infinite-scroll-trigger
-            (loaded)="fetchCommunities()"
-          ></tt-infinite-scroll-trigger>
-        } @placeholder {
-          <div></div>
+  <div class="scrollbar wide-scrollbar" ttScrollBlock>
+    <div class="communities-cards__wrapper">
+      @for (community of communities; track community.id; let last = $last) {
+        <tt-community-card [community]="community"></tt-community-card>
+        @if (last && communities.length < totalCount()) {
+          @defer (on viewport) {
+            <tt-infinite-scroll-trigger
+              (loaded)="fetchCommunities()"
+            ></tt-infinite-scroll-trigger>
+          } @placeholder {
+            <div></div>
+          }
         }
       }
-    }
-    @if (communities.length < totalCount()) {
-      <tt-loader></tt-loader>
-    }
+      @if (communities.length < totalCount()) {
+        <tt-loader></tt-loader>
+      }
+    </div>
   </div>
 }

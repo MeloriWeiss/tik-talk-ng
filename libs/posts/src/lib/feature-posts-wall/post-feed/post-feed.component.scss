@@ -2,8 +2,11 @@
   overflow-y: scroll;
 }
 
+.message-input {
+  margin-bottom: 16px;
+}
+
 .posts-wrapper {
   display: grid;
   grid-gap: 16px;
-  margin-top: 16px;
 }

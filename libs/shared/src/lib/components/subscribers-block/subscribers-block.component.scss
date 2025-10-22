@@ -1,0 +1,52 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.subscribers-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.subscribers-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+}
+
+.to-subscribers-search {
+  padding: 8px;
+}
+
+.to-subscribers-search-icon {
+  border-radius: 50%;
+  background-color: var(--light-color);
+  width: 14px;
+  height: 14px;
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 8px;
+    background-color: var(--dark-color);
+    top: 50%;
+    left: 50%;
+  }
+
+  &::before {
+    transform: translateY(-50%) translateX(-50%);
+  }
+
+  &::after {
+    transform: translateY(-50%) translateX(-50%) rotate(90deg);
+  }
+}
+
+.badge {
+  background-color: #98E9AB;
+}

@@ -25,3 +25,8 @@ export const selectCommunitiesPageable = createSelector(
     };
   }
 );
+
+export const selectCommunityPosts = createSelector(
+  communitiesFeature.selectPosts,
+  (posts) => posts
+);

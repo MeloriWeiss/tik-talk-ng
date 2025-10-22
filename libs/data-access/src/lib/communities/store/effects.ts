@@ -9,6 +9,8 @@ import {
 } from './selectors';
 import { CommunitiesService } from '../services/communities.service';
 import { Router } from '@angular/router';
+import { Post } from '../../posts/index';
+import { Community } from '../interfaces/communities.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +19,7 @@ export class CommunitiesEffects {
   #communitiesService = inject(CommunitiesService);
   #actions$ = inject(Actions);
   #store = inject(Store);
-  #router = inject(Router)
+  #router = inject(Router);
 
   filterCommunities = createEffect(() => {
     return this.#actions$.pipe(
@@ -45,17 +47,50 @@ export class CommunitiesEffects {
     return this.#actions$.pipe(
       ofType(communitiesActions.createCommunity),
       switchMap(({ params }) => {
-        return this.#communitiesService.createCommunity(params)
-          .pipe(
-            tap(community => {
-              this.#router.navigate(['communities', community.id]).then()
-            })
-          );
+        return this.#communitiesService.createCommunity(params).pipe(
+          tap((community) => {
+            this.#router.navigate(['communities', community.id]).then();
+          })
+        );
       }),
       map((res) => {
         return communitiesActions.communityCreated({
           community: res,
         });
+      })
+    );
+  });
+
+  fetchPosts = createEffect(() => {
+    return this.#actions$.pipe(
+      ofType(communitiesActions.fetchPosts),
+      switchMap(({ communityId }) => {
+        return this.#communitiesService.fetchPosts(communityId);
+      }),
+      map((res) => {
+        return communitiesActions.postsLoaded({
+          posts: res.items,
+        });
+      })
+    );
+  });
+
+  createPost = createEffect(() => {
+    return this.#actions$.pipe(
+      ofType(communitiesActions.createPost),
+      switchMap(({ community, payload }) => {
+        return this.#communitiesService.createPost(payload)
+          .pipe(
+            map((post) => {
+              return {
+                ...post,
+                author: community
+              }
+            })
+          );
+      }),
+      map((res: Post<Community>) => {
+        return communitiesActions.postLoaded({ post: res });
       })
     );
   });

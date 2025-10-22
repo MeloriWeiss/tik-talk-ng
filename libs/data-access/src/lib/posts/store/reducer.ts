@@ -1,9 +1,10 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { Post, PostComment } from '../index';
 import { postsActions } from './actions';
+import { Profile } from '../../profile';
 
 export interface PostsState {
-  posts: Post[];
+  posts: Post<Profile>[];
   comments: Record<string, PostComment[]>;
 }
 

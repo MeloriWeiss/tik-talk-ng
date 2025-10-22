@@ -1,0 +1,5 @@
+@if (bannerUrl()) {
+  <img [src]="bannerUrl() | imgUrl" alt="Баннер" class="banner-img">
+} @else {
+  <img src="/assets/svg/img-placeholder.svg" alt="Пустой баннер" class="banner-img-placeholder">
+}

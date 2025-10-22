@@ -3,20 +3,28 @@ import { Profile } from '../../profile/index';
 export interface PostCreateDto {
   title: string;
   content: string;
-  authorId: number;
+  authorId?: number;
+  communityId?: number;
 }
 
-export interface Post {
+export interface Post<T> {
   id: number;
   title: string;
-  communityId: number;
+  communityId: number | null;
   content: string;
-  author: Profile;
+  author: T;
   images: string[];
   createdAt: string;
   updatedAt: string;
   likes: number;
   comments: PostComment[];
+}
+
+export interface BasePostAuthor {
+  id: number,
+  admin: Profile,
+  name: string,
+  avatarUrl: string | null,
 }
 
 export interface PostComment {

@@ -1,19 +1,26 @@
 import {
   ChangeDetectionStrategy,
-  Component,
-  inject,
+  Component, computed,
+  inject, Signal,
   signal,
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
-import { first, switchMap } from 'rxjs';
-import { ScrollBlockDirective } from '@tt/common-ui';
+import { filter, switchMap } from 'rxjs';
+import {LabeledTagsComponent, LabeledTextComponent, ScrollBlockDirective } from '@tt/common-ui';
 import { SvgIconComponent } from '@tt/common-ui';
 import { PostFeedComponent } from '@tt/posts';
 import { ProfileHeaderComponent } from '../../ui';
 import { ProfileService, selectMe } from '@tt/data-access/profile';
 import { Store } from '@ngrx/store';
-import { SubscriberCircleComponent } from '../subscriber-circle/subscriber-circle.component';
+import { SubscribersBlockComponent } from '@tt/shared';
+import {
+  BasePostAuthor,
+  Post,
+  postsActions,
+  selectPosts,
+} from '@tt/data-access/posts';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'tt-profile-page',
@@ -25,7 +32,9 @@ import { SubscriberCircleComponent } from '../subscriber-circle/subscriber-circl
     PostFeedComponent,
     ScrollBlockDirective,
     AsyncPipe,
-    SubscriberCircleComponent,
+    SubscribersBlockComponent,
+    LabeledTagsComponent,
+    LabeledTextComponent,
   ],
   templateUrl: './profile-page.component.html',
   styleUrl: './profile-page.component.scss',
@@ -37,13 +46,33 @@ export class ProfilePageComponent {
   #activatedRoute = inject(ActivatedRoute);
   #router = inject(Router);
 
-  me$ = this.#store.select(selectMe);
-  subscribers$ = this.#profileService.getSubscribersShortList(6);
+  me = this.#store.selectSignal(selectMe);
+  feed = this.#store.selectSignal(selectPosts);
+
+  posts: Signal<Post<BasePostAuthor>[]> = computed(() => {
+    return this.feed().map((post) => {
+      const author = post.author;
+
+      return {
+        ...post,
+        author: {
+          id: author.id,
+          admin: author,
+          name: author.firstName + ' ' + author.lastName,
+          avatarUrl: author.avatarUrl,
+        },
+      };
+    });
+  });
+
+  me$ = toObservable(this.me);
 
   isMyPage = signal(false);
 
+  subscribers$ = this.#profileService.getSubscribers(6);
+
   profile$ = this.me$.pipe(
-    first(),
+    filter((me) => !!me),
     switchMap((me) => {
       return this.#activatedRoute.params.pipe(
         switchMap(({ id }) => {
@@ -58,9 +87,37 @@ export class ProfilePageComponent {
     })
   );
 
+  constructor() {
+    this.#activatedRoute.params
+      .pipe(takeUntilDestroyed())
+      .subscribe(({ id }) => {
+        return this.#store.dispatch(
+          postsActions.fetchPosts(id === 'me' ? {} : { userId: id })
+        );
+      });
+  }
+
   async sendMessage(userId: number) {
     this.#router
       .navigate(['/chats', 'new'], { queryParams: { userId } })
       .then();
+  }
+
+  createPost(text: string) {
+    const me = this.me();
+
+    if (!me) {
+      return;
+    }
+
+    this.#store.dispatch(
+      postsActions.createPost({
+        payload: {
+          title: '',
+          content: text,
+          authorId: me.id
+        },
+      })
+    );
   }
 }

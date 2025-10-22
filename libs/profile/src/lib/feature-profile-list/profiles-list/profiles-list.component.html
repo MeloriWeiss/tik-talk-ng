@@ -1,19 +1,21 @@
-<div class="profile-cards__wrapper scrollbar wide-scrollbar" ttScrollBlock>
-  @for (profile of profiles(); track profile.id; let last = $last) {
-    <tt-profile-card [profile]="profile"></tt-profile-card>
-    @if (last && profiles().length < totalCount()) {
-      @defer (on viewport) {
-        <tt-infinite-scroll-trigger
-          (loaded)="fetchProfiles()"
-        ></tt-infinite-scroll-trigger>
-      } @placeholder {
-        <div></div>
+<div class="scrollbar wide-scrollbar" ttScrollBlock>
+  <div class="profile-cards__wrapper">
+    @for (profile of profiles(); track profile.id; let last = $last) {
+      <tt-profile-card [profile]="profile"></tt-profile-card>
+      @if (last && profiles().length < totalCount()) {
+        @defer (on viewport) {
+          <tt-infinite-scroll-trigger
+            (loaded)="fetchProfiles()"
+          ></tt-infinite-scroll-trigger>
+        } @placeholder {
+          <div></div>
+        }
       }
     }
-  }
-  @if (profiles().length < totalCount()) {
-    <tt-loader></tt-loader>
-  }
+    @if (profiles().length < totalCount()) {
+      <tt-loader></tt-loader>
+    }
+  </div>
 </div>
 
 <tt-sidebar-portal>

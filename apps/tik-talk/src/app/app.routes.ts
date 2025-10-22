@@ -54,7 +54,6 @@ export const routes: Routes = [
       {
         path: 'profile/:id',
         component: ProfilePageComponent,
-        providers: [provideState(postsFeature), provideEffects(PostsEffects)],
       },
       {
         path: 'settings',
@@ -107,7 +106,8 @@ export const routes: Routes = [
     providers: [
       provideState(profileFeature),
       provideState(chatsFeature),
-      provideEffects([ProfileEffects, ChatsEffects]),
+      provideState(postsFeature),
+      provideEffects([ProfileEffects, ChatsEffects, PostsEffects]),
     ],
     canActivate: [canActivateAuth],
     title: 'TikTalk',

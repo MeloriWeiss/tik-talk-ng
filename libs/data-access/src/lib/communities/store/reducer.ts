@@ -1,6 +1,7 @@
 import { Community } from '../interfaces/communities.interface';
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { communitiesActions } from './actions';
+import { Post } from '../../posts/index';
 
 export interface CommunitiesState {
   communities: Community[];
@@ -8,6 +9,7 @@ export interface CommunitiesState {
   page: number;
   size: number;
   totalCommunitiesCount: number;
+  posts: Post<Community>[];
 }
 
 const initialState: CommunitiesState = {
@@ -16,6 +18,7 @@ const initialState: CommunitiesState = {
   page: 1,
   size: 10,
   totalCommunitiesCount: 0,
+  posts: [],
 };
 
 export const communitiesFeature = createFeature({
@@ -57,7 +60,19 @@ export const communitiesFeature = createFeature({
       return {
         ...state,
         communities: [community, ...state.communities],
-      }
+      };
+    }),
+    on(communitiesActions.postsLoaded, (state, { posts }) => {
+      return {
+        ...state,
+        posts: posts
+      };
+    }),
+    on(communitiesActions.postLoaded, (state, { post }) => {
+      return {
+        ...state,
+        posts: [post, ...state.posts],
+      };
     })
   ),
 });

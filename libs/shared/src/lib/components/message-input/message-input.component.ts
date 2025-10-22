@@ -1,6 +1,6 @@
 import {
   ChangeDetectionStrategy,
-  Component,
+  Component, computed,
   inject,
   input,
   output,
@@ -25,9 +25,22 @@ import { selectMe } from '@tt/data-access/profile';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MessageInputComponent {
-  store = inject(Store);
+  #store = inject(Store);
 
-  profile = this.store.selectSignal(selectMe);
+  avatarUrl = input<string | null>();
+  defaultAvatarUrl = input<string | null>();
+  messageAvatarUrl = computed(() => {
+    const avatarUrl = this.avatarUrl();
+
+    if (avatarUrl) {
+      return avatarUrl;
+    }
+    if (avatarUrl === null) {
+      return null;
+    }
+
+    return (this.#store.selectSignal(selectMe)())?.avatarUrl;
+  });
 
   placeholder = input('');
 

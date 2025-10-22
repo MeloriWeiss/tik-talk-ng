@@ -1,6 +1,4 @@
-@if (profile(); as profile) {
-  <tt-avatar-circle [avatarUrl]="profile.avatarUrl"></tt-avatar-circle>
-}
+<tt-avatar-circle [avatarUrl]="messageAvatarUrl()" [defaultAvatarUrl]="defaultAvatarUrl()"></tt-avatar-circle>
 
 <tt-main-textarea
   [placeholder]="placeholder()"
