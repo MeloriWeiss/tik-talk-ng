@@ -1,4 +1,5 @@
 import { Profile } from '../../profile/index';
+import { Post } from '../../posts/index';
 
 export interface Community {
   id: number;
@@ -12,4 +13,5 @@ export interface Community {
   subscribersAmount: number;
   createdAt: string;
   isJoined: boolean;
+  posts: Post<Community>[]
 }

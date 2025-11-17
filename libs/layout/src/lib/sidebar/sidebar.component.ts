@@ -105,7 +105,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnDestroy {
       .pipe(takeUntilDestroyed(this.#destroyRef))
       .subscribe((message) => {
         if (isErrorMessage(message)) {
-          this.reconnect().then();
+          // this.reconnect().then();
         }
       });
   }

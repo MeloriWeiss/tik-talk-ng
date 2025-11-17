@@ -14,6 +14,7 @@ import {
 } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 
 function squaring(): MonoTypeOperatorFunction<number> {
   return (source) => {
@@ -61,19 +62,45 @@ export class ExperimentsComponent {
     //   next: val => console.log(val),
     //   complete: () => console.log(`that's all`)
     // })
+  //   const fg = new FormGroup({
+  //     name: new FormControl('')
+  //   })
+  //   const fa = new FormArray([
+  //     new FormControl('')
+  //   ])
+  //   fg.setValue({name: 'sdfsdf'})
+  //   fa.setValue(['sdfsd'])
+  //
+  //   class Animal {
+  //     run(d: string[]) {
+  //       return [d[0]];
+  //     }
+  //   }
+  //   class Dog extends Animal {
+  //     override run(d: string[]) {
+  //       return d;
+  //     }
+  //   }
+  //   function add(animal: Animal) {
+  //     console.log(animal.run(['1', 'dsf', 'sdfsdfsd']))
+  //   }
+  //
+  //   add(new Dog());
 
-    console.log(1);
+    async function wrapper() {
+      console.log(1);
+      await child();
+      console.log(2);
+    }
 
-    setTimeout(() => console.log(2));
+    async function child() {
+      console.log(3);
+      await Promise.resolve();
+      console.log(4);
+    }
 
-    Promise.resolve().then(() => console.log(3));
-
-    Promise.resolve().then(() => setTimeout(() => console.log(4)));
-
-    Promise.resolve().then(() => console.log(5));
-
-    setTimeout(() => console.log(6));
-
-    console.log(7);
+    console.log(5);
+    wrapper();
+    console.log(6);
   }
 }

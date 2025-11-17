@@ -115,7 +115,7 @@ export class ProfilePageComponent {
         payload: {
           title: '',
           content: text,
-          authorId: me.id
+          authorId: me.id,
         },
       })
     );

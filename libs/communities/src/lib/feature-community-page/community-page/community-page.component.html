@@ -1,4 +1,4 @@
-@if (community$ | async; as community) {
+@if (community(); as community) {
   <tt-community-banner [bannerUrl]="community.bannerUrl"></tt-community-banner>
 
   <header class="community-header">

@@ -65,7 +65,10 @@ export const communitiesFeature = createFeature({
     on(communitiesActions.postsLoaded, (state, { posts }) => {
       return {
         ...state,
-        posts: posts
+        posts: [...posts].sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        )
       };
     }),
     on(communitiesActions.postLoaded, (state, { post }) => {
