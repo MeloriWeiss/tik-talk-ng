@@ -8,18 +8,25 @@ import {
   linkedSignal,
   Signal,
   signal,
+  untracked,
 } from '@angular/core';
-import { CommunitiesService, Community } from '@tt/data-access/communities';
+import {
+  CommunitiesService,
+  OptionalCreateCommunityFormData,
+  selectCommunity,
+} from '@tt/data-access/communities';
 import { Store } from '@ngrx/store';
 import { Profile, selectMe } from '@tt/data-access/profile';
 import {
   CommunityBannerComponent,
+  CreateCommunityModalComponent,
   SubscribeBtnComponent,
 } from '../../ui/index';
 import {
   AvatarCircleComponent,
   LabeledTagsComponent,
   LabeledTextComponent,
+  ModalService,
   ScrollBlockDirective,
   SvgIconComponent,
 } from '@tt/common-ui';
@@ -30,7 +37,8 @@ import {
   selectCommunityPosts,
 } from '@tt/data-access/communities/store';
 import { Pageable } from '@tt/data-access/shared';
-import { BasePostAuthor, Post, postsActions } from '@tt/data-access/posts';
+import { BasePostAuthor, Post } from '@tt/data-access/posts';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'tt-community-page',
@@ -52,6 +60,7 @@ import { BasePostAuthor, Post, postsActions } from '@tt/data-access/posts';
 export class CommunityPageComponent {
   #communitiesService = inject(CommunitiesService);
   #store = inject(Store);
+  #modalService = inject(ModalService);
 
   me = this.#store.selectSignal(selectMe);
   feed = this.#store.selectSignal(selectCommunityPosts);
@@ -74,30 +83,12 @@ export class CommunityPageComponent {
     });
   });
 
-  community = signal<Community | null>(null);
+  community = this.#store.selectSignal(selectCommunity);
   subscribers = signal<Pageable<Profile> | null>(null);
   isMyCommunity = computed(() =>
     Boolean(this.me()?.id === this.community()?.admin.id)
   );
   isJoined = linkedSignal(() => Boolean(this.community()?.isJoined));
-
-  // community$ = this.#store.select(selectMe).pipe(
-  //   filter((me) => !!me),
-  //   switchMap((me) => {
-  //     return this.#activatedRoute.params.pipe(
-  //       switchMap(({ id }) => {
-  //         return this.#communitiesService.getCommunity(id).pipe(
-  //           tap((community) => {
-  //             if (!me || !community) {
-  //               return;
-  //             }
-  //             this.community.set(community);
-  //           })
-  //         );
-  //       })
-  //     );
-  //   })
-  // );
 
   constructor() {
     effect(() => {
@@ -111,23 +102,18 @@ export class CommunityPageComponent {
       return this.#communitiesService
         .getCommunity(id)
         .subscribe((community) => {
-          this.community.set(community);
+          this.#store.dispatch(
+            communitiesActions.communityLoaded({ community })
+          );
           this.#store.dispatch(
             communitiesActions.postsLoaded({ posts: community.posts })
           );
         });
     });
-    // this.#activatedRoute.params
-    //   .pipe(takeUntilDestroyed())
-    //   .subscribe(({ id }) => {
-    //     this.#store.dispatch(
-    //       communitiesActions.fetchPosts({ communityId: id })
-    //     );
-    //   });
 
     effect(() => {
       this.isJoined();
-      const community = this.community();
+      const community = untracked(() => this.community());
 
       if (!community) {
         return;
@@ -150,9 +136,7 @@ export class CommunityPageComponent {
   createPost(text: string) {
     const community = this.community();
 
-    if (!community) {
-      return;
-    }
+    if (!community) return;
 
     this.#store.dispatch(
       communitiesActions.createPost({
@@ -162,6 +146,36 @@ export class CommunityPageComponent {
           content: text,
           communityId: community.id,
         },
+      })
+    );
+  }
+
+  async openEditCommunityModal() {
+    const community = this.community();
+
+    if (!community) return;
+
+    const res = await firstValueFrom(
+      this.#modalService.show<OptionalCreateCommunityFormData | false>(
+        CreateCommunityModalComponent,
+        {
+          initialFormValue: {
+            name: community.name,
+            themes: community.themes,
+            tags: community.tags,
+            description: community.description,
+          },
+          deletable: true,
+        }
+      )
+    );
+
+    if (!res) return;
+
+    this.#store.dispatch(
+      communitiesActions.updateCommunity({
+        communityId: community.id,
+        payload: res,
       })
     );
   }

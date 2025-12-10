@@ -12,10 +12,10 @@
     </div>
 
     @if (isMyCommunity()) {
-      <a class="btn to-settings-btn">
+      <button class="btn to-settings-btn" (click)="openEditCommunityModal()">
         Редактировать
         <svg icon="settings" class="to-settings-icon"></svg>
-      </a>
+      </button>
     } @else {
       <tt-subscribe-btn
         [isJoined]="isJoined()"

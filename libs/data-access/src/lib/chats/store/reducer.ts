@@ -8,7 +8,7 @@ import {
 } from '../interfaces';
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { chatsActions } from './actions';
-import { DateUtil } from '@tt/common-ui';
+import { DateUtil } from '../../shared';
 
 export interface ChatsState {
   activeChat: PatchedChat | null;

@@ -11,6 +11,11 @@ export const selectTotalCommunitiesCount = createSelector(
   (totalCommunitiesCount) => totalCommunitiesCount
 );
 
+export const selectCommunity = createSelector(
+  communitiesFeature.selectCommunity,
+  (community) => community
+);
+
 export const selectCommunitiesFilters = createSelector(
   communitiesFeature.selectCommunitiesFilters,
   (communitiesFilters) => communitiesFilters

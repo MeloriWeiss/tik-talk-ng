@@ -61,6 +61,33 @@ export class CommunitiesEffects {
     );
   });
 
+  updateCommunity = createEffect(() => {
+    return this.#actions$.pipe(
+      ofType(communitiesActions.updateCommunity),
+      switchMap(({ communityId, payload }) => {
+        return this.#communitiesService.updateCommunity(communityId, payload);
+      }),
+      map((res) => {
+        return communitiesActions.communityLoaded({ community: res });
+      })
+    );
+  });
+
+  deleteCommunity = createEffect(
+    () => {
+      return this.#actions$.pipe(
+        ofType(communitiesActions.deleteCommunity),
+        switchMap(({ communityId }) => {
+          return this.#communitiesService.deleteCommunity(communityId);
+        }),
+        tap(() => {
+          this.#router.navigate(['communities']).then();
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
   fetchPosts = createEffect(() => {
     return this.#actions$.pipe(
       ofType(communitiesActions.fetchPosts),
@@ -79,15 +106,14 @@ export class CommunitiesEffects {
     return this.#actions$.pipe(
       ofType(communitiesActions.createPost),
       switchMap(({ community, payload }) => {
-        return this.#communitiesService.createPost(payload)
-          .pipe(
-            map((post) => {
-              return {
-                ...post,
-                author: community
-              }
-            })
-          );
+        return this.#communitiesService.createPost(payload).pipe(
+          map((post) => {
+            return {
+              ...post,
+              author: community,
+            };
+          })
+        );
       }),
       map((res: Post<Community>) => {
         return communitiesActions.postLoaded({ post: res });

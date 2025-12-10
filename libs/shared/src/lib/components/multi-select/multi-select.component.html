@@ -15,7 +15,7 @@
         class="badge-tag deletable"
         type="button"
       >
-        <button (click)="deleteOption(selectedOption.value)" type="button" class="badge-tag__delete">
+        <button (click)="deleteOption($event, selectedOption.value)" type="button" class="badge-tag__delete">
           <svg icon="cross" class="svg11"></svg>
         </button>
         {{ selectedOption.name }}

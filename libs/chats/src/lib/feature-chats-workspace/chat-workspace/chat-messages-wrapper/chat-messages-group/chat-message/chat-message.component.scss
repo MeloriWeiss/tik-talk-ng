@@ -59,6 +59,7 @@
   background-color: var(--message-color);
   color: var(--light-color);
   position: relative;
+  word-break: break-word;
 
   &::before {
     content: '';
