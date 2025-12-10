@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { DateUtil } from '../utils/index';
+import { DateUtil } from '@tt/data-access/shared';
 
 @Pipe({
   name: 'localTime',

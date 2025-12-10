@@ -11,6 +11,7 @@ import { CommunitiesService } from '@tt/data-access/communities';
 
 @Component({
   selector: 'tt-subscribe-btn',
+  standalone: true,
   imports: [SvgIconComponent],
   templateUrl: './subscribe-btn.component.html',
   styleUrl: './subscribe-btn.component.scss',
@@ -25,18 +26,18 @@ export class SubscribeBtnComponent {
   changeJoinStatus = output<boolean>();
 
   joinCommunity() {
-    firstValueFrom(this.#communitiesService.joinCommunity(this.communityId())).then(
-      () => {
-        this.changeJoinStatus.emit(true);
-      }
-    );
+    firstValueFrom(
+      this.#communitiesService.joinCommunity(this.communityId())
+    ).then(() => {
+      this.changeJoinStatus.emit(true);
+    });
   }
 
   leaveCommunity() {
-    firstValueFrom(this.#communitiesService.leaveCommunity(this.communityId())).then(
-      () => {
-        this.changeJoinStatus.emit(false);
-      }
-    );
+    firstValueFrom(
+      this.#communitiesService.leaveCommunity(this.communityId())
+    ).then(() => {
+      this.changeJoinStatus.emit(false);
+    });
   }
 }

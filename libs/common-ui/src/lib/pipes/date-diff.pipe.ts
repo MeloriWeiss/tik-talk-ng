@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { DateTime } from 'luxon';
-import { DateUtil } from '../utils';
+import { DateUtil } from '@tt/data-access/shared';
 
 @Pipe({
   name: 'dateDiff',

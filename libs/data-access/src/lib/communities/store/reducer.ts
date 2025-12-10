@@ -5,6 +5,7 @@ import { Post } from '../../posts/index';
 
 export interface CommunitiesState {
   communities: Community[];
+  community: Community | null;
   communitiesFilters: Record<string, any>;
   page: number;
   size: number;
@@ -14,6 +15,7 @@ export interface CommunitiesState {
 
 const initialState: CommunitiesState = {
   communities: [],
+  community: null,
   communitiesFilters: {},
   page: 1,
   size: 10,
@@ -43,6 +45,12 @@ export const communitiesFeature = createFeature({
         };
       }
     ),
+    on(communitiesActions.communityLoaded, (state, { community }) => {
+      return {
+        ...state,
+        community,
+      };
+    }),
     on(communitiesActions.setPage, (state, { page }) => {
       return {
         ...state,
@@ -68,7 +76,7 @@ export const communitiesFeature = createFeature({
         posts: [...posts].sort(
           (a, b) =>
             new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        )
+        ),
       };
     }),
     on(communitiesActions.postLoaded, (state, { post }) => {

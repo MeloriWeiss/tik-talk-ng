@@ -1,7 +1,9 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Community } from '../interfaces/communities.interface';
+import {
+  Community,
+  OptionalCreateCommunityFormData,
+} from '../interfaces/communities.interface';
 import { Post, PostCreateDto } from '../../posts/index';
-import { Profile } from '../../profile/index';
 
 export const communitiesActions = createActionGroup({
   source: 'communities',
@@ -18,11 +20,19 @@ export const communitiesActions = createActionGroup({
     'create community': props<{ params: Record<string, any> }>(),
     'community created': props<{ community: Community }>(),
 
+    'delete community': props<{ communityId: number }>(),
+
     'fetch posts': props<{ communityId: number }>(),
     'posts loaded': props<{ posts: Post<Community>[] }>(),
 
     'create post': props<{ community: Community; payload: PostCreateDto }>(),
     'fetch post': props<{ postId: number }>(),
     'post loaded': props<{ post: Post<Community> }>(),
+
+    'update community': props<{
+      communityId: number;
+      payload: OptionalCreateCommunityFormData;
+    }>(),
+    'community loaded': props<{ community: Community }>(),
   },
 });

@@ -139,7 +139,9 @@ export class MultiSelectComponent
     this.isDropdownOpened.set(false);
   }
 
-  deleteOption(optionValue: string) {
+  deleteOption(event: MouseEvent, optionValue: string) {
+    event.stopPropagation();
+
     this.onTouched();
 
     const option = this.optionElements().find(

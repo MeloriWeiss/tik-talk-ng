@@ -1,5 +1,6 @@
 import { Profile } from '../../profile/index';
 import { Post } from '../../posts/index';
+import { Nullable } from '../../shared/index';
 
 export interface Community {
   id: number;
@@ -13,5 +14,14 @@ export interface Community {
   subscribersAmount: number;
   createdAt: string;
   isJoined: boolean;
-  posts: Post<Community>[]
+  posts: Post<Community>[];
 }
+
+export interface CreateCommunityFormData {
+  name: string;
+  themes: string[];
+  tags: string[];
+  description: string;
+}
+
+export type OptionalCreateCommunityFormData = Partial<Nullable<CreateCommunityFormData>>;

@@ -8,9 +8,8 @@
 
 .modal-actions {
   margin-top: 23px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr auto;
 }
 
 .trash-icon {
@@ -20,6 +19,7 @@
 .modal-primary-btns {
   display: flex;
   align-items: center;
+  justify-self: end;
   gap: 20px;
 }
 

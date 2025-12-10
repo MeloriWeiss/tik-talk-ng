@@ -1,7 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { GetSubscribersDto, httpConfig, Pageable } from '../../shared/index';
-import { Community } from '../interfaces/communities.interface';
+import {
+  Community,
+  OptionalCreateCommunityFormData,
+} from '../interfaces/communities.interface';
 import { Post, PostCreateDto } from '../../posts/index';
 import { Profile } from '../../profile/index';
 
@@ -34,16 +37,33 @@ export class CommunitiesService {
     );
   }
 
-  createCommunity(params: Record<string, unknown>) {
-    return this.#http.post<Community>(`${this.#baseApiUrl}community/`, params)
+  createCommunity(data: Record<string, unknown>) {
+    return this.#http.post<Community>(`${this.#baseApiUrl}community/`, data);
+  }
+
+  updateCommunity(communityId: number, data: OptionalCreateCommunityFormData) {
+    return this.#http.patch<Community>(
+      `${this.#baseApiUrl}community/${communityId}`,
+      data
+    );
   }
 
   getCommunity(communityId: number) {
-    return this.#http.get<Community>(`${this.#baseApiUrl}community/${communityId}`)
+    return this.#http.get<Community>(
+      `${this.#baseApiUrl}community/${communityId}`
+    );
+  }
+
+  deleteCommunity(communityId: number) {
+    return this.#http.delete<void>(
+      `${this.#baseApiUrl}community/${communityId}`
+    );
   }
 
   fetchPosts(communityId: number) {
-    return this.#http.get<Pageable<Post<Community>>>(`${this.#baseApiUrl}community/${communityId}/posts`)
+    return this.#http.get<Pageable<Post<Community>>>(
+      `${this.#baseApiUrl}community/${communityId}/posts`
+    );
   }
 
   createPost(payload: PostCreateDto) {
@@ -51,11 +71,14 @@ export class CommunitiesService {
   }
 
   getSubscribers(params: GetSubscribersDto) {
-    return this.#http.get<Pageable<Profile>>(`${this.#baseApiUrl}community/subscribers/${params.communityId}`, {
-      params: {
-        page: params.page ?? 1,
-        size: params.size ?? 6
+    return this.#http.get<Pageable<Profile>>(
+      `${this.#baseApiUrl}community/subscribers/${params.communityId}`,
+      {
+        params: {
+          page: params.page ?? 1,
+          size: params.size ?? 6,
+        },
       }
-    })
+    );
   }
 }

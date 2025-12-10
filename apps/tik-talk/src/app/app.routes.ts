@@ -18,6 +18,10 @@ import {
   ExpRFormsComponent,
   ExpTdFormsComponent,
 } from '@tt/experimental';
+import {
+  CommunitiesEffects,
+  communitiesFeature,
+} from '@tt/data-access/communities';
 
 export const routes: Routes = [
   {
@@ -107,7 +111,8 @@ export const routes: Routes = [
       provideState(profileFeature),
       provideState(chatsFeature),
       provideState(postsFeature),
-      provideEffects([ProfileEffects, ChatsEffects, PostsEffects]),
+      provideState(communitiesFeature),
+      provideEffects([ProfileEffects, ChatsEffects, PostsEffects, CommunitiesEffects]),
     ],
     canActivate: [canActivateAuth],
     title: 'TikTalk',

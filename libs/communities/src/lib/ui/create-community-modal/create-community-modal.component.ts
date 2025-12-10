@@ -1,7 +1,16 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  input,
+  OnDestroy,
+  output,
+} from '@angular/core';
 import {
   BadgesInputComponent,
   BaseModalComponent,
+  DeleteConfirmationModalComponent,
   LabeledFormFieldWrapperComponent,
   MainTextareaComponent,
   ModalService,
@@ -16,8 +25,15 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { firstValueFrom } from 'rxjs';
+import {
+  communitiesActions,
+  CreateCommunityFormData,
+  OptionalCreateCommunityFormData,
+  selectCommunity,
+} from '@tt/data-access/communities';
+import { ModalClose } from '@tt/data-access/shared';
 import { Store } from '@ngrx/store';
-import { communitiesActions } from '@tt/data-access/communities/store';
 
 @Component({
   selector: 'tt-create-community-modal',
@@ -36,38 +52,63 @@ import { communitiesActions } from '@tt/data-access/communities/store';
   styleUrl: './create-community-modal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreateCommunityModalComponent {
-  #modalService = inject(ModalService);
+export class CreateCommunityModalComponent implements ModalClose, OnDestroy {
   #store = inject(Store);
+  #modalService = inject(ModalService);
 
+  initialFormValue = input<CreateCommunityFormData>();
+  deletable = input<boolean>(false);
+
+  closed = output<OptionalCreateCommunityFormData | false>();
+
+  community = this.#store.selectSignal(selectCommunity);
   communitiesThemes = communitiesThemes;
 
-  createCommunityForm = new FormGroup({
+  communityForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(5)]),
     themes: new FormControl([] as string[], [Validators.required]),
     tags: new FormControl([] as string[], [Validators.required]),
     description: new FormControl(''),
   });
 
-  createCommunity() {
-    this.createCommunityForm.markAllAsTouched();
-    this.createCommunityForm.updateValueAndValidity();
+  constructor() {
+    effect(() => {
+      const initialFormValue = this.initialFormValue();
 
-    if (this.createCommunityForm.invalid) {
+      if (!initialFormValue) return;
+
+      this.communityForm.patchValue(initialFormValue);
+    });
+  }
+
+  submitForm() {
+    this.communityForm.markAllAsTouched();
+    this.communityForm.updateValueAndValidity();
+
+    if (this.communityForm.invalid) {
       return;
     }
 
-    const formValue = this.createCommunityForm.value;
+    const formValue = this.communityForm.value;
+
+    this.closed.emit(formValue);
+
+    this.closeModal();
+  }
+
+  async deleteCommunity() {
+    const res = await firstValueFrom(
+      this.#modalService.show<boolean>(DeleteConfirmationModalComponent)
+    );
+
+    if (!res) return;
+
+    const community = this.community();
+
+    if (!community) return;
 
     this.#store.dispatch(
-      communitiesActions.createCommunity({
-        params: {
-          name: formValue.name,
-          themes: formValue.themes,
-          tags: formValue.tags,
-          description: formValue.description
-        },
-      })
+      communitiesActions.deleteCommunity({ communityId: community.id })
     );
 
     this.closeModal();
@@ -77,12 +118,7 @@ export class CreateCommunityModalComponent {
     this.#modalService.close();
   }
 
-  resetForm() {
-    this.createCommunityForm.reset({
-      name: '',
-      themes: [],
-      tags: [],
-      description: '',
-    });
+  ngOnDestroy() {
+    this.closed.emit(false);
   }
 }

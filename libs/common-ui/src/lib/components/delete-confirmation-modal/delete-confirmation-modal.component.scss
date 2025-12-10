@@ -1,0 +1,13 @@
+.confirmation-text {
+  font-weight: 700;
+  font-size: 21px;
+  line-height: 21px;
+  color: var(--light-color);
+  padding: 5px 10px 40px;
+}
+
+.modal-btns {
+  display: flex;
+  justify-content: space-between;
+  gap: 60px;
+}
