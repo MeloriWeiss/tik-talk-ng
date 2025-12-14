@@ -1,0 +1,18 @@
+@if (itemsConfig(); as items) {
+  <div class="radio-items-wrapper">
+    @for (item of items; track item.value) {
+      <label class="radio-item">
+        <input
+          class="radio-input"
+          type="radio"
+          name="share-type"
+          [value]="item.value"
+          [ngModel]="shareType"
+          (ngModelChange)="changeShareType($event)"
+          [disabled]="disabled()"
+        >
+        <span class="radio-label">{{ item.name }}</span>
+      </label>
+    }
+  </div>
+}

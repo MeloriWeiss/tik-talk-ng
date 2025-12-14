@@ -1,0 +1,19 @@
+<tt-labeled-form-field-wrapper label="Подписчики">
+  <tt-form-input [formControl]="searchInput" placeholder="Выберите">
+    <svg icon="search" class="search-input-icon svg18" rightIcon></svg>
+  </tt-form-input>
+</tt-labeled-form-field-wrapper>
+
+<div class="subscribers-wrapper">
+  @for (subscriber of subscribers(); track subscriber.id) {
+    <tt-subscriber-circle
+      [subscriber]="subscriber"
+      [selectable]="true"
+      (selectSubscriber)="selectSubscriber($event)"
+    ></tt-subscriber-circle>
+  }
+</div>
+
+<div class="control-value-error">
+  <ng-content select="[errorMessage]"></ng-content>
+</div>

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { GetSubscribersDto, httpConfig, Pageable } from '../../shared/index';
+import { GetCommunitySubscribersDto, httpConfig, Pageable } from '../../shared/index';
 import {
   Community,
   OptionalCreateCommunityFormData,
@@ -70,7 +70,7 @@ export class CommunitiesService {
     return this.#http.post<Post<Profile>>(`${this.#baseApiUrl}post/`, payload);
   }
 
-  getSubscribers(params: GetSubscribersDto) {
+  getSubscribers(params: GetCommunitySubscribersDto) {
     return this.#http.get<Pageable<Profile>>(
       `${this.#baseApiUrl}community/subscribers/${params.communityId}`,
       {

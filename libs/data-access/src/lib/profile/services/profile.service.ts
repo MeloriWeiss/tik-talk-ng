@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
 import { httpConfig, Pageable } from '../../shared/index';
 import { Profile } from '../interfaces/profile.interface';
+import { GetProfileSubscribersDto } from '../../shared/interfaces/get-subscribers.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -13,14 +14,14 @@ export class ProfileService {
   baseApiUrl = httpConfig.baseApiUrl;
 
   getTestAccounts() {
-    return this.#http.get<Profile[]>(`${this.baseApiUrl}account/test_accounts`)
+    return this.#http.get<Profile[]>(`${this.baseApiUrl}account/test_accounts`);
   }
 
   getMe() {
     return this.#http.get<Profile>(`${this.baseApiUrl}account/me`);
   }
 
-  getAccount(id: string) {
+  getAccount(id: number) {
     return this.#http.get<Profile>(`${this.baseApiUrl}account/${id}`);
   }
 
@@ -30,13 +31,12 @@ export class ProfileService {
       .pipe(map((res) => res.items.slice(0, subsAmount)));
   }
 
-  getSubscribers(subsAmount = 3) {
-    return this.#http
-      .get<Pageable<Profile>>(`${this.baseApiUrl}account/subscribers/`)
-      .pipe(map((res) => ({
-        ...res,
-        items: res.items.slice(0, subsAmount)
-      })));
+  getSubscribers(params: GetProfileSubscribersDto) {
+    return this.#http.get<Pageable<Profile>>(
+      `${this.baseApiUrl}account/subscribers/${params.account_id}`, {
+        params: params
+      }
+    );
   }
 
   patchProfile(profile: Partial<Profile>) {

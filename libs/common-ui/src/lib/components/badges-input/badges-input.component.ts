@@ -60,6 +60,7 @@ export class BadgesInputComponent implements ControlValueAccessor {
     this.value$.next([...new Set([...this.value$.value, this.innerInput])]);
     this.innerInput = '';
     this.onChange(this.value$.value);
+    this.onTouched();
   }
 
   writeValue(stack: string[] | null): void {

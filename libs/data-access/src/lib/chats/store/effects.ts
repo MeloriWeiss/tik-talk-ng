@@ -9,38 +9,42 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class ChatsEffects {
-  actions$ = inject(Actions);
-  chatsService = inject(ChatsService);
-  router = inject(Router)
+  #actions$ = inject(Actions);
+  #chatsService = inject(ChatsService);
+  #router = inject(Router);
 
   getMyChats = createEffect(() => {
-    return this.actions$.pipe(
+    return this.#actions$.pipe(
       ofType(chatsActions.getMyChats),
       switchMap(() => {
-        return this.chatsService.getMyChats();
+        return this.#chatsService.getMyChats();
       }),
       map((res) => chatsActions.chatsLoaded({ chats: res }))
     );
   });
 
   getChatById = createEffect(() => {
-    return this.actions$.pipe(
+    return this.#actions$.pipe(
       ofType(chatsActions.getChatById),
       switchMap(({ chatId }) => {
-        return this.chatsService.getChatById(chatId);
+        return this.#chatsService.getChatById(chatId);
       }),
       map((res) => chatsActions.chatLoaded(res))
     );
   });
 
   createChat = createEffect(() => {
-    return this.actions$.pipe(
+    return this.#actions$.pipe(
       ofType(chatsActions.createChat),
-      switchMap(({ userId }) => {
-        return this.chatsService.createChat(userId)
+      switchMap(({ userId, firstMessage }) => {
+        return this.#chatsService.createChat(userId)
           .pipe(
             tap(chat => {
-              this.router.navigate(['chats', chat.id]).then();
+              if (firstMessage) {
+                this.#chatsService.wsAdaptor.sendMessage(firstMessage, chat.id);
+              }
+
+              this.#router.navigate(['chats', chat.id]).then();
             })
           );
       }),

@@ -32,6 +32,18 @@
       }
     }
   }
+
+  &.has-not-avatar {
+    grid-template-columns: 1fr 40px 44px;
+  }
+
+  &.has-not-send-btn {
+    grid-template-columns: 32px 1fr 40px;
+  }
+
+  &.has-not-avatar.has-not-send-btn {
+    grid-template-columns: 1fr 40px;
+  }
 }
 
 .emojis {

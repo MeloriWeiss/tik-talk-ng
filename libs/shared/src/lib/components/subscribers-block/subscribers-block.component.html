@@ -9,8 +9,8 @@
         [subscriber]="subscriber"
       ></tt-subscriber-circle>
     }
-    <a [routerLink]="['/search']" class="to-subscribers-search">
+    <button class="add-subscribers-btn" (click)="onAddSubscribers()">
       <div class="to-subscribers-search-icon"></div>
-    </a>
+    </button>
   </div>
 }

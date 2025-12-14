@@ -1,14 +1,29 @@
 import {
   ChangeDetectionStrategy,
-  Component, computed,
+  Component,
+  computed,
+  forwardRef,
+  HostBinding,
   inject,
   input,
   output,
+  signal,
 } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AvatarCircleComponent, MainTextareaComponent, SvgIconComponent } from '@tt/common-ui';
+import {
+  ControlValueAccessor,
+  FormControl,
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import {
+  AvatarCircleComponent,
+  MainTextareaComponent,
+  SvgIconComponent,
+} from '@tt/common-ui';
 import { Store } from '@ngrx/store';
 import { selectMe } from '@tt/data-access/profile';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'tt-message-input',
@@ -22,14 +37,29 @@ import { selectMe } from '@tt/data-access/profile';
   ],
   templateUrl: './message-input.component.html',
   styleUrl: './message-input.component.scss',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: forwardRef(() => MessageInputComponent),
+    },
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MessageInputComponent {
+export class MessageInputComponent implements ControlValueAccessor {
   #store = inject(Store);
 
-  avatarUrl = input<string | null>();
-  defaultAvatarUrl = input<string | null>();
+  readonly hasAvatar = input(true);
+  readonly hasSendBtn = input(true);
+  readonly avatarUrl = input<string | null>();
+  readonly defaultAvatarUrl = input<string | null>();
+  readonly placeholder = input('');
+
+  disabled = signal(false);
+
   messageAvatarUrl = computed(() => {
+    if (!this.hasAvatar()) return;
+
     const avatarUrl = this.avatarUrl();
 
     if (avatarUrl) {
@@ -39,15 +69,45 @@ export class MessageInputComponent {
       return null;
     }
 
-    return (this.#store.selectSignal(selectMe)())?.avatarUrl;
+    return this.#store.selectSignal(selectMe)()?.avatarUrl;
   });
-
-  placeholder = input('');
 
   isEmojiOpened = false;
   textareaControl = new FormControl('');
 
   created = output<string>();
+
+  @HostBinding('class.has-not-avatar')
+  get hasNotAvatar() {
+    return !this.hasAvatar();
+  }
+
+  @HostBinding('class.has-not-send-btn')
+  get hasNotSendBtn() {
+    return !this.hasSendBtn();
+  }
+
+  constructor() {
+    this.textareaControl.valueChanges
+      .pipe(takeUntilDestroyed())
+      .subscribe(value => this.onChange(value));
+  }
+
+  writeValue(val: string | null): void {
+    this.textareaControl.setValue(val);
+  }
+
+  registerOnChange(fn: (value: string | null) => void): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled.set(isDisabled);
+  }
 
   onCreate() {
     if (!this.textareaControl.value) {
@@ -69,4 +129,7 @@ export class MessageInputComponent {
     this.textareaControl.patchValue(this.textareaControl.value + smile);
     this.isEmojiOpened = false;
   }
+
+  onChange(value: string | null) {}
+  onTouched() {}
 }

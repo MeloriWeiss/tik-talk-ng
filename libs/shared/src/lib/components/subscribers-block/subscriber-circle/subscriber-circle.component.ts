@@ -1,13 +1,20 @@
-import { ChangeDetectionStrategy, Component, HostListener, input, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostBinding,
+  HostListener,
+  inject,
+  input, output,
+  signal,
+} from '@angular/core';
 import { Profile } from '@tt/data-access/profile';
 import { AvatarCircleComponent, PortalComponent } from '@tt/common-ui';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'tt-subscriber-circle',
   imports: [
     AvatarCircleComponent,
-    RouterLink,
     PortalComponent,
   ],
   templateUrl: './subscriber-circle.component.html',
@@ -15,9 +22,15 @@ import { RouterLink } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SubscriberCircleComponent {
-  subscriber = input<Profile>();
+  #router = inject(Router);
+
+  subscriber = input.required<Profile>();
+  selectable = input(false);
+  selected = signal(false);
 
   isMouseOver = signal(false);
+
+  selectSubscriber = output<number | null>();
 
   @HostListener('mouseover')
   onMouseOver() {
@@ -27,5 +40,26 @@ export class SubscriberCircleComponent {
   @HostListener('mouseleave')
   onMouseLeave() {
     this.isMouseOver.set(false);
+  }
+
+  @HostBinding('class.selected')
+  get isSubscriberSelected() {
+    return this.selected();
+  }
+
+  onAvatarClick() {
+    const subscriberId = this.subscriber().id;
+
+    if (this.selectable()) {
+      this.selected.set(!this.selected());
+
+      if (!this.selected()) {
+        return this.selectSubscriber.emit(null);
+      }
+
+      return this.selectSubscriber.emit(subscriberId);
+    }
+
+    this.#router.navigate(['profile', subscriberId]).then();
   }
 }

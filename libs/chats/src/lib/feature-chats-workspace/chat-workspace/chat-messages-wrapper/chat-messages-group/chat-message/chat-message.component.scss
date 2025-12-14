@@ -19,7 +19,7 @@
       display: grid;
     }
 
-    .message-text {
+    .message-content {
       background-color: var(--primary-color);
       justify-self: end;
 
@@ -53,7 +53,7 @@
   gap: 4px;
 }
 
-.message-text {
+.message-content {
   display: inline-block;
   padding: 8px 16px;
   background-color: var(--message-color);

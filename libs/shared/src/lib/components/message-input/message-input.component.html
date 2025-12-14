@@ -1,4 +1,6 @@
-<tt-avatar-circle [avatarUrl]="messageAvatarUrl()" [defaultAvatarUrl]="defaultAvatarUrl()"></tt-avatar-circle>
+@if (hasAvatar()) {
+  <tt-avatar-circle [avatarUrl]="messageAvatarUrl()" [defaultAvatarUrl]="defaultAvatarUrl()"></tt-avatar-circle>
+}
 
 <tt-main-textarea
   [placeholder]="placeholder()"
@@ -7,7 +9,11 @@
 ></tt-main-textarea>
 
 <div class="emojis" [class.opened]="isEmojiOpened">
-  <button class="emoji-rows popup-wrapper" (click)="onClickSmile($event)">
+  <button
+    (click)="onClickSmile($event)"
+    class="emoji-rows popup-wrapper"
+    type="button"
+  >
     <div class="emoji-row">
       <span>😃</span>
       <span>😁</span>
@@ -31,6 +37,7 @@
     </div>
   </button>
   <button
+    type="button"
     class="non-visible-btn"
     (click)="onOpenEmojiList()"
   >
@@ -41,6 +48,8 @@
   </button>
 </div>
 
-<button class="btn btn-icon" (click)="onCreate()">
-  <svg icon="send-message" class="svg16"></svg>
-</button>
+@if (hasSendBtn()) {
+  <button class="btn btn-icon" (click)="onCreate()">
+    <svg icon="send-message" class="svg16"></svg>
+  </button>
+}

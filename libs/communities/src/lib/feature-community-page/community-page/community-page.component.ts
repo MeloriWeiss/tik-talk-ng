@@ -20,6 +20,7 @@ import { Profile, selectMe } from '@tt/data-access/profile';
 import {
   CommunityBannerComponent,
   CreateCommunityModalComponent,
+  ShareCommunityModalComponent,
   SubscribeBtnComponent,
 } from '../../ui/index';
 import {
@@ -178,5 +179,9 @@ export class CommunityPageComponent {
         payload: res,
       })
     );
+  }
+
+  shareCommunity() {
+    this.#modalService.show(ShareCommunityModalComponent);
   }
 }

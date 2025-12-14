@@ -6,7 +6,7 @@
       <strong class="post-author bold">{{ post.author.name }}</strong>
       <span class="post-created-at ml8">{{ post.createdAt | dateDiff }}</span>
     </div>
-    <p>{{ post.content }}</p>
+    <div [innerHTML]="post.content | sanitize" class="post-content" ttHtmlLinkClick></div>
 
     <div class="post-counters">
     <span class="post-counter">

@@ -1,0 +1,19 @@
+:host {
+  &.ng-touched.ng-invalid {
+    .control-value-error {
+      display: block;
+    }
+  }
+}
+
+.subscribers-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 36px;
+  margin-top: 20px;
+}
+
+.control-value-error {
+  margin-top: 4px;
+}

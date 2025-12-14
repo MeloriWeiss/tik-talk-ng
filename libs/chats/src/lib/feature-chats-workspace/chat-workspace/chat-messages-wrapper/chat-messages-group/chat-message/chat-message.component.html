@@ -6,6 +6,6 @@
       <strong>{{ message.user?.firstName }} {{ message.user?.lastName }}</strong>
       <span class="time">{{ message.createdAt | localTime }}</span>
     </div>
-    <div class="message-text medium">{{ message.text }}</div>
+    <div class="message-content medium" [innerHTML]="message.text | sanitize" ttHtmlLinkClick></div>
   </div>
 }

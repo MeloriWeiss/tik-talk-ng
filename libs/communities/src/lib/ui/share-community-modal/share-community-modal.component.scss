@@ -1,19 +1,26 @@
-.modal {
+.modal-content {
+  width: 356px;
+}
+
+.share-form {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 352px;
-  margin-top: -6px;
+}
+
+.collapsible-block {
+  padding: 2px;
+  margin: -2px;
+}
+
+.message-input {
+  margin-top: 1px;
 }
 
 .modal-actions {
   margin-top: 23px;
   display: grid;
   grid-template-columns: 1fr auto;
-}
-
-.trash-icon {
-  color: #e99898;
 }
 
 .modal-primary-btns {

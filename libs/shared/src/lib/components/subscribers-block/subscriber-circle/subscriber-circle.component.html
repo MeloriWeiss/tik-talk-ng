@@ -1,16 +1,18 @@
 @if (subscriber(); as subscriber) {
-  <a
-    #anchor
-    [routerLink]="['/profile', subscriber.id]"
+  <button
+    (click)="onAvatarClick()"
+    #icon
+    class="avatar-wrapper"
+    type="button"
   >
     <tt-avatar-circle
       [avatarUrl]="subscriber.avatarUrl"
       class="size36"
     ></tt-avatar-circle>
-  </a>
+  </button>
 
   @if (isMouseOver()) {
-    <tt-portal [host]="anchor">
+    <tt-portal [host]="icon">
       <div class="popup-wrapper">
         {{ subscriber.firstName }}
       </div>

@@ -17,7 +17,7 @@ export const chatsActions = createActionGroup({
 
     'filter chats': props<{ value: string | null }>(),
 
-    'create chat': props<{ userId: number }>(),
+    'create chat': props<{ userId: number, firstMessage?: string }>(),
     'chat created': props<{ chat: Chat }>(),
 
     'new message': props<{ message: ChatWSMessage }>(),
