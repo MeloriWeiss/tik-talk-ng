@@ -1,4 +1,4 @@
-@if (profile$ | async; as profile) {
+@if (profile(); as profile) {
   <header class="profile-page__header">
     <tt-profile-header [profile]="profile"></tt-profile-header>
     @if (isMyPage()) {
@@ -24,7 +24,7 @@
     ></tt-post-feed>
 
     <aside class="aside-info">
-      <tt-subscribers-block [subscribers]="subscribers$ | async"></tt-subscribers-block>
+      <tt-subscribers-block [subscribers]="subscribers()" (addSubscribers)="onAddSubscribers()"></tt-subscribers-block>
 
       <tt-labeled-tags [tags]="profile.stack"></tt-labeled-tags>
 

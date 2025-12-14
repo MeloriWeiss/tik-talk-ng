@@ -1,17 +1,24 @@
 import {
   ChangeDetectionStrategy,
-  Component, computed,
-  inject, Signal,
+  Component,
+  computed,
+  DestroyRef,
+  effect,
+  inject,
+  input,
+  Signal,
   signal,
 } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { AsyncPipe } from '@angular/common';
-import { filter, switchMap } from 'rxjs';
-import {LabeledTagsComponent, LabeledTextComponent, ScrollBlockDirective } from '@tt/common-ui';
+import { Router, RouterLink } from '@angular/router';
+import {
+  LabeledTagsComponent,
+  LabeledTextComponent,
+  ScrollBlockDirective,
+} from '@tt/common-ui';
 import { SvgIconComponent } from '@tt/common-ui';
 import { PostFeedComponent } from '@tt/posts';
 import { ProfileHeaderComponent } from '../../ui';
-import { ProfileService, selectMe } from '@tt/data-access/profile';
+import { Profile, ProfileService, selectMe } from '@tt/data-access/profile';
 import { Store } from '@ngrx/store';
 import { SubscribersBlockComponent } from '@tt/shared';
 import {
@@ -21,6 +28,7 @@ import {
   selectPosts,
 } from '@tt/data-access/posts';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { Pageable } from '@tt/data-access/shared';
 
 @Component({
   selector: 'tt-profile-page',
@@ -31,7 +39,6 @@ import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
     RouterLink,
     PostFeedComponent,
     ScrollBlockDirective,
-    AsyncPipe,
     SubscribersBlockComponent,
     LabeledTagsComponent,
     LabeledTextComponent,
@@ -43,11 +50,13 @@ import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 export class ProfilePageComponent {
   #profileService = inject(ProfileService);
   #store = inject(Store);
-  #activatedRoute = inject(ActivatedRoute);
   #router = inject(Router);
+  #destroyRef = inject(DestroyRef);
 
   me = this.#store.selectSignal(selectMe);
   feed = this.#store.selectSignal(selectPosts);
+
+  id = input<number | string>();
 
   posts: Signal<Post<BasePostAuthor>[]> = computed(() => {
     return this.feed().map((post) => {
@@ -68,33 +77,46 @@ export class ProfilePageComponent {
   me$ = toObservable(this.me);
 
   isMyPage = signal(false);
+  subscribers = signal<Pageable<Profile> | null>(null);
 
-  subscribers$ = this.#profileService.getSubscribers(6);
-
-  profile$ = this.me$.pipe(
-    filter((me) => !!me),
-    switchMap((me) => {
-      return this.#activatedRoute.params.pipe(
-        switchMap(({ id }) => {
-          this.isMyPage.set(id === 'me' || Number(id) === me?.id);
-
-          if (this.isMyPage()) {
-            return this.me$;
-          }
-          return this.#profileService.getAccount(id);
-        })
-      );
-    })
-  );
+  profile = signal<Profile | null>(null);
 
   constructor() {
-    this.#activatedRoute.params
-      .pipe(takeUntilDestroyed())
-      .subscribe(({ id }) => {
-        return this.#store.dispatch(
-          postsActions.fetchPosts(id === 'me' ? {} : { userId: id })
-        );
-      });
+    effect(() => {
+      const id = this.id();
+
+      if (!id) return;
+
+      this.#store.dispatch(
+        postsActions.fetchPosts(id === 'me' ? {} : { userId: +id })
+      );
+
+      const me = this.me();
+
+      if (!me) return;
+
+      this.#profileService
+        .getSubscribers({
+          account_id: id === 'me' ? me.id : +id,
+          size: 6,
+        })
+        .pipe(takeUntilDestroyed(this.#destroyRef))
+        .subscribe((subscribers) => {
+          this.subscribers.set(subscribers);
+        });
+
+      this.isMyPage.set(id === 'me' || Number(id) === me?.id);
+
+      if (this.isMyPage()) {
+        return this.profile.set(me);
+      }
+      this.#profileService
+        .getAccount(+id)
+        .pipe(takeUntilDestroyed(this.#destroyRef))
+        .subscribe((profile) => {
+          this.profile.set(profile);
+        });
+    });
   }
 
   async sendMessage(userId: number) {
@@ -119,5 +141,9 @@ export class ProfilePageComponent {
         },
       })
     );
+  }
+
+  onAddSubscribers() {
+    this.#router.navigate(['search']).then();
   }
 }

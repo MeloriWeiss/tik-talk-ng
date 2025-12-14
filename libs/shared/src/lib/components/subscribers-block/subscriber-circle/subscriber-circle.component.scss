@@ -1,0 +1,16 @@
+:host {
+  &.selected {
+    .avatar-wrapper {
+      border-color: var(--light-color);
+    }
+  }
+}
+
+.avatar-wrapper {
+  display: block;
+  background: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  margin: -2px;
+}

@@ -1,0 +1,36 @@
+<tt-base-modal title="Поделиться">
+  <div class="modal-content">
+    <form class="share-form" [formGroup]="shareForm" (submit)="share()">
+      <tt-radio-input
+        formControlName="shareType"
+        [itemsConfig]="communityShareTypes"
+      ></tt-radio-input>
+
+      <div ttCollapsible [isOpened]="isFullForm()" class="collapsible-block">
+        <tt-subscribers-search-input formControlName="selectedSubscriberId">
+          <span errorMessage>Выберите минимум одного подписчика</span>
+        </tt-subscribers-search-input>
+      </div>
+
+      <tt-message-input
+        formControlName="comment"
+        class="border-dashed message-input"
+        placeholder="Напишите комментарий"
+        [hasAvatar]="false"
+        [hasSendBtn]="false"
+      ></tt-message-input>
+
+      <div class="modal-actions">
+        <div class="modal-primary-btns">
+          <button
+            class="btn btn-transparent"
+            type="button"
+            (click)="closeModal()"
+          >Отмена
+          </button>
+          <button class="btn">Отправить</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</tt-base-modal>

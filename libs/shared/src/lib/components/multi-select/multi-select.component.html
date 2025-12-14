@@ -24,6 +24,10 @@
   }
 </button>
 
+<div class="control-value-error">
+  <ng-content select="[errorMessage]"></ng-content>
+</div>
+
 @if (isDropdownOpened()) {
   <tt-portal [host]="selectHeader" [width]="elementWidth()">
     <tt-multi-select-dropdown

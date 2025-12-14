@@ -3,31 +3,30 @@
     <tt-labeled-form-field-wrapper label="Название сообщества">
       <tt-form-input
         formControlName="name"
-        class="form-control"
-      ></tt-form-input>
-      <span class="control-value-error">Название должно содержать не менее 5 символов</span>
+      >
+        <span errorMessage>Название должно содержать не менее 5 символов</span>
+      </tt-form-input>
     </tt-labeled-form-field-wrapper>
 
     <tt-labeled-form-field-wrapper label="Тема">
       <tt-multi-select
         formControlName="themes"
         [options]="communitiesThemes"
-        class="form-control"
       >
         @for (option of communitiesThemes; track option.value) {
           <tt-multi-select-option [name]="option.name" [value]="option.value"></tt-multi-select-option>
         }
+        <span errorMessage>Выберите минимум одну тему</span>
       </tt-multi-select>
-      <span class="control-value-error">Выберите минимум одну тему</span>
     </tt-labeled-form-field-wrapper>
 
     <tt-labeled-form-field-wrapper label="Теги">
       <tt-badges-input
         formControlName="tags"
         placeholder="Введите"
-        class="form-control"
-      ></tt-badges-input>
-      <span class="control-value-error">Введите минимум один тег</span>
+      >
+        <span errorMessage>Введите минимум один тег</span>
+      </tt-badges-input>
     </tt-labeled-form-field-wrapper>
 
     <tt-labeled-form-field-wrapper label="Описание">

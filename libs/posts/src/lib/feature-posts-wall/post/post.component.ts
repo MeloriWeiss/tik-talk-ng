@@ -16,7 +16,7 @@ import {
 import { CommentComponent } from '../../ui';
 import {
   AvatarCircleComponent,
-  DateDiffPipe,
+  DateDiffPipe, HtmlLinkClickDirective, SanitizePipe,
   SvgIconComponent,
 } from '@tt/common-ui';
 import {
@@ -39,6 +39,8 @@ import { selectMe } from '@tt/data-access/profile';
     CommentComponent,
     DateDiffPipe,
     MessageInputComponent,
+    SanitizePipe,
+    HtmlLinkClickDirective,
   ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',
@@ -65,6 +67,13 @@ export class PostComponent implements OnInit, AfterViewInit {
   });
 
   commentsContainer = viewChild.required<ElementRef>('commentsContainer');
+  postContent = viewChild<ElementRef>('postContent');
+
+  ngOnInit() {
+    this.comms = this.#store.selectSignal(
+      selectCommentsByPostId(this.post().id)
+    );
+  }
 
   ngAfterViewInit() {
     effect(
@@ -75,15 +84,9 @@ export class PostComponent implements OnInit, AfterViewInit {
         requestAnimationFrame(() => {
           commentsContainer.nativeElement.scrollTop =
             commentsContainer.nativeElement.scrollHeight;
-        })
+        });
       },
       { injector: this.#injector }
-    );
-  }
-
-  ngOnInit() {
-    this.comms = this.#store.selectSignal(
-      selectCommentsByPostId(this.post().id)
     );
   }
 

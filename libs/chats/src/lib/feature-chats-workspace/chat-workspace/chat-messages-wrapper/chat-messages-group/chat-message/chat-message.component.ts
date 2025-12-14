@@ -1,11 +1,16 @@
 import { ChangeDetectionStrategy, Component, HostBinding, input } from '@angular/core';
-import { AvatarCircleComponent, LocalTimePipe } from '@tt/common-ui';
+import { AvatarCircleComponent, HtmlLinkClickDirective, LocalTimePipe, SanitizePipe } from '@tt/common-ui';
 import { Message } from '@tt/data-access/chats';
 
 @Component({
   selector: 'tt-chat-message',
   standalone: true,
-  imports: [AvatarCircleComponent, LocalTimePipe],
+  imports: [
+    AvatarCircleComponent,
+    LocalTimePipe,
+    SanitizePipe,
+    HtmlLinkClickDirective,
+  ],
   templateUrl: './chat-message.component.html',
   styleUrl: './chat-message.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

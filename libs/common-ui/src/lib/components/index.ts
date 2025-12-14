@@ -20,6 +20,7 @@ import { ModalService } from './base-modal/modal.service';
 import { LabeledTextComponent } from './labeled-text/labeled-text.component';
 import { LabeledTagsComponent } from './labeled-tags/labeled-tags.component';
 import { DeleteConfirmationModalComponent } from './delete-confirmation-modal/delete-confirmation-modal.component';
+import { RadioInputComponent } from './radio-input/radio-input.component';
 
 export {
   AvatarCircleComponent,
@@ -44,4 +45,5 @@ export {
   LabeledTextComponent,
   LabeledTagsComponent,
   DeleteConfirmationModalComponent,
+  RadioInputComponent,
 };

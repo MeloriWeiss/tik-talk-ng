@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
-import { AvatarCircleComponent, DateDiffPipe } from '@tt/common-ui';
+import { AvatarCircleComponent, DateDiffPipe, SanitizePipe } from '@tt/common-ui';
 import { ChatsListItem } from '@tt/data-access/chats';
 import { selectMe } from '@tt/data-access/profile';
 import { Store } from '@ngrx/store';
@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 @Component({
   selector: 'tt-button[chats]',
   standalone: true,
-  imports: [AvatarCircleComponent, DateDiffPipe],
+  imports: [AvatarCircleComponent, DateDiffPipe, SanitizePipe],
   templateUrl: './chats-btn.component.html',
   styleUrl: './chats-btn.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

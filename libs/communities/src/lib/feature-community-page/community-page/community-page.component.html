@@ -38,7 +38,7 @@
     ></tt-post-feed>
 
     <aside class="aside-info">
-      <tt-subscribers-block [subscribers]="subscribers()"></tt-subscribers-block>
+      <tt-subscribers-block [subscribers]="subscribers()" (addSubscribers)="shareCommunity()"></tt-subscribers-block>
 
       <tt-labeled-tags title="Тема" [tags]="community.themes"></tt-labeled-tags>
 
