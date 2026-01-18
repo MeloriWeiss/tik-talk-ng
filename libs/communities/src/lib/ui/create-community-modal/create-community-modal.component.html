@@ -1,4 +1,4 @@
-<tt-base-modal>
+<tt-base-modal [emitEvent]="emitClickOutEvent()">
   <form class="modal" [formGroup]="communityForm" (ngSubmit)="submitForm()">
     <tt-labeled-form-field-wrapper label="Название сообщества">
       <tt-form-input

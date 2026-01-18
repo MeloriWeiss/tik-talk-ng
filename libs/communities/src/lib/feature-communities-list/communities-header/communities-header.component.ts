@@ -22,7 +22,7 @@ export class CommunitiesHeaderComponent {
 
   async showModal() {
     const res = await firstValueFrom(
-      this.#modalService.show<OptionalCreateCommunityFormData | false>(
+      await this.#modalService.show<OptionalCreateCommunityFormData | false>(
         CreateCommunityModalComponent
       )
     );

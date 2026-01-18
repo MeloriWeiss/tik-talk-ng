@@ -31,7 +31,7 @@
 @if (isDropdownOpened()) {
   <tt-portal [host]="selectHeader" [width]="elementWidth()">
     <tt-multi-select-dropdown
-      (ttClickOutside)="closeDropdown()"
+      (ttClickOut)="closeDropdown()"
     >
       <ng-content></ng-content>
     </tt-multi-select-dropdown>

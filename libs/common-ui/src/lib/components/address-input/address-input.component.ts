@@ -19,7 +19,6 @@ import { AsyncPipe } from '@angular/common';
 import { DadataSuggestion } from '../../data/interfaces/dadata.interface';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AddressInputDropdownComponent } from './address-input-dropdown/address-input-dropdown.component';
-import { ClickOutsideDirective } from '../../directives/index';
 
 @Component({
   selector: 'tt-address-input',
@@ -28,7 +27,6 @@ import { ClickOutsideDirective } from '../../directives/index';
     ReactiveFormsModule,
     AsyncPipe,
     AddressInputDropdownComponent,
-    ClickOutsideDirective,
   ],
   templateUrl: './address-input.component.html',
   styleUrl: './address-input.component.scss',

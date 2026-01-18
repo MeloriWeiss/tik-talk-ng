@@ -20,24 +20,30 @@ export class ModalService {
     this.#container = vcr;
   }
 
-  show<T>(
+  async show<T>(
     modalComponent: ModalComponentType,
     inputs?: Record<string, unknown>
-  ): Observable<T> {
-    if (!this.#container) {
-      return of();
-    }
+  ): Promise<Observable<T | undefined>> {
+    const show = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (!this.#container) {
+          return reject(of());
+        }
 
-    const componentRef = this.#container.createComponent(modalComponent);
-    const instance = componentRef.instance;
+        const componentRef = this.#container.createComponent(modalComponent);
+        const instance = componentRef.instance;
 
-    if (inputs) {
-      Object.entries(inputs).forEach(([name, value]) => {
-        componentRef.setInput(name, value);
-      });
-    }
+        if (inputs) {
+          Object.entries(inputs).forEach(([name, value]) => {
+            componentRef.setInput(name, value);
+          });
+        }
 
-    return outputToObservable(instance.closed) as Observable<T>;
+        resolve(outputToObservable(instance.closed));
+      })
+    });
+
+    return show as Promise<Observable<T | undefined>>;
   }
 
   close() {
