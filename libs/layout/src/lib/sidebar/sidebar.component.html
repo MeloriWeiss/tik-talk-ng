@@ -1,4 +1,7 @@
-<img src="/assets/svg/logo-small.svg" alt="logo" class="ml16 mb20"/>
+<div class="sidebar__header">
+  <img src="/assets/svg/logo-small.svg" alt="logo" class="ml16 mb20" />
+  <tt-theme-switcher></tt-theme-switcher>
+</div>
 
 <nav (mouseenter)="null">
   <ul class="main-menu-list">
@@ -49,11 +52,8 @@
 
   <div class="sidebar__footer-controls">
     @if (me(); as me) {
-      <img
-        [src]="(me.avatarUrl | imgUrl) || '/assets/svg/avatar-placeholder.svg'"
-        [alt]="me.lastName"
-        class="sidebar__footer-img"
-      />
+      <tt-avatar-circle [avatarUrl]="me.avatarUrl"></tt-avatar-circle>
+
       <div class="sidebar__footer-username regular">{{ me.username }}</div>
 
       <a routerLink="/settings" class="settings-btn">

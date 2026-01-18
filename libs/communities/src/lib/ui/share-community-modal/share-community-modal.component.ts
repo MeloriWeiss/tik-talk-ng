@@ -78,13 +78,14 @@ export class ShareCommunityModalComponent implements ModalClose, OnDestroy {
           this.isFullForm.set(value === ShareTypes.MESSAGE);
 
           this.shareForm.controls.selectedSubscriberId.clearValidators();
-          this.shareForm.controls.selectedSubscriberId.updateValueAndValidity();
 
           if (value === ShareTypes.MESSAGE) {
             this.shareForm.controls.selectedSubscriberId.setValidators([
               Validators.required,
             ]);
           }
+
+          this.shareForm.controls.selectedSubscriberId.updateValueAndValidity();
         }),
         takeUntilDestroyed()
       )

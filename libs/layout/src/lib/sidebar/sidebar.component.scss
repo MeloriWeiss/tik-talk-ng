@@ -6,6 +6,12 @@
   width: 300px;
 }
 
+.sidebar__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
 .main-menu-list {
   display: grid;
   grid-gap: 8px;

@@ -1,0 +1,11 @@
+<label class="switcher">
+  <input
+    [ngModel]="value"
+    (ngModelChange)="valueChange($event)"
+    [disabled]="disabled()"
+    type="checkbox"
+    class="switcher-input"
+  >
+  <span class="switcher-slider"></span>
+  <div class="switcher-circle"></div>
+</label>

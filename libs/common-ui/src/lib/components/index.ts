@@ -21,6 +21,8 @@ import { LabeledTextComponent } from './labeled-text/labeled-text.component';
 import { LabeledTagsComponent } from './labeled-tags/labeled-tags.component';
 import { DeleteConfirmationModalComponent } from './delete-confirmation-modal/delete-confirmation-modal.component';
 import { RadioInputComponent } from './radio-input/radio-input.component';
+import { ThemeSwitcherComponent } from './theme-switcher/theme-switcher.component';
+import { SwitcherComponent } from './switcher/switcher.component';
 
 export {
   AvatarCircleComponent,
@@ -46,4 +48,6 @@ export {
   LabeledTagsComponent,
   DeleteConfirmationModalComponent,
   RadioInputComponent,
+  SwitcherComponent,
+  ThemeSwitcherComponent,
 };

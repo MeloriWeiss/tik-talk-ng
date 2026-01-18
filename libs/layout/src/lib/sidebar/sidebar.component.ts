@@ -12,9 +12,9 @@ import {
 import { SubscriberCardComponent } from './subscriber-card/subscriber-card.component';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
-  ImgUrlPipe,
+  AvatarCircleComponent,
   SidebarPortalService,
-  SvgIconComponent,
+  SvgIconComponent, ThemeSwitcherComponent,
 } from '@tt/common-ui';
 import { AsyncPipe } from '@angular/common';
 import {
@@ -46,8 +46,9 @@ enum menuLinks {
     RouterLink,
     SvgIconComponent,
     AsyncPipe,
-    ImgUrlPipe,
     RouterLinkActive,
+    AvatarCircleComponent,
+    ThemeSwitcherComponent,
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
