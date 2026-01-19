@@ -157,7 +157,7 @@ export class CommunityPageComponent {
     if (!community) return;
 
     const res = await firstValueFrom(
-      await this.#modalService.show<OptionalCreateCommunityFormData | false>(
+      this.#modalService.show<OptionalCreateCommunityFormData | false>(
         CreateCommunityModalComponent,
         {
           initialFormValue: {

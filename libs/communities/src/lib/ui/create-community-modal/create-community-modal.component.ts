@@ -10,7 +10,6 @@ import {
 import {
   BadgesInputComponent,
   BaseModalComponent,
-  ClickOutService,
   DeleteConfirmationModalComponent,
   LabeledFormFieldWrapperComponent,
   MainTextareaComponent,
@@ -56,12 +55,9 @@ import { Store } from '@ngrx/store';
 export class CreateCommunityModalComponent implements ModalClose, OnDestroy {
   #store = inject(Store);
   #modalService = inject(ModalService);
-  // #clickOutService = inject(ClickOutService);
 
   initialFormValue = input<CreateCommunityFormData>();
   deletable = input<boolean>(false);
-
-  emitClickOutEvent = signal(true);
 
   closed = output<OptionalCreateCommunityFormData | false>();
 
@@ -101,13 +97,9 @@ export class CreateCommunityModalComponent implements ModalClose, OnDestroy {
   }
 
   async deleteCommunity() {
-    this.emitClickOutEvent.set(false);
-
     const res = await firstValueFrom(
-      await this.#modalService.show<boolean>(DeleteConfirmationModalComponent)
+      this.#modalService.show<boolean>(DeleteConfirmationModalComponent)
     );
-
-    this.emitClickOutEvent.set(true);
 
     if (!res) return;
 
