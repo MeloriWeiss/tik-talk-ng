@@ -14,7 +14,6 @@ import {
   untracked,
 } from '@angular/core';
 import {
-  ClickOutsideDirective,
   PortalComponent,
   SvgIconComponent,
 } from '@tt/common-ui';
@@ -27,7 +26,6 @@ import { MultiSelectDropdownComponent } from './multi-select-dropdown/multi-sele
   selector: 'tt-multi-select',
   imports: [
     PortalComponent,
-    ClickOutsideDirective,
     SvgIconComponent,
     MultiSelectDropdownComponent,
   ],

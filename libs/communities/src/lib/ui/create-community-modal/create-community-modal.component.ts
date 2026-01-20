@@ -5,7 +5,7 @@ import {
   inject,
   input,
   OnDestroy,
-  output,
+  output, signal,
 } from '@angular/core';
 import {
   BadgesInputComponent,

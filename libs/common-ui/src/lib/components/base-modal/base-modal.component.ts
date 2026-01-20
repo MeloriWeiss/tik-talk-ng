@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { ModalService } from './modal.service';
 import { SvgIconComponent } from '../svg-icon/svg-icon.component';
+import { ClickOutDirective } from '../../directives/index';
 
 @Component({
   selector: 'tt-base-modal',
@@ -14,7 +15,13 @@ import { SvgIconComponent } from '../svg-icon/svg-icon.component';
   imports: [SvgIconComponent],
   templateUrl: './base-modal.component.html',
   styleUrl: './base-modal.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  hostDirectives: [
+    {
+      directive: ClickOutDirective,
+      outputs: ['ttClickOut'],
+    },
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BaseModalComponent {
   #modalService = inject(ModalService);

@@ -3,6 +3,7 @@ import { CollapsibleDirective } from './collapsible.directive';
 import { DndDirective } from './dnd.directive';
 import { HtmlLinkClickDirective } from './html-link-click.directive';
 import { ScrollBlockDirective } from './scroll-block.directive';
+import { ClickOutDirective } from './click-out.directive';
 
 export {
   DndDirective,
@@ -10,4 +11,5 @@ export {
   ClickOutsideDirective,
   CollapsibleDirective,
   HtmlLinkClickDirective,
+  ClickOutDirective,
 };

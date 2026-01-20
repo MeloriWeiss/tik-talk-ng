@@ -23,7 +23,7 @@ export class ModalService {
   show<T>(
     modalComponent: ModalComponentType,
     inputs?: Record<string, unknown>
-  ): Observable<T> {
+  ): Observable<T | undefined> {
     if (!this.#container) {
       return of();
     }
@@ -37,7 +37,7 @@ export class ModalService {
       });
     }
 
-    return outputToObservable(instance.closed) as Observable<T>;
+    return outputToObservable(instance.closed) as Observable<T | undefined>;
   }
 
   close() {
