@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { CommunitiesSearchPageComponent } from '../feature-communities-list';
 import { CommunityPageComponent } from '../feature-community-page/community-page/community-page.component';
+import { CommunitiesStoreFacade } from '@tt/data-access/communities/services/communities-store-facade.service';
 
 export const communitiesRoutes: Routes = [
   {
@@ -9,7 +10,7 @@ export const communitiesRoutes: Routes = [
       {
         path: '',
         redirectTo: 'search',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'search',
@@ -20,5 +21,6 @@ export const communitiesRoutes: Routes = [
         component: CommunityPageComponent,
       },
     ],
+    providers: [CommunitiesStoreFacade],
   },
 ];

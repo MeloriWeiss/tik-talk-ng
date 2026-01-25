@@ -18,6 +18,7 @@ import {
 import { Store } from '@ngrx/store';
 import { Profile, selectMe } from '@tt/data-access/profile';
 import {
+  ChangePhotoTooltipComponent,
   CommunityBannerComponent,
   CreateCommunityModalComponent,
   ShareCommunityModalComponent,
@@ -25,6 +26,7 @@ import {
 } from '../../ui/index';
 import {
   AvatarCircleComponent,
+  EditableAvatarCircleComponent,
   LabeledTagsComponent,
   LabeledTextComponent,
   ModalService,
@@ -53,6 +55,8 @@ import { firstValueFrom } from 'rxjs';
     LabeledTextComponent,
     PostFeedComponent,
     ScrollBlockDirective,
+    EditableAvatarCircleComponent,
+    ChangePhotoTooltipComponent,
   ],
   templateUrl: './community-page.component.html',
   styleUrl: './community-page.component.scss',
@@ -63,14 +67,17 @@ export class CommunityPageComponent {
   #store = inject(Store);
   #modalService = inject(ModalService);
 
+  defaultAvatarUrl = 'assets/svg/img-placeholder.svg';
+
   me = this.#store.selectSignal(selectMe);
   feed = this.#store.selectSignal(selectCommunityPosts);
+  community = this.#store.selectSignal(selectCommunity);
 
   id = input<number>();
 
   posts: Signal<Post<BasePostAuthor>[]> = computed(() => {
     return this.feed().map((post) => {
-      const author = post.author;
+      const author = post.author ?? this.community();
 
       return {
         ...post,
@@ -84,7 +91,6 @@ export class CommunityPageComponent {
     });
   });
 
-  community = this.#store.selectSignal(selectCommunity);
   subscribers = signal<Pageable<Profile> | null>(null);
   isMyCommunity = computed(() =>
     Boolean(this.me()?.id === this.community()?.admin.id)

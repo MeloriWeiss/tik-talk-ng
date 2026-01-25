@@ -1,5 +1,16 @@
 @if (bannerUrl()) {
-  <img [src]="bannerUrl() | imgUrl" alt="Баннер" class="banner-img">
+  <img [src]="resultBannerUrl()" alt="Баннер" class="banner-img">
 } @else {
   <img src="/assets/svg/img-placeholder.svg" alt="Пустой баннер" class="banner-img-placeholder">
 }
+
+<button class="non-visible-btn change-photo-btn" (click)="fileInput.click()">
+  <tt-change-photo-tooltip class="change-photo-tooltip"></tt-change-photo-tooltip>
+</button>
+
+<input
+  #fileInput
+  (change)="onUploadImage($event)"
+  type="file"
+  class="d-none"
+>

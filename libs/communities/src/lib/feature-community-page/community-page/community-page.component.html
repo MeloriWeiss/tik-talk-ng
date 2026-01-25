@@ -3,11 +3,18 @@
 
   <header class="community-header">
     <div class="community_avatar-name">
-      <tt-avatar-circle
-        [avatarUrl]="community.avatarUrl"
-        defaultAvatarUrl="assets/svg/img-placeholder.svg"
-        class="size70"
-      ></tt-avatar-circle>
+      <tt-editable-avatar-circle>
+        <tt-avatar-circle
+          [avatarUrl]="community.avatarUrl"
+          [defaultAvatarUrl]="defaultAvatarUrl"
+          class="size70"
+          avatar
+        ></tt-avatar-circle>
+        <tt-change-photo-tooltip
+          showedOnHover
+          class="mt5"
+        ></tt-change-photo-tooltip>
+      </tt-editable-avatar-circle>
       <span class="community-name">{{ community.name }}</span>
     </div>
 
@@ -31,7 +38,7 @@
       [bottomPaddingSize]="2"
       [posts]="posts()"
       [avatarUrl]="community.avatarUrl"
-      defaultAvatarUrl="assets/svg/img-placeholder.svg"
+      [defaultAvatarUrl]="defaultAvatarUrl"
       [canCreatePosts]="isMyCommunity()"
       (createdPost)="createPost($event)"
       class="scrollbar scroll-hidden"
