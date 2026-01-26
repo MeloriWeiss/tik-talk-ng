@@ -23,6 +23,7 @@ import { DeleteConfirmationModalComponent } from './delete-confirmation-modal/de
 import { RadioInputComponent } from './radio-input/radio-input.component';
 import { ThemeSwitcherComponent } from './theme-switcher/theme-switcher.component';
 import { SwitcherComponent } from './switcher/switcher.component';
+import { EditableAvatarCircleComponent } from './editable-avatar-circle/editable-avatar-circle.component';
 
 export {
   AvatarCircleComponent,
@@ -50,4 +51,5 @@ export {
   RadioInputComponent,
   SwitcherComponent,
   ThemeSwitcherComponent,
+  EditableAvatarCircleComponent,
 };

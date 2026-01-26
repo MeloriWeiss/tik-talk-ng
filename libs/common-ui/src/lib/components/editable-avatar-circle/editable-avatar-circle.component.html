@@ -1,0 +1,16 @@
+<button #avatar (click)="fileInput.click()" class="non-visible-btn change-avatar-btn">
+  <ng-content select="[avatar]"></ng-content>
+</button>
+
+@if (isMouseOver()) {
+  <tt-portal [host]="avatar">
+    <ng-content select="[showedOnHover]"></ng-content>
+  </tt-portal>
+}
+
+<input
+  #fileInput
+  (change)="onUploadImage($event)"
+  type="file"
+  class="d-none"
+>

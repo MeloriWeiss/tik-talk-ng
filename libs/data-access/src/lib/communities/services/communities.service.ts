@@ -1,12 +1,17 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { GetCommunitySubscribersDto, httpConfig, Pageable } from '../../shared/index';
+import {
+  GetCommunitySubscribersDto,
+  httpConfig,
+  Pageable,
+} from '../../shared/index';
 import {
   Community,
   OptionalCreateCommunityFormData,
 } from '../interfaces/communities.interface';
 import { Post, PostCreateDto } from '../../posts/index';
 import { Profile } from '../../profile/index';
+import { UploadImageDto } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -77,6 +82,21 @@ export class CommunitiesService {
         params: {
           page: params.page ?? 1,
           size: params.size ?? 6,
+        },
+      }
+    );
+  }
+
+  uploadImage(payload: UploadImageDto) {
+    const fd = new FormData();
+    fd.append('image', payload.image_file);
+
+    return this.#http.post<Community>(
+      `${this.#baseApiUrl}community/upload_image/${payload.community_id}`,
+      fd,
+      {
+        params: {
+          image_type: payload.image_type,
         },
       }
     );
