@@ -22,6 +22,7 @@ import {
   CommunitiesEffects,
   communitiesFeature,
 } from '@tt/data-access/communities';
+import { canDeactivateWithConfirm } from '@tt/shared';
 
 export const routes: Routes = [
   {
@@ -58,6 +59,7 @@ export const routes: Routes = [
       {
         path: 'profile/:id',
         component: ProfilePageComponent,
+        canDeactivate: [canDeactivateWithConfirm],
       },
       {
         path: 'settings',
@@ -112,7 +114,12 @@ export const routes: Routes = [
       provideState(chatsFeature),
       provideState(postsFeature),
       provideState(communitiesFeature),
-      provideEffects([ProfileEffects, ChatsEffects, PostsEffects, CommunitiesEffects]),
+      provideEffects([
+        ProfileEffects,
+        ChatsEffects,
+        PostsEffects,
+        CommunitiesEffects,
+      ]),
     ],
     canActivate: [canActivateAuth],
     title: 'TikTalk',

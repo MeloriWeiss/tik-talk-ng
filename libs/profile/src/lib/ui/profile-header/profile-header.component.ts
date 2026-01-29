@@ -1,15 +1,27 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { AvatarCircleComponent } from '@tt/common-ui';
-import { Profile } from '@tt/data-access/profile';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { AvatarCircleComponent, ChangePhotoTooltipComponent, EditableAvatarCircleComponent } from '@tt/common-ui';
+import { Profile, ProfileService } from '@tt/data-access/profile';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'tt-profile-header',
   standalone: true,
-  imports: [AvatarCircleComponent],
+  imports: [
+    AvatarCircleComponent,
+    EditableAvatarCircleComponent,
+    ChangePhotoTooltipComponent,
+  ],
   templateUrl: './profile-header.component.html',
   styleUrl: './profile-header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileHeaderComponent {
+  #profileService = inject(ProfileService);
+
   profile = input<Profile>();
+  isMyPage = input(false);
+
+  onFileLoaded(file: File) {
+    firstValueFrom(this.#profileService.uploadAvatar(file)).then();
+  }
 }

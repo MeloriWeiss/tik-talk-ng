@@ -1,17 +1,17 @@
 <tt-base-modal>
-  <p class="confirmation-text">Уверены, что хотите удалить?</p>
+  <p class="confirmation-text">{{ title() }}</p>
   <div class="modal-btns">
     <button
       class="btn btn-transparent"
       type="button"
       (click)="confirm(false)"
-    >Отмена
+    >{{ rejectBtnText() }}
     </button>
     <button
       class="btn"
       type="button"
       (click)="confirm(true)"
-    >Удалить
+    >{{ agreeBtnText() }}
     </button>
   </div>
 </tt-base-modal>

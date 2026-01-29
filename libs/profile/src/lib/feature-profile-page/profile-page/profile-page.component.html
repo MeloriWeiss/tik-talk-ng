@@ -1,6 +1,9 @@
 @if (profile(); as profile) {
   <header class="profile-page__header">
-    <tt-profile-header [profile]="profile"></tt-profile-header>
+    <tt-profile-header
+      [profile]="profile"
+      [isMyPage]="isMyPage()"
+    ></tt-profile-header>
     @if (isMyPage()) {
       <a class="btn to-settings-btn" routerLink="/settings">
         Редактировать

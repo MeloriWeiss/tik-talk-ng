@@ -54,8 +54,7 @@ export class MessageInputComponent implements ControlValueAccessor {
   readonly avatarUrl = input<string | null>();
   readonly defaultAvatarUrl = input<string | null>();
   readonly placeholder = input('');
-
-  disabled = signal(false);
+  readonly disabled = signal(false);
 
   messageAvatarUrl = computed(() => {
     if (!this.hasAvatar()) return;
@@ -110,10 +109,11 @@ export class MessageInputComponent implements ControlValueAccessor {
   }
 
   onCreate() {
-    if (!this.textareaControl.value) {
-      return;
-    }
-    this.created.emit(this.textareaControl.value.trim());
+    const value = this.textareaControl.value?.trim();
+
+    if (!value) return;
+
+    this.created.emit(value);
     this.textareaControl.setValue('');
   }
 

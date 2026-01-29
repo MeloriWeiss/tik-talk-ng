@@ -449,6 +449,8 @@ h4 {
 
 .post-content,
 .message-content {
+  word-break: break-word;
+
   a {
     color: var(--light-color);
     cursor: pointer;
@@ -458,4 +460,8 @@ h4 {
 
 .d-none {
   display: none;
+}
+
+.pointer {
+  cursor: pointer;
 }

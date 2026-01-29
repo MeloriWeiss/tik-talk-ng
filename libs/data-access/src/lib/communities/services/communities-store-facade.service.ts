@@ -26,6 +26,17 @@ export class CommunitiesStoreFacade {
             communitiesActions.postsLoaded({ posts: community.posts })
           );
         })
-      )
+      );
+  }
+
+  getCommunity(id: number) {
+    return this.#communitiesService.getCommunity(id).pipe(
+      tap((community) => {
+        this.#store.dispatch(communitiesActions.communityLoaded({ community }));
+        this.#store.dispatch(
+          communitiesActions.postsLoaded({ posts: community.posts })
+        );
+      })
+    );
   }
 }

@@ -10,6 +10,8 @@ import { DateUtil } from './utils/date.util';
 import { Nullable } from './interfaces/nullable';
 import { ModalClose } from './interfaces/modal-close';
 
+export * from './services';
+
 export {
   Pageable,
   httpConfig,

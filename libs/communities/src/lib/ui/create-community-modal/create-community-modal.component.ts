@@ -5,12 +5,12 @@ import {
   inject,
   input,
   OnDestroy,
-  output, signal,
+  output,
 } from '@angular/core';
 import {
   BadgesInputComponent,
   BaseModalComponent,
-  DeleteConfirmationModalComponent,
+  ConfirmationModalComponent,
   LabeledFormFieldWrapperComponent,
   MainTextareaComponent,
   ModalService,
@@ -98,7 +98,7 @@ export class CreateCommunityModalComponent implements ModalClose, OnDestroy {
 
   async deleteCommunity() {
     const res = await firstValueFrom(
-      this.#modalService.show<boolean>(DeleteConfirmationModalComponent)
+      this.#modalService.show<boolean>(ConfirmationModalComponent)
     );
 
     if (!res) return;

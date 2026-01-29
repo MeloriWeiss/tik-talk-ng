@@ -5,5 +5,5 @@ export * from './store';
 
 export {
   Profile,
-  ProfileService
+  ProfileService,
 }

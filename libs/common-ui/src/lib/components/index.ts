@@ -19,11 +19,12 @@ import { ModalHostComponent } from './modal-host/modal-host.component';
 import { ModalService } from './base-modal/modal.service';
 import { LabeledTextComponent } from './labeled-text/labeled-text.component';
 import { LabeledTagsComponent } from './labeled-tags/labeled-tags.component';
-import { DeleteConfirmationModalComponent } from './delete-confirmation-modal/delete-confirmation-modal.component';
+import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
 import { RadioInputComponent } from './radio-input/radio-input.component';
 import { ThemeSwitcherComponent } from './theme-switcher/theme-switcher.component';
 import { SwitcherComponent } from './switcher/switcher.component';
 import { EditableAvatarCircleComponent } from './editable-avatar-circle/editable-avatar-circle.component';
+import { ChangePhotoTooltipComponent } from './change-photo-tooltip/change-photo-tooltip.component';
 
 export {
   AvatarCircleComponent,
@@ -47,9 +48,10 @@ export {
   ModalHostComponent,
   LabeledTextComponent,
   LabeledTagsComponent,
-  DeleteConfirmationModalComponent,
+  ConfirmationModalComponent,
   RadioInputComponent,
   SwitcherComponent,
   ThemeSwitcherComponent,
   EditableAvatarCircleComponent,
+  ChangePhotoTooltipComponent,
 };

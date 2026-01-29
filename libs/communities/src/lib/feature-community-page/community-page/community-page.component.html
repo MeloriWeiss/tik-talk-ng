@@ -1,9 +1,15 @@
 @if (community(); as community) {
-  <tt-community-banner [bannerUrl]="community.bannerUrl"></tt-community-banner>
+  <tt-community-banner
+    [bannerUrl]="community.bannerUrl"
+    [isMyCommunity]="isMyCommunity()"
+  ></tt-community-banner>
 
   <header class="community-header">
     <div class="community_avatar-name">
-      <tt-editable-avatar-circle>
+      <tt-editable-avatar-circle
+        [canEdit]="isMyCommunity()"
+        (fileLoaded)="onFileLoaded($event)"
+      >
         <tt-avatar-circle
           [avatarUrl]="community.avatarUrl"
           [defaultAvatarUrl]="defaultAvatarUrl"
@@ -11,7 +17,7 @@
           avatar
         ></tt-avatar-circle>
         <tt-change-photo-tooltip
-          showedOnHover
+          tooltip
           class="mt5"
         ></tt-change-photo-tooltip>
       </tt-editable-avatar-circle>

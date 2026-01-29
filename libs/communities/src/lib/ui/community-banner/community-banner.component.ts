@@ -1,13 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  HostListener,
   inject,
   input,
   linkedSignal,
-  signal,
 } from '@angular/core';
-import { ChangePhotoTooltipComponent } from '../change-photo-tooltip/change-photo-tooltip.component';
 import { firstValueFrom } from 'rxjs';
 import {
   CommunitiesService,
@@ -15,6 +12,7 @@ import {
   selectCommunity,
 } from '@tt/data-access/communities';
 import { Store } from '@ngrx/store';
+import { ChangePhotoTooltipComponent } from '@tt/common-ui';
 
 @Component({
   selector: 'tt-community-banner',
@@ -29,6 +27,7 @@ export class CommunityBannerComponent {
   #community = inject(Store).selectSignal(selectCommunity);
 
   bannerUrl = input<string | null>();
+  isMyCommunity = input(false);
 
   resultBannerUrl = linkedSignal(() => `/yt-course/${this.bannerUrl()}`);
 
