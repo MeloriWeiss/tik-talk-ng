@@ -30,7 +30,7 @@ export class PostService {
       .pipe(
         map((posts) => {
           return posts.filter((post) => !post.communityId);
-        })
+        }),
       );
   }
 

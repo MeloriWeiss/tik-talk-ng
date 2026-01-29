@@ -27,8 +27,13 @@ import {
   postsActions,
   selectPosts,
 } from '@tt/data-access/posts';
-import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
-import { Pageable } from '@tt/data-access/shared';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {
+  HasChanges,
+  Pageable,
+  TrackChangesService,
+} from '@tt/data-access/shared';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'tt-profile-page',
@@ -47,11 +52,12 @@ import { Pageable } from '@tt/data-access/shared';
   styleUrl: './profile-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProfilePageComponent {
+export class ProfilePageComponent implements HasChanges {
   #profileService = inject(ProfileService);
   #store = inject(Store);
   #router = inject(Router);
   #destroyRef = inject(DestroyRef);
+  #trackChangesService = inject(TrackChangesService);
 
   me = this.#store.selectSignal(selectMe);
   feed = this.#store.selectSignal(selectPosts);
@@ -74,48 +80,49 @@ export class ProfilePageComponent {
     });
   });
 
-  me$ = toObservable(this.me);
-
   isMyPage = signal(false);
   subscribers = signal<Pageable<Profile> | null>(null);
-
   profile = signal<Profile | null>(null);
+
+  get hasChanges() {
+    return this.#trackChangesService.hasChanges;
+  }
 
   constructor() {
     effect(() => {
       const id = this.id();
+      const me = this.me();
 
-      if (!id) return;
+      if (!id || !me) return;
 
       this.#store.dispatch(
         postsActions.fetchPosts(id === 'me' ? {} : { userId: +id })
       );
 
-      const me = this.me();
-
-      if (!me) return;
-
-      this.#profileService
-        .getSubscribers({
-          account_id: id === 'me' ? me.id : +id,
-          size: 6,
-        })
-        .pipe(takeUntilDestroyed(this.#destroyRef))
-        .subscribe((subscribers) => {
-          this.subscribers.set(subscribers);
-        });
+      firstValueFrom(
+        this.#profileService
+          .getSubscribers({
+            account_id: id === 'me' ? me.id : +id,
+            size: 6,
+          })
+          .pipe(takeUntilDestroyed(this.#destroyRef))
+      ).then((subscribers) => {
+        this.subscribers.set(subscribers);
+      });
 
       this.isMyPage.set(id === 'me' || Number(id) === me?.id);
 
       if (this.isMyPage()) {
         return this.profile.set(me);
       }
-      this.#profileService
-        .getAccount(+id)
-        .pipe(takeUntilDestroyed(this.#destroyRef))
-        .subscribe((profile) => {
-          this.profile.set(profile);
-        });
+
+      firstValueFrom(
+        this.#profileService
+          .getAccount(+id)
+          .pipe(takeUntilDestroyed(this.#destroyRef))
+      ).then((profile) => {
+        this.profile.set(profile);
+      });
     });
   }
 

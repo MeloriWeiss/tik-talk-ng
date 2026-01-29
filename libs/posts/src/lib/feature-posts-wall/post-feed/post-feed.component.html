@@ -1,5 +1,6 @@
 @if (canCreatePosts()) {
   <tt-message-input
+    ttTrackMessage
     [avatarUrl]="avatarUrl()"
     [defaultAvatarUrl]="defaultAvatarUrl()"
     (created)="onCreatePost($event)"

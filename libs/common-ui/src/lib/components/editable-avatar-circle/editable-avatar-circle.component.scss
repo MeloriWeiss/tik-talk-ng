@@ -1,13 +1,9 @@
 :host {
   display: block;
   font-size: 0;
-
-
 }
 
 .change-avatar-btn {
-  cursor: pointer;
-
   &:hover {
     .avatar-tooltip {
       display: block;

@@ -4,9 +4,11 @@
   <img src="/assets/svg/img-placeholder.svg" alt="Пустой баннер" class="banner-img-placeholder">
 }
 
-<button class="non-visible-btn change-photo-btn" (click)="fileInput.click()">
-  <tt-change-photo-tooltip class="change-photo-tooltip"></tt-change-photo-tooltip>
-</button>
+@if (isMyCommunity()) {
+  <button class="non-visible-btn change-photo-btn" (click)="fileInput.click()">
+    <tt-change-photo-tooltip class="change-photo-tooltip"></tt-change-photo-tooltip>
+  </button>
+}
 
 <input
   #fileInput

@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  input,
   OnDestroy,
   output,
 } from '@angular/core';
@@ -10,14 +11,18 @@ import { BaseModalComponent } from '../base-modal/base-modal.component';
 import { ModalClose } from '@tt/data-access/shared';
 
 @Component({
-  selector: 'tt-delete-confirmation-modal',
+  selector: 'tt-confirmation-modal',
   imports: [BaseModalComponent],
-  templateUrl: './delete-confirmation-modal.component.html',
-  styleUrl: './delete-confirmation-modal.component.scss',
+  templateUrl: './confirmation-modal.component.html',
+  styleUrl: './confirmation-modal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DeleteConfirmationModalComponent implements ModalClose, OnDestroy {
+export class ConfirmationModalComponent implements ModalClose, OnDestroy {
   #modalService = inject(ModalService);
+
+  title = input('Уверены, что хотите удалить?');
+  agreeBtnText = input('Удалить');
+  rejectBtnText = input('Отмена');
 
   closed = output<boolean>();
 

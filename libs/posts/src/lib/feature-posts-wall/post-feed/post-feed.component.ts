@@ -1,19 +1,17 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
-  inject,
   input,
   output,
 } from '@angular/core';
 import { BasePostAuthor, Post } from '@tt/data-access/posts';
-import { MessageInputComponent } from '@tt/shared';
+import { MessageInputComponent, TrackMessageDirective } from '@tt/shared';
 import { PostComponent } from '../post/post.component';
 
 @Component({
   selector: 'tt-post-feed',
   standalone: true,
-  imports: [MessageInputComponent, PostComponent],
+  imports: [MessageInputComponent, PostComponent, TrackMessageDirective],
   templateUrl: './post-feed.component.html',
   styleUrl: './post-feed.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

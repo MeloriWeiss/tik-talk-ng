@@ -12,13 +12,13 @@ import {
 } from '@angular/core';
 import {
   CommunitiesService,
+  CommunityImageType,
   OptionalCreateCommunityFormData,
   selectCommunity,
 } from '@tt/data-access/communities';
 import { Store } from '@ngrx/store';
 import { Profile, selectMe } from '@tt/data-access/profile';
 import {
-  ChangePhotoTooltipComponent,
   CommunityBannerComponent,
   CreateCommunityModalComponent,
   ShareCommunityModalComponent,
@@ -26,6 +26,7 @@ import {
 } from '../../ui/index';
 import {
   AvatarCircleComponent,
+  ChangePhotoTooltipComponent,
   EditableAvatarCircleComponent,
   LabeledTagsComponent,
   LabeledTextComponent,
@@ -39,9 +40,14 @@ import {
   communitiesActions,
   selectCommunityPosts,
 } from '@tt/data-access/communities/store';
-import { Pageable } from '@tt/data-access/shared';
+import {
+  HasChanges,
+  Pageable,
+  TrackChangesService,
+} from '@tt/data-access/shared';
 import { BasePostAuthor, Post } from '@tt/data-access/posts';
 import { firstValueFrom } from 'rxjs';
+import { CommunitiesStoreFacade } from '@tt/data-access/communities/services';
 
 @Component({
   selector: 'tt-community-page',
@@ -62,10 +68,12 @@ import { firstValueFrom } from 'rxjs';
   styleUrl: './community-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CommunityPageComponent {
+export class CommunityPageComponent implements HasChanges {
   #communitiesService = inject(CommunitiesService);
+  #communitiesStoreFacade = inject(CommunitiesStoreFacade);
   #store = inject(Store);
   #modalService = inject(ModalService);
+  #trackChangesService = inject(TrackChangesService);
 
   defaultAvatarUrl = 'assets/svg/img-placeholder.svg';
 
@@ -97,42 +105,34 @@ export class CommunityPageComponent {
   );
   isJoined = linkedSignal(() => Boolean(this.community()?.isJoined));
 
+  get hasChanges() {
+    return this.#trackChangesService.hasChanges;
+  }
+
   constructor() {
     effect(() => {
       const id = this.id();
       const me = this.me();
 
-      if (!id || !me) {
-        return;
-      }
+      if (!id || !me) return;
 
-      return this.#communitiesService
-        .getCommunity(id)
-        .subscribe((community) => {
-          this.#store.dispatch(
-            communitiesActions.communityLoaded({ community })
-          );
-          this.#store.dispatch(
-            communitiesActions.postsLoaded({ posts: community.posts })
-          );
-        });
+      firstValueFrom(this.#communitiesStoreFacade.getCommunity(id)).then();
     });
 
     effect(() => {
+      this.id();
       this.isJoined();
       const community = untracked(() => this.community());
 
-      if (!community) {
-        return;
-      }
+      if (!community) return;
 
-      this.#communitiesService
-        .getSubscribers({
+      firstValueFrom(
+        this.#communitiesService.getSubscribers({
           communityId: community.id,
         })
-        .subscribe((res) => {
-          this.subscribers.set(res);
-        });
+      ).then((res) => {
+        this.subscribers.set(res);
+      });
     });
   }
 
@@ -189,5 +189,19 @@ export class CommunityPageComponent {
 
   shareCommunity() {
     this.#modalService.show(ShareCommunityModalComponent);
+  }
+
+  onFileLoaded(file: File) {
+    const community = this.community();
+
+    if (!community) return;
+
+    firstValueFrom(
+      this.#communitiesStoreFacade.uploadImage({
+        community_id: community.id,
+        image_type: CommunityImageType.AVATAR,
+        image_file: file,
+      })
+    ).then();
   }
 }

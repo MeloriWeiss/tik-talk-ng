@@ -2,18 +2,13 @@ import {
   ChangeDetectionStrategy,
   Component,
   contentChild,
+  ElementRef,
   HostListener,
-  inject,
+  input, output,
   signal,
+  viewChild,
 } from '@angular/core';
 import { AvatarCircleComponent, PortalComponent } from '../index';
-import {
-  CommunityImageType,
-  selectCommunity,
-} from '@tt/data-access/communities';
-import { Store } from '@ngrx/store';
-import { firstValueFrom } from 'rxjs';
-import { CommunitiesStoreFacade } from '@tt/data-access/communities/services';
 
 @Component({
   selector: 'tt-editable-avatar-circle',
@@ -23,10 +18,10 @@ import { CommunitiesStoreFacade } from '@tt/data-access/communities/services';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditableAvatarCircleComponent {
-  #store = inject(Store);
-  #communitiesStoreFacade = inject(CommunitiesStoreFacade);
+  canEdit = input(false);
+  fileLoaded = output<File>();
 
-  #community = this.#store.selectSignal(selectCommunity);
+  fileInput = viewChild.required<ElementRef<HTMLInputElement>>('fileInput');
 
   avatarCircle = contentChild(AvatarCircleComponent);
 
@@ -42,7 +37,15 @@ export class EditableAvatarCircleComponent {
     this.isMouseOver.set(false);
   }
 
+  onAvatarClick() {
+    if (!this.canEdit()) return;
+
+    this.fileInput().nativeElement.click();
+  }
+
   onUploadImage(event: Event) {
+    if (!this.canEdit()) return;
+
     const file = (event.target as HTMLInputElement).files?.[0];
 
     if (!file || !file.type.match('image')) return;
@@ -54,17 +57,7 @@ export class EditableAvatarCircleComponent {
         event.target?.result?.toString() ?? ''
       );
 
-      const community = this.#community();
-
-      if (!community) return;
-
-      firstValueFrom(
-        this.#communitiesStoreFacade.uploadImage({
-          community_id: community.id,
-          image_type: CommunityImageType.AVATAR,
-          image_file: file,
-        })
-      ).then();
+      this.fileLoaded.emit(file);
     };
 
     reader.readAsDataURL(file);

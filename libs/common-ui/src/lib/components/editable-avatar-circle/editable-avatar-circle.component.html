@@ -1,10 +1,15 @@
-<button #avatar (click)="fileInput.click()" class="non-visible-btn change-avatar-btn">
+<button
+  #avatar
+  (click)="onAvatarClick()"
+  class="non-visible-btn change-avatar-btn"
+  [class.pointer]="canEdit()"
+>
   <ng-content select="[avatar]"></ng-content>
 </button>
 
-@if (isMouseOver()) {
+@if (canEdit() && isMouseOver()) {
   <tt-portal [host]="avatar">
-    <ng-content select="[showedOnHover]"></ng-content>
+    <ng-content select="[tooltip]"></ng-content>
   </tt-portal>
 }
 
