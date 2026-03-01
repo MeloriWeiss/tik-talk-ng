@@ -1,0 +1,4 @@
+{
+  "*.ts": "nx run-many --target=lint --files",
+  "*.{ts,html,scss,css,json,md}": "prettier --write"
+}

@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, input, linkedSignal, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  linkedSignal,
+} from '@angular/core';
 
 @Component({
   selector: 'tt-avatar-circle',

@@ -9,6 +9,7 @@ import { ClickOutDirective } from '../../../directives/index';
 
 @Component({
   selector: 'tt-address-input-dropdown',
+  standalone: true,
   imports: [],
   templateUrl: './address-input-dropdown.component.html',
   styleUrl: './address-input-dropdown.component.scss',

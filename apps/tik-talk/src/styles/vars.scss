@@ -1,0 +1,38 @@
+:root {
+  --dark-color: #000000;
+  --dark-active-color: #161616;
+  --dark-transparent-color: rgba(0, 0, 0, 0.5);
+  --light-color: #ffffff;
+  --primary-color: #ae7aff;
+  --primary-hover-color: #8850e7;
+  --gray-color: #575757;
+  --gray-light-color: #797979;
+  --light-transparent-color: #ffffffbf;
+  --message-color: #404040;
+
+  --light-border: 1px solid var(--light-color);
+  --light-wide-border: 2px solid var(--light-color);
+}
+
+@mixin light-theme-vars-set {
+  background-image: none;
+  background-color: var(--dark-active-color);
+
+  --dark-color: #ffffff;
+  --dark-active-color: #e7e7e7;
+  --dark-transparent-color: rgba(227, 227, 227, 0.4);
+  --light-color: #000000;
+  --primary-color: #ae7aff;
+  --primary-hover-color: #8850e7;
+  --gray-color: #444444;
+  --gray-light-color: #ababab;
+  --light-transparent-color: rgba(79, 79, 79, 0.75);
+  --message-color: #e1e1e1;
+
+  --light-border: 1px solid var(--light-color);
+  --light-wide-border: 2px solid var(--light-color);
+}
+
+body.light {
+  @include light-theme-vars-set;
+}

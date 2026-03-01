@@ -9,7 +9,6 @@ import {
 import {
   ControlValueAccessor,
   FormControl,
-  FormsModule,
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
 } from '@angular/forms';
@@ -17,6 +16,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'tt-form-input',
+  standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './form-input.component.html',
   styleUrl: './form-input.component.scss',

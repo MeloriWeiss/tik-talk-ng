@@ -16,7 +16,9 @@ import {
 import { CommentComponent } from '../../ui';
 import {
   AvatarCircleComponent,
-  DateDiffPipe, HtmlLinkClickDirective, SanitizePipe,
+  DateDiffPipe,
+  HtmlLinkClickDirective,
+  SanitizePipe,
   SvgIconComponent,
 } from '@tt/common-ui';
 import {
@@ -67,7 +69,6 @@ export class PostComponent implements OnInit, AfterViewInit {
   });
 
   commentsContainer = viewChild.required<ElementRef>('commentsContainer');
-  postContent = viewChild<ElementRef>('postContent');
 
   ngOnInit() {
     this.comms = this.#store.selectSignal(

@@ -23,11 +23,7 @@ import { AddressInputDropdownComponent } from './address-input-dropdown/address-
 @Component({
   selector: 'tt-address-input',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    AsyncPipe,
-    AddressInputDropdownComponent,
-  ],
+  imports: [ReactiveFormsModule, AsyncPipe, AddressInputDropdownComponent],
   templateUrl: './address-input.component.html',
   styleUrl: './address-input.component.scss',
   providers: [
@@ -68,7 +64,9 @@ export class AddressInputComponent implements ControlValueAccessor {
     this.addressForm.valueChanges
       .pipe(
         tap(() => {
-          const address = Object.values(this.addressForm.value).join(', ');
+          const address = Object.values(this.addressForm.value)
+            .filter((value) => !!value)
+            .join(', ');
           this.innerSearchControl.setValue(address, { emitEvent: false });
           this.onChange(address);
         }),
@@ -126,5 +124,5 @@ export class AddressInputComponent implements ControlValueAccessor {
 
   onChange(value: string | null) {}
 
-  onTouched() {};
+  onTouched() {}
 }

@@ -3,6 +3,9 @@ import { CommunitiesSearchPageComponent } from '../feature-communities-list';
 import { CommunityPageComponent } from '../feature-community-page/community-page/community-page.component';
 import { CommunitiesStoreFacade } from '@tt/data-access/communities/services/communities-store-facade.service';
 import { canDeactivateWithConfirm } from '@tt/shared';
+import { provideState } from '@ngrx/store';
+import { PostsEffects, postsFeature } from '@tt/data-access/posts';
+import { provideEffects } from '@ngrx/effects';
 
 export const communitiesRoutes: Routes = [
   {
@@ -23,6 +26,10 @@ export const communitiesRoutes: Routes = [
         canDeactivate: [canDeactivateWithConfirm],
       },
     ],
-    providers: [CommunitiesStoreFacade],
+    providers: [
+      CommunitiesStoreFacade,
+      provideState(postsFeature),
+      provideEffects([PostsEffects]),
+    ],
   },
 ];
